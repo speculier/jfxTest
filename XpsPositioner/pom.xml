@@ -1,0 +1,97 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>com.gbcs</groupId>
+  <artifactId>TestJavaFX</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>TestJavaFX</name>
+  <url>http://maven.apache.org</url>
+
+	<organization>
+		<name>GB Conseils et Services</name>
+		<url>http://www.google.fr/</url>
+	</organization>
+	
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+	  <!-- Java compiler -->
+	  <compileSource>1.8</compileSource>
+  </properties>
+	
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+	<!-- https://mvnrepository.com/artifact/log4j/log4j -->
+	<dependency>
+	    <groupId>log4j</groupId>
+	    <artifactId>log4j</artifactId>
+	    <version>1.2.17</version>
+	</dependency>    
+	
+  </dependencies>
+  
+  <build>
+	  <plugins>
+ 			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<archive>
+						<manifestEntries>
+							<Specification-Title>XpsPositioner Shared Resources</Specification-Title>
+							<Specification-Version>1.0</Specification-Version>
+							<Specification-Vendor>GB Conseils et Services</Specification-Vendor>
+							<Implementation-Title>XPSPotitioner</Implementation-Title>
+							<Implementation-Version>1.0</Implementation-Version>
+							<Implementation-Vendor>GB Conseils et Services</Implementation-Vendor>
+							<Implementation-URL>www.google.fr</Implementation-URL>
+							<Build-Date>${buildNumber}</Build-Date>
+							<Main-Class>com.gbcs.XPSPositioner.XPSPositionerApplication</Main-Class>
+						</manifestEntries>
+					</archive>
+				</configuration>
+			</plugin>
+	  		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
+					<encoding>ISO-8859-1</encoding>
+					<source>${compileSource}</source>
+					<target>${compileSource}</target>
+					<meminitial>128m</meminitial>
+					<maxmem>512m</maxmem>
+				</configuration>
+			</plugin>
+	  		<plugin>
+	        	<groupId>org.apache.maven.plugins</groupId>
+	        	<artifactId>maven-resources-plugin</artifactId>
+	        	<version>2.6</version>
+	    	</plugin>
+	  		<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<version>2.2</version>
+			</plugin>
+		    <plugin>
+			    <groupId>com.zenjava</groupId>
+			    <artifactId>javafx-maven-plugin</artifactId>
+			    <version>8.8.3</version>
+			    <configuration>
+			        <mainClass>com.gbcs.TestJavaFX.JavaFXApp</mainClass>
+			    </configuration>
+			</plugin>
+	 </plugins>
+  </build>
+</project>
+
