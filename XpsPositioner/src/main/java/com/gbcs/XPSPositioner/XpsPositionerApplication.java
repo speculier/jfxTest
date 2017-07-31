@@ -4,8 +4,8 @@ package com.gbcs.XPSPositioner;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.controls.GroupBox;
 import com.gbcs.XPSPositioner.controls.XpsAngleSpinner;
+import com.gbcs.XPSPositioner.tabs.TablesTab;
 
 import javafx.application.Application;
 import javafx.scene.*;
@@ -24,8 +24,11 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.control.*;
+import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 
 /**
@@ -100,7 +103,7 @@ public class XpsPositionerApplication extends Application {
     private final BorderPane main2DPanel = new BorderPane();
     private final TabPane tabPane = new TabPane();   
     private final Tab adminTab = new Tab("Admin");
-    private final Tab tablesTab = new Tab("Tables");
+    private final TablesTab tablesTab = new TablesTab("Tables");
     private final Tab mecaTab = new Tab("Meca");
     private final Tab essaiTab = new Tab("Essai");
     private final Tab sequenceTab = new Tab("Sequence");
@@ -231,14 +234,10 @@ public class XpsPositionerApplication extends Application {
      */
     private void buildPanels() {
        
-    	buildTablesTab();
-    	buildMecaTab();
-    	buildEssaiTab();
-    	buildSequenceTab();
     	buildAdminTab();
     	
     	// Disable closing panels
-    	tablesTab.setClosable(false);
+    	//tablesTab.setClosable(false);
     	mecaTab.setClosable(false);
     	essaiTab.setClosable(false);
     	sequenceTab.setClosable(false);
@@ -452,74 +451,6 @@ public class XpsPositionerApplication extends Application {
          
          // Add components in the tables tab
          adminTab.setContent(toolBar);
-    }
-    
-    /**
-     * buildTablesTab
-     */
-    private void buildTablesTab() {
-    	
-   	 	Button buttonInitialisation = new Button("Initialisation");
-   	 	buttonInitialisation.setOnAction(e->{
-
-        });
-   	 	
-   	 	Button buttonOrigine = new Button("Origine");
-   	 	buttonOrigine.setOnAction(e->{
-        	// Home zoom/rotation/distance to camera
-        	setCurrentSceneOrientation(true, CAMERA_INITIAL_X_ANGLE, CAMERA_INITIAL_Y_ANGLE, CAMERA_INITIAL_DISTANCE);
-        	
-        	// Reet spinners to default values
-        	spinnerCurrentXAngle.setDefaultValueFactory();
-        	spinnerCurrentYAngle.setDefaultValueFactory();
-        });
-   	 	
- 	 	Button buttonMoteurOff = new Button("Moteur Off");
- 	 	buttonMoteurOff.setOnAction(e->{
-
-        });
-   	 	
- 	 	Button buttonVitesses = new Button("Vitesses");
- 	 	buttonVitesses.setOnAction(e->{
-
-        });
- 	 	
- 	 	Label labelX1Courant = new Label("Courant");
- 	 	Label labelX1Relatif = new Label("Relatif");
- 	 	Label labelX1Absolu = new Label("Absolu");
- 	  
- 	 	GroupBox x1TitlePane = new GroupBox ();
- 	 	x1TitlePane.setText("X1");
-  	 	x1TitlePane.setContent(labelX1Courant);
- 	 	//x1TitlePane.setContent(labelX1Relatif);
- 	 	//x1TitlePane.setContent(labelX1Absolu);
- 	 
-   	 	ToolBar toolBar = new ToolBar(buttonInitialisation, buttonOrigine, buttonMoteurOff, buttonVitesses, x1TitlePane);
-        toolBar.setOrientation(Orientation.HORIZONTAL);
-   	 	
-        // Add components in the tables tab
-        tablesTab.setContent(toolBar);
-    }
-    
-    /**
-     * buildMecaTab
-     */
-    private void buildMecaTab() {
-    	
-    }
-	
-    /**
-     * buildEssaiTab
-     */
-    private void buildEssaiTab() {
-    	
-    }
-	
-    /**
-     * buildSequenceTab
-     */
-    private void buildSequenceTab() {
-    	
     }
     
     /**
