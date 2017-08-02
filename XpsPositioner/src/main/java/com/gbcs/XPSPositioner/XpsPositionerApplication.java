@@ -4,34 +4,49 @@ package com.gbcs.XPSPositioner;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.controls.XpsAngleSpinner;
+import com.gbcs.XPSPositioner.components.XpsAngleSpinner;
+import com.gbcs.XPSPositioner.panels.StatusBarPanel;
+import com.gbcs.XPSPositioner.tabs.AdminTab;
+import com.gbcs.XPSPositioner.tabs.EssaiTab;
+import com.gbcs.XPSPositioner.tabs.MecaTab;
+import com.gbcs.XPSPositioner.tabs.SequenceTab;
 import com.gbcs.XPSPositioner.tabs.TablesTab;
+import com.gbcs.XPSPositioner.utils.Constants;
 
 import javafx.application.Application;
-import javafx.scene.*;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
+import javafx.scene.DepthTest;
+import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SpinnerValueFactory;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.ToolBar;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Sphere;
-import javafx.scene.transform.Rotate;
-import javafx.event.EventHandler;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
-import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
-import javafx.scene.control.*;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
+import javafx.stage.Stage;
 
-/**
+/**TablesTab
  * XPSPositionner class (Java entry point)
  * @author sp01515
  *
@@ -48,9 +63,6 @@ public class XpsPositionerApplication extends Application {
 	// 3D root group that contains all other groups
 	private final Group root3D = new Group();
 	private SubScene scene3D;
-
-	// root group that contains 2D panels
-	//private final Group root2D = new Group();
 
     // Axis group: contains the 3 axis X, Y and Z
 	private final XForm axisGroup = new XForm();
@@ -71,21 +83,12 @@ public class XpsPositionerApplication extends Application {
 
     // 3D perspective Camera
     private final PerspectiveCamera camera = new PerspectiveCamera(true);
-
-    //
-    // Constants
-    //
-    private static final double CAMERA_INITIAL_DISTANCE = -450;
-    private static final double CAMERA_INITIAL_X_ANGLE = 20.0;
-    private static final double CAMERA_INITIAL_Y_ANGLE = 210.0;
-    private static final double CAMERA_NEAR_CLIP = 0.1;
-    private static final double CAMERA_FAR_CLIP = 10000.0;
-    private static final double AXIS_LENGTH = 500.0;
-    private static final double CONTROL_MULTIPLIER = 0.1;
-    private static final double SHIFT_MULTIPLIER = 10.0;
-    private static final double MOUSE_SPEED = 0.1;
-    private static final double ROTATION_SPEED = 2.0;
-    private static final double TRACK_SPEED = 0.3;
+    
+    // Main Menu bar
+    private MenuBar menuBar = new MenuBar();
+    
+    // Main statusBar 
+    StatusBarPanel statusBar = new StatusBarPanel();
     
     //
     // Positions variables
@@ -102,18 +105,28 @@ public class XpsPositionerApplication extends Application {
     //
     private final BorderPane main2DPanel = new BorderPane();
     private final TabPane tabPane = new TabPane();   
-    private final Tab adminTab = new Tab("Admin");
+    private final AdminTab adminTab = new AdminTab(this, "Admin");
     private final TablesTab tablesTab = new TablesTab("Tables");
-    private final Tab mecaTab = new Tab("Meca");
-    private final Tab essaiTab = new Tab("Essai");
-    private final Tab sequenceTab = new Tab("Sequence");
+    private final MecaTab mecaTab = new MecaTab("Méca");
+    private final EssaiTab essaiTab = new EssaiTab("Essai");
+    private final SequenceTab sequenceTab = new SequenceTab("Séquence");
+
+    /**
+     * getAxisGroup
+     * @return
+     */
+    public XForm getAxisGroup() {
+    	return axisGroup;
+    }
     
-    // Toolbar components 
-    private CheckBox checkBoxDisplayAxes;
-    private XpsAngleSpinner spinnerCurrentXAngle;
-    private XpsAngleSpinner spinnerCurrentYAngle;
-	//private ToolBar toolBar;
-          
+    /**
+     * getPerspectiveCamera
+     * @return
+     */
+    public PerspectiveCamera getPerspectiveCamera() {
+    	return camera;
+    }
+    
     /**
      * buildAxes
      */
@@ -131,9 +144,9 @@ public class XpsPositionerApplication extends Application {
         blueMaterial.setDiffuseColor(Color.DARKBLUE);
         blueMaterial.setSpecularColor(Color.BLUE);
 
-        final Box xAxis = new Box(AXIS_LENGTH, 1, 1);
-        final Box yAxis = new Box(1, AXIS_LENGTH, 1);
-        final Box zAxis = new Box(1, 1, AXIS_LENGTH);
+        final Box xAxis = new Box(Constants.AXIS_LENGTH, 1, 1);
+        final Box yAxis = new Box(1, Constants.AXIS_LENGTH, 1);
+        final Box zAxis = new Box(1, 1, Constants.AXIS_LENGTH);
 
         xAxis.setMaterial(redMaterial);
         yAxis.setMaterial(greenMaterial);
@@ -145,7 +158,7 @@ public class XpsPositionerApplication extends Application {
         // Add the 'axis' group in the 'world3D' group
         world3D.getChildren().addAll(axisGroup);
     }
-    
+
     /**
      * build3DShapes
      */
@@ -229,15 +242,78 @@ public class XpsPositionerApplication extends Application {
     }
     
     /**
+     * buildMenus
+     */
+    private void buildMenus() {
+   
+    	//
+    	// File
+    	//
+	    Menu menuFile = new Menu("File");
+	    
+	    MenuItem menuItemFileEdit = new MenuItem("Editer");
+	    menuItemFileEdit.setOnAction(e->{
+	    	
+        });
+	    
+	    MenuItem menuItemFileQuit = new MenuItem("Quitter");
+	    menuItemFileQuit.setOnAction(e->{
+	    	Platform.exit();
+        });
+	    
+	    menuFile.getItems().addAll(menuItemFileEdit, menuItemFileQuit);
+	    
+		//
+    	// Password
+    	//
+	    Menu menuPassword = new Menu("Mot de passe");
+	    menuPassword.setOnAction(e->{
+	    	
+        });
+	    
+		//
+    	// Configuration
+    	//
+	    Menu menuConfiguration = new Menu("Configuration");
+	    MenuItem menuItemConfigurationAdresseXps = new MenuItem("Adresse XPS");
+	    MenuItem menuItemConfigurationSelectAxes = new MenuItem("Sélection des axes");
+	    MenuItem menuItemConfigurationArrowsSize = new MenuItem("Taille des flèches");
+	    MenuItem menuItemConfigurationShow = new MenuItem("Montrer");
+	    MenuItem menuItemConfigurationRotations = new MenuItem("Rotations");
+	    MenuItem menuItemConfigurationOrderNumber = new MenuItem("Numéro d'ordre");
+	    MenuItem menuItemConfigurationPassword = new MenuItem("Mot de passe");
+	    menuConfiguration.getItems().addAll(menuItemConfigurationAdresseXps, menuItemConfigurationSelectAxes, menuItemConfigurationArrowsSize, menuItemConfigurationShow, menuItemConfigurationRotations, menuItemConfigurationOrderNumber, menuItemConfigurationPassword);
+	    
+		//
+    	// Maintenance
+    	//
+	    Menu menuMaintenance = new Menu("Maintenance");
+	    MenuItem menuItemMaintenanceXps = new MenuItem("XPS");
+	    MenuItem menuItemMaintenanceDebug = new MenuItem("Debug");
+	    menuMaintenance.getItems().addAll(menuItemMaintenanceXps, menuItemMaintenanceDebug);
+	    
+		//
+    	// Help
+    	//
+	    Menu menuHelp = new Menu("Aide");
+	    MenuItem menuHelpAPropos = new MenuItem("A Propos...");
+	    MenuItem menuHelpManual = new MenuItem("Manuel");
+	    menuHelp.getItems().addAll(menuHelpAPropos, menuHelpManual);
+	    
+	    menuBar.getMenus().addAll(menuFile, menuPassword, menuConfiguration, menuMaintenance, menuHelp);
+    }
+    
+    /**
      * buildPanels
-     * Tab panels (Tables, meca, ...)
+     * Build all Tab panels (Tables, Meca, ...)
      */
     private void buildPanels() {
-       
-    	buildAdminTab();
+          	
+    	// Build menus
+    	buildMenus();
     	
     	// Disable closing panels
-    	//tablesTab.setClosable(false);
+    	tablesTab.setClosable(false);
     	mecaTab.setClosable(false);
     	essaiTab.setClosable(false);
     	sequenceTab.setClosable(false);
@@ -252,7 +328,15 @@ public class XpsPositionerApplication extends Application {
         
         // Set the tab pane to the right 
         main2DPanel.setRight(tabPane);
-        main2DPanel.setPrefSize(300,300);
+        
+        // Set menu bar to the top
+	    main2DPanel.setTop(menuBar);
+	    
+	    // Set status bar to the bottom
+		main2DPanel.setBottom(statusBar);
+        
+		// Set size
+        main2DPanel.setPrefSize(800,600);
     }
     
     /**
@@ -270,15 +354,15 @@ public class XpsPositionerApplication extends Application {
                 double modifier = 1.0;
                 
                 if (se.isControlDown()) {
-                    modifier = CONTROL_MULTIPLIER;
+                    modifier = Constants.CONTROL_MULTIPLIER;
                 } 
                
                 if (se.isShiftDown()) {
-                    modifier = SHIFT_MULTIPLIER;
+                    modifier = Constants.SHIFT_MULTIPLIER;
                 }  
                 
                 double z = camera.getTranslateZ();
-                double newZ = z + mouseDeltaY * MOUSE_SPEED * modifier;
+                double newZ = z + mouseDeltaY * Constants.MOUSE_SPEED * modifier;
                 camera.setTranslateZ(newZ);
             }
         });
@@ -305,26 +389,26 @@ public class XpsPositionerApplication extends Application {
                 double modifier = 1.0;
                 
                 if (me.isControlDown()) {
-                    modifier = CONTROL_MULTIPLIER;
+                    modifier = Constants.CONTROL_MULTIPLIER;
                 } 
                 
                 if (me.isShiftDown()) {
-                    modifier = SHIFT_MULTIPLIER;
+                    modifier = Constants.SHIFT_MULTIPLIER;
                 }    
                 
                 // Left click : rotate scene
                 if (me.isPrimaryButtonDown()) {
-                	cameraXform.ry.setAngle(cameraXform.ry.getAngle() - mouseDeltaX*MOUSE_SPEED*modifier*ROTATION_SPEED);  
-                    cameraXform.rx.setAngle(cameraXform.rx.getAngle() + mouseDeltaY*MOUSE_SPEED*modifier*ROTATION_SPEED);
+                	cameraXform.ry.setAngle(cameraXform.ry.getAngle() - mouseDeltaX * Constants.MOUSE_SPEED * modifier * Constants.ROTATION_SPEED);  
+                    cameraXform.rx.setAngle(cameraXform.rx.getAngle() + mouseDeltaY * Constants.MOUSE_SPEED * modifier * Constants.ROTATION_SPEED);
                     
-                    spinnerCurrentXAngle.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 360, cameraXform.rx.getAngle()));
-                    spinnerCurrentYAngle.setValueFactory(new SpinnerValueFactory.DoubleSpinnerValueFactory(0, 360, cameraXform.ry.getAngle()));
+                    adminTab.setXAngleSpinnerValue(cameraXform.rx.getAngle());
+                    adminTab.setYAngleSpinnerValue(cameraXform.ry.getAngle());
                 }
                 
                 // Right click : move scene
                 else if (me.isSecondaryButtonDown()) {
-                    cameraXform2.t.setX(cameraXform2.t.getX() + mouseDeltaX*MOUSE_SPEED*modifier*TRACK_SPEED);  
-                    cameraXform2.t.setY(cameraXform2.t.getY() + mouseDeltaY*MOUSE_SPEED*modifier*TRACK_SPEED);  
+                    cameraXform2.t.setX(cameraXform2.t.getX() + mouseDeltaX * Constants.MOUSE_SPEED * modifier * Constants.TRACK_SPEED);  
+                    cameraXform2.t.setY(cameraXform2.t.getY() + mouseDeltaY * Constants.MOUSE_SPEED * modifier * Constants.TRACK_SPEED);  
                 }
             }
         });
@@ -342,11 +426,11 @@ public class XpsPositionerApplication extends Application {
         cameraXform3.getChildren().add(camera);
         cameraXform3.setRotateZ(180.0);
 
-        camera.setNearClip(CAMERA_NEAR_CLIP);
-        camera.setFarClip(CAMERA_FAR_CLIP);
-        camera.setTranslateZ(CAMERA_INITIAL_DISTANCE);
-        cameraXform.ry.setAngle(CAMERA_INITIAL_Y_ANGLE);
-        cameraXform.rx.setAngle(CAMERA_INITIAL_X_ANGLE);
+        camera.setNearClip(Constants.CAMERA_NEAR_CLIP);
+        camera.setFarClip(Constants.CAMERA_FAR_CLIP);
+        camera.setTranslateZ(Constants.CAMERA_INITIAL_DISTANCE);
+        cameraXform.ry.setAngle(Constants.CAMERA_INITIAL_Y_ANGLE);
+        cameraXform.rx.setAngle(Constants.CAMERA_INITIAL_X_ANGLE);
     }
     
     /**
@@ -356,7 +440,7 @@ public class XpsPositionerApplication extends Application {
      * @param yAngle
      * @param distanceFromCamera
      */
-    private void setCurrentSceneOrientation(boolean centerScene, double xAngle, double yAngle, double distanceFromCamera) {
+    public void setCurrentSceneOrientation(boolean centerScene, double xAngle, double yAngle, double distanceFromCamera) {
     	
     	// Center in th middle of ythe scene
     	if (centerScene) {
@@ -376,7 +460,7 @@ public class XpsPositionerApplication extends Application {
      * buildGraphicalScene
      */
     private void buildGraphicalScene() {
-    	
+	    
     	// Add the group 'world3D' in the root group
         root3D.getChildren().add(world3D);
         root3D.setDepthTest(DepthTest.ENABLE);
@@ -400,60 +484,6 @@ public class XpsPositionerApplication extends Application {
     }
     
     /**
-     * buildAdminTab
-     */
-    private void buildAdminTab() {
-    	
-    	 Button buttonInitialPosition = new Button("Initial Position");
-    	 buttonInitialPosition.setOnAction(e->{
-         	// Home zoom/rotation/distance to camera
-         	setCurrentSceneOrientation(true, CAMERA_INITIAL_X_ANGLE, CAMERA_INITIAL_Y_ANGLE, CAMERA_INITIAL_DISTANCE);
-         	
-         	// Reet spinners to default values
-         	spinnerCurrentXAngle.setDefaultValueFactory();
-         	spinnerCurrentYAngle.setDefaultValueFactory();
-         });
-         
-         // Display axis or not
-         checkBoxDisplayAxes = new CheckBox("Display/hide axes");
-         checkBoxDisplayAxes.setSelected(true);
-         checkBoxDisplayAxes.setOnAction(e->{
-         	axisGroup.setVisible(checkBoxDisplayAxes.isSelected());
-         });
-         
-         // Spinners for the current X & Y angle values
-         spinnerCurrentXAngle = new XpsAngleSpinner(CAMERA_INITIAL_X_ANGLE);
-         spinnerCurrentYAngle = new XpsAngleSpinner(CAMERA_INITIAL_Y_ANGLE);
-         
-         spinnerCurrentXAngle.valueProperty().addListener(new ChangeListener<Double>() {
- 			@Override
- 			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
- 				setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
- 						Double.valueOf(spinnerCurrentYAngle.getValue().toString()),
- 						camera.getTranslateZ());
- 			}
- 		 });
-         
-         spinnerCurrentYAngle.valueProperty().addListener(new ChangeListener<Double>() {
-  			@Override
-  			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
- 				setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
- 						Double.valueOf(spinnerCurrentYAngle.getValue().toString()),
- 						camera.getTranslateZ());
-  			}
-  		 });
-         
-         Label labelXAngle = new Label("X angle");
-         Label labelYAngle = new Label("Y angle");
-
-         ToolBar toolBar = new ToolBar(checkBoxDisplayAxes, buttonInitialPosition, labelXAngle, spinnerCurrentXAngle, labelYAngle, spinnerCurrentYAngle);
-         toolBar.setOrientation(Orientation.HORIZONTAL);
-         
-         // Add components in the tables tab
-         adminTab.setContent(toolBar);
-    }
-    
-    /**
      * Javafx entry point
      * @param primaryStage the main stage
      */
@@ -466,17 +496,17 @@ public class XpsPositionerApplication extends Application {
         // Build the left 3D graphical scene
     	buildGraphicalScene();
         
-    	// Build the right panels
+    	// Build the user panels
         buildPanels();
         
         // Create main scene
         Scene mainScene = new Scene(main2DPanel);
-        
+	    
         // Set mouse handlers
         handleMouse3D(scene3D, world3D);
 
         // Set scene in the stage and show it
-        primaryStage.setTitle("Sample shapes in a 3D environment");
+        primaryStage.setTitle("Démonstration de controle de GABI AIRBUS");
         primaryStage.setScene(mainScene);
         primaryStage.show();
     }
