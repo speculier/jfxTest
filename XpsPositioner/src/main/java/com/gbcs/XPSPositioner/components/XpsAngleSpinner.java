@@ -9,8 +9,8 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 
 /**
- * AngleSpinner
- * @author sp01515
+ * XpsAngleSpinner
+ * @author Sébastien
  *
  */
 public class XpsAngleSpinner extends Spinner {
@@ -21,7 +21,7 @@ public class XpsAngleSpinner extends Spinner {
 	private SpinnerValueFactory<Double> spinnerValue;
 
 	/**
-	 * 
+	 * XpsAngleSpinner ctor
 	 * @param arg0
 	 */
 	public XpsAngleSpinner(double intialValue) {
