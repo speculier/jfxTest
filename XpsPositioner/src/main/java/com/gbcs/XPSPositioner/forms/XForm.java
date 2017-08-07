@@ -1,5 +1,5 @@
 
-package com.gbcs.XPSPositioner;
+package com.gbcs.XPSPositioner.forms;
 
 import org.apache.log4j.Logger;
 

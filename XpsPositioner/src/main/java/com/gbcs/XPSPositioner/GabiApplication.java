@@ -5,6 +5,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.forms.MainGraphicalForm;
+import com.gbcs.XPSPositioner.forms.XForm;
 import com.gbcs.XPSPositioner.panels.MainApplicationPanel;
 import com.gbcs.XPSPositioner.utils.Constants;
 
@@ -28,14 +29,14 @@ import javafx.scene.shape.Sphere;
 import javafx.stage.Stage;
 
 /**
- * XPSPositionner class (Java entry point)
+ * GabiApplication class (Java entry point)
  * @author sp01515
  *
  */
-public class XpsPositionerApplication extends Application {
+public class GabiApplication extends Application {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(XpsPositionerApplication.class);
+	private static final Logger logger = Logger.getLogger(GabiApplication.class);
 	  
 	// 3D root group that contains all other groups
 	private final Group root3D = new Group();
@@ -57,7 +58,8 @@ public class XpsPositionerApplication extends Application {
     private final PerspectiveCamera camera = new PerspectiveCamera(true);
     
     // Main application panel
-    private final MainApplicationPanel mainApplicationPanel = new MainApplicationPanel(this);
+    private GabiManager mainGabiManager;
+    private MainApplicationPanel mainApplicationPanel;
     
     // Positions variables
     private double mousePosX;
@@ -338,7 +340,6 @@ public class XpsPositionerApplication extends Application {
         scene3D.setCamera(camera);
 
         // Create 2D panel for user controls
-        mainApplicationPanel.setApplication(this);
         mainApplicationPanel.setCenter(scene3D);
     }
     
@@ -349,6 +350,10 @@ public class XpsPositionerApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
        
+    	// Creating main manager and main pansel
+       	mainGabiManager = new GabiManager(this);
+    	mainApplicationPanel = new MainApplicationPanel(mainGabiManager);
+    	
     	// Style sheet
         setUserAgentStylesheet(STYLESHEET_MODENA);
 
