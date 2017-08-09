@@ -9,8 +9,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 
@@ -57,17 +55,17 @@ public class EssaiPointManagementPanel extends TitledPane {
  	 		        "100"
  	 		    );
  	 	
- 	 	ComboBox comboX = new ComboBox(moveValues);
+ 	 	ComboBox<String> comboX = new ComboBox<String>(moveValues);
  	 	comboX.setEditable(false);
  	 	comboX.getSelectionModel().selectFirst();
  	 	comboX.setVisibleRowCount(5);
  	 	
- 	 	ComboBox comboY = new ComboBox(moveValues);
+ 	 	ComboBox<String> comboY = new ComboBox<String>(moveValues);
  	 	comboY.setEditable(false);
  	 	comboY.getSelectionModel().selectFirst();
  	 	comboY.setVisibleRowCount(5);
  	 	
- 	 	ComboBox comboZ = new ComboBox(moveValues);
+ 	 	ComboBox<String> comboZ = new ComboBox<String>(moveValues);
  	 	comboZ.setEditable(false);
  	 	comboZ.getSelectionModel().selectFirst();
  	 	comboZ.setVisibleRowCount(5);
@@ -83,17 +81,16 @@ public class EssaiPointManagementPanel extends TitledPane {
 	 	grid1.setHgap(10);
 	 	grid1.setPadding(new Insets(5, 5, 5, 5));
 	 	
-	 	grid1.setHalignment(labelX, HPos.CENTER);
-	 	grid1.setHalignment(labelY, HPos.CENTER);
-	 	grid1.setHalignment(labelZ, HPos.CENTER);
-	 	grid1.setHalignment(labelUnitX, HPos.CENTER);
-	 	grid1.setHalignment(labelUnitY, HPos.CENTER);
-	 	grid1.setHalignment(labelUnitZ, HPos.CENTER);
-	 	grid1.setHalignment(comboX, HPos.CENTER);
-	 	grid1.setHalignment(comboY, HPos.CENTER);
-	 	grid1.setHalignment(comboZ, HPos.CENTER);
+	 	GridPane.setHalignment(labelX, HPos.CENTER);
+	 	GridPane.setHalignment(labelY, HPos.CENTER);
+	 	GridPane.setHalignment(labelZ, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitX, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitY, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitZ, HPos.CENTER);
+	 	GridPane.setHalignment(comboX, HPos.CENTER);
+	 	GridPane.setHalignment(comboY, HPos.CENTER);
+	 	GridPane.setHalignment(comboZ, HPos.CENTER);
 	 	
-
 		grid1.add(labelX, 0, 0);
 		grid1.add(labelY, 0, 1);
 		grid1.add(labelZ, 0, 2);
@@ -111,7 +108,7 @@ public class EssaiPointManagementPanel extends TitledPane {
 		grid2.setHgap(10);
 	 	grid2.setPadding(new Insets(5, 5, 5, 5));
 	 	
-		grid2.setHalignment(alignmentPanel, HPos.RIGHT);
+	 	GridPane.setHalignment(alignmentPanel, HPos.RIGHT);
 		
 	 	grid2.add(alignmentPanel, 0, 0);
 		
@@ -120,10 +117,10 @@ public class EssaiPointManagementPanel extends TitledPane {
 	 	mainGrid.setHgap(20);
 		mainGrid.setPadding(new Insets(5, 5, 5, 5));
 		
-		mainGrid.setHalignment(grid1, HPos.CENTER);
-		mainGrid.setHalignment(grid2, HPos.CENTER);
-		mainGrid.setHalignment(buttonPlace, HPos.CENTER);
-		mainGrid.setHalignment(buttonVise, HPos.CENTER);
+		GridPane.setHalignment(grid1, HPos.CENTER);
+		GridPane.setHalignment(grid2, HPos.CENTER);
+		GridPane.setHalignment(buttonPlace, HPos.CENTER);
+		GridPane.setHalignment(buttonVise, HPos.CENTER);
 		
 		mainGrid.add(grid1, 0, 0);
 		mainGrid.add(grid2, 1, 0);

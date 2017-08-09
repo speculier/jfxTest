@@ -60,11 +60,11 @@ public class MovePositionStage extends Stage {
    	 	GridPane grid = new GridPane();
    	 	grid.setPadding(new Insets(5, 5, 5, 5));
    	 	
-	   	grid.setHalignment(pointPaneM1, HPos.CENTER);  
-	   	grid.setHalignment(pointPaneM2, HPos.CENTER);
-	   	grid.setHalignment(buttonCurrentPosition, HPos.CENTER);
-	   	grid.setHalignment(buttonOk, HPos.CENTER);
-	   	grid.setHalignment(buttonCancel, HPos.CENTER);
+	   	GridPane.setHalignment(pointPaneM1, HPos.CENTER);  
+	   	GridPane.setHalignment(pointPaneM2, HPos.CENTER);
+	   	GridPane.setHalignment(buttonCurrentPosition, HPos.CENTER);
+	   	GridPane.setHalignment(buttonOk, HPos.CENTER);
+	   	GridPane.setHalignment(buttonCancel, HPos.CENTER);
 	   	
 	   	grid.add(pointPaneM1, 0, 0);
 	   	grid.add(pointPaneM2, 0, 1);

@@ -6,18 +6,15 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.GabiManager;
+import com.gbcs.XPSPositioner.GabiController;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -34,14 +31,14 @@ public class FileSequencePanel extends TitledPane {
 	
 	private ListView<String> listviewSequences;
 	private FileChooser fileChooserOpen = new FileChooser();
-	private GabiManager gabiManager;
+	private GabiController gabiManager;
 	
 	/**
 	 * FileSequencePanel ctor
 	 * @param lv
 	 * @param text
 	 */
-	public FileSequencePanel(GabiManager manager, ListView<String> lv, String text) {
+	public FileSequencePanel(GabiController manager, ListView<String> lv, String text) {
 
 		listviewSequences = lv;
 		gabiManager = manager;
@@ -64,9 +61,9 @@ public class FileSequencePanel extends TitledPane {
 	 	grid.setHgap(10);
 	 	grid.setPadding(new Insets(5, 5, 5, 5));
 	 	 	
-	 	grid.setHalignment(buttonNewSequence, HPos.LEFT);
-		grid.setHalignment(buttonOpenSequenceFile, HPos.LEFT);
-		grid.setHalignment(buttonSaveSequenceFile, HPos.LEFT);
+	 	GridPane.setHalignment(buttonNewSequence, HPos.LEFT);
+	 	GridPane.setHalignment(buttonOpenSequenceFile, HPos.LEFT);
+	 	GridPane.setHalignment(buttonSaveSequenceFile, HPos.LEFT);
 		
 		grid.add(buttonNewSequence, 0, 0);
 	 	grid.add(buttonOpenSequenceFile, 0, 1);
@@ -91,7 +88,7 @@ public class FileSequencePanel extends TitledPane {
  		fileChooserOpen = new FileChooser();
  		fileChooserOpen.setTitle("Relire une séquence...");
  
- 		List filterList = new ArrayList<String>();
+ 		List<String> filterList = new ArrayList<String>();
  		filterList.add("*.seq");
  
  		fileChooserOpen.getExtensionFilters().addAll(new ExtensionFilter("GABI Sequence files", filterList));
@@ -112,7 +109,7 @@ public class FileSequencePanel extends TitledPane {
  		fileChooserOpen = new FileChooser();
 	 	fileChooserOpen.setTitle("Enregistrer une séquence...");
 	 	
-		List filterList = new ArrayList<String>();
+		List<String> filterList = new ArrayList<String>();
  		filterList.add("*.seq");
  
  		fileChooserOpen.getExtensionFilters().addAll(new ExtensionFilter("GABI Sequence files", filterList));

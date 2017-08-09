@@ -58,10 +58,10 @@ public class PasswordStage extends Stage {
    	 	GridPane mainGrid = new GridPane();
 	    mainGrid.setPadding(new Insets(5, 5, 5, 5));
 	   	 	
-	   	mainGrid.setHalignment(labelPassword, HPos.CENTER);  
-	   	mainGrid.setHalignment(fieldPassword, HPos.CENTER);
-	   	mainGrid.setHalignment(buttonOk, HPos.CENTER);
-	   	mainGrid.setHalignment(buttonCancel, HPos.CENTER);
+	    GridPane.setHalignment(labelPassword, HPos.CENTER);  
+	   	GridPane.setHalignment(fieldPassword, HPos.CENTER);
+	   	GridPane.setHalignment(buttonOk, HPos.CENTER);
+	   	GridPane.setHalignment(buttonCancel, HPos.CENTER);
 	   	
 	   	mainGrid.add(labelPassword, 0, 0);
 	   	mainGrid.add(fieldPassword, 0, 1);

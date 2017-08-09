@@ -4,12 +4,9 @@ import org.apache.log4j.Logger;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -51,15 +48,15 @@ public class TargetOintPanel extends TitledPane {
 	 	upperGrid.setHgap(10);
 	 	upperGrid.setPadding(new Insets(5, 5, 5, 5));
 	 	
-	 	upperGrid.setHalignment(labelX, HPos.CENTER);
-	 	upperGrid.setHalignment(labelY, HPos.CENTER);
-	 	upperGrid.setHalignment(labelZ, HPos.CENTER);
-	 	upperGrid.setHalignment(textFieldMoveXValue, HPos.CENTER);
-	 	upperGrid.setHalignment(textFieldMoveYValue, HPos.CENTER);
-	 	upperGrid.setHalignment(textFieldMoveZValue, HPos.CENTER);
-	 	upperGrid.setHalignment(labelUnitX, HPos.CENTER);
-	 	upperGrid.setHalignment(labelUnitY, HPos.CENTER);
-	 	upperGrid.setHalignment(labelUnitZ, HPos.CENTER);
+	 	GridPane.setHalignment(labelX, HPos.CENTER);
+	 	GridPane.setHalignment(labelY, HPos.CENTER);
+	 	GridPane.setHalignment(labelZ, HPos.CENTER);
+	 	GridPane.setHalignment(textFieldMoveXValue, HPos.CENTER);
+	 	GridPane.setHalignment(textFieldMoveYValue, HPos.CENTER);
+	 	GridPane.setHalignment(textFieldMoveZValue, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitX, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitY, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitZ, HPos.CENTER);
 
 	 	upperGrid.add(labelX, 0, 0);
 		upperGrid.add(labelY, 0, 1);
@@ -82,8 +79,8 @@ public class TargetOintPanel extends TitledPane {
 	 	mainGgrid.setHgap(10);
 	 	mainGgrid.setPadding(new Insets(5, 5, 5, 5));
 	 	 	
-	 	mainGgrid.setHalignment(upperGrid, HPos.LEFT);
-	 	mainGgrid.setHalignment(typeOfAlignmentPanel, HPos.LEFT);
+	 	GridPane.setHalignment(upperGrid, HPos.LEFT);
+	 	GridPane.setHalignment(typeOfAlignmentPanel, HPos.LEFT);
 
 	 	mainGgrid.add(upperGrid, 0, 0);
 	 	mainGgrid.add(typeOfAlignmentPanel, 0, 1);

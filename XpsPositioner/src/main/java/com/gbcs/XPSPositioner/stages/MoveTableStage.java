@@ -2,20 +2,15 @@ package com.gbcs.XPSPositioner.stages;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.panels.FileSequencePanel;
 import com.gbcs.XPSPositioner.panels.TableAxesPanel;
-import com.gbcs.XPSPositioner.panels.XyPointPane;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -69,9 +64,9 @@ public class MoveTableStage extends Stage {
    	 	GridPane moveValueGrid = new GridPane();
 	   	moveValueGrid.setPadding(new Insets(5, 5, 5, 5));
 		   	 	
-	   	moveValueGrid.setHalignment(labelMove, HPos.LEFT);  
-	   	moveValueGrid.setHalignment(textFieldMoveValue, HPos.LEFT);
-	   	moveValueGrid.setHalignment(labelUnit, HPos.LEFT);
+	   	GridPane.setHalignment(labelMove, HPos.LEFT);  
+	   	GridPane.setHalignment(textFieldMoveValue, HPos.LEFT);
+	   	GridPane.setHalignment(labelUnit, HPos.LEFT);
 
 	   	moveValueGrid.add(labelMove, 0, 0);
 	   	moveValueGrid.add(textFieldMoveValue, 1, 0);
@@ -81,10 +76,10 @@ public class MoveTableStage extends Stage {
    	 	GridPane grid = new GridPane();
    	 	grid.setPadding(new Insets(5, 5, 5, 5));
    	 	
-	   	grid.setHalignment(tableAxesPanel, HPos.CENTER);  
-	   	grid.setHalignment(moveValueGrid, HPos.CENTER);
-	   	grid.setHalignment(buttonOk, HPos.CENTER);
-	   	grid.setHalignment(buttonCancel, HPos.CENTER);
+   	 	GridPane.setHalignment(tableAxesPanel, HPos.CENTER);  
+	   	GridPane.setHalignment(moveValueGrid, HPos.CENTER);
+	   	GridPane.setHalignment(buttonOk, HPos.CENTER);
+	   	GridPane.setHalignment(buttonCancel, HPos.CENTER);
 	   	
 	   	grid.add(tableAxesPanel, 0, 0);
 	   	grid.add(moveValueGrid, 0, 1);

@@ -52,10 +52,10 @@ public class TableAxesPanel extends TitledPane {
 	 	grid.setHgap(10);
 	 	grid.setPadding(new Insets(5, 5, 5, 5));
 	 	
-	 	grid.setHalignment(radioXM1, HPos.LEFT);
-		grid.setHalignment(radioYM1, HPos.LEFT);
-		grid.setHalignment(radioXM2, HPos.LEFT);
-		grid.setHalignment(radioYM2, HPos.LEFT);
+	 	GridPane.setHalignment(radioXM1, HPos.LEFT);
+	 	GridPane.setHalignment(radioYM1, HPos.LEFT);
+	 	GridPane.setHalignment(radioXM2, HPos.LEFT);
+	 	GridPane.setHalignment(radioYM2, HPos.LEFT);
 		
 	 	grid.add(radioXM1, 0, 0);
 	 	grid.add(radioYM1, 0, 1);

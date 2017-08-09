@@ -2,29 +2,20 @@ package com.gbcs.XPSPositioner.tabs;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.GabiApplication;
-import com.gbcs.XPSPositioner.GabiManager;
+import com.gbcs.XPSPositioner.GabiController;
 import com.gbcs.XPSPositioner.components.XpsAngleSpinner;
-import com.gbcs.XPSPositioner.forms.MainGraphicalForm;
-import com.gbcs.XPSPositioner.panels.AxeTranslationManagementPanel;
+import com.gbcs.XPSPositioner.panels.GabiView;
 import com.gbcs.XPSPositioner.utils.Constants;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToolBar;
-import javafx.scene.layout.GridPane;
-import javafx.scene.text.TextAlignment;
 
 /**
  * AdminTab
@@ -36,7 +27,7 @@ public class AdminTab extends Tab {
 	// Logger
 	private static final Logger logger = Logger.getLogger(AdminTab.class);
 	
-	private GabiManager gabiManager;
+	private GabiView gabiView;
 	
     private CheckBox checkBoxDisplayAxes;
     private XpsAngleSpinner spinnerCurrentXAngle;
@@ -44,12 +35,12 @@ public class AdminTab extends Tab {
     
 	/**
 	 * AdminTab ctor
-	 * @param text
+	 * @param view
 	 * @param text
 	 */
-	public AdminTab(GabiManager manager, String text) {
+	public AdminTab(GabiView view, String text) {
 		
-		gabiManager = manager;
+		gabiView = view;
 		setClosable(false);
 		setText(text);
 		
@@ -57,7 +48,7 @@ public class AdminTab extends Tab {
     	 buttonInitialPosition.setOnAction(e->{
     		 
          	// Home zoom/rotation/distance to camera
-    		// manager.getApplication().setCurrentSceneOrientation(true, Constants.CAMERA_INITIAL_X_ANGLE, Constants.CAMERA_INITIAL_Y_ANGLE, Constants.CAMERA_INITIAL_DISTANCE);
+    		gabiView.getMainGraphicalForm().setCurrentSceneOrientation(true, Constants.CAMERA_INITIAL_X_ANGLE, Constants.CAMERA_INITIAL_Y_ANGLE, Constants.CAMERA_INITIAL_DISTANCE);
          	
          	// Reset spinners to default values
          	spinnerCurrentXAngle.setDefaultValueFactory();
@@ -68,7 +59,7 @@ public class AdminTab extends Tab {
          checkBoxDisplayAxes = new CheckBox("Display/hide axes");
          checkBoxDisplayAxes.setSelected(true);
          checkBoxDisplayAxes.setOnAction(e->{
-        	// manager.getApplication().getAxisGroup().setVisible(checkBoxDisplayAxes.isSelected());
+        	 gabiView.getMainGraphicalForm().getAxisGroup().setVisible(checkBoxDisplayAxes.isSelected());
          });
          
          // Spinners for the current X & Y angle values
@@ -78,18 +69,18 @@ public class AdminTab extends Tab {
          spinnerCurrentXAngle.valueProperty().addListener(new ChangeListener<Double>() {
  			@Override
  			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
- 		/*		manager.getApplication().setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
+ 				gabiView.getMainGraphicalForm().setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
  						Double.valueOf(spinnerCurrentYAngle.getValue().toString()),
- 						manager.getApplication().getPerspectiveCamera().getTranslateZ());*/
+ 						gabiView.getMainGraphicalForm().getPerspectiveCamera().getTranslateZ());
  			}
  		 });
          
          spinnerCurrentYAngle.valueProperty().addListener(new ChangeListener<Double>() {
   			@Override
   			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
-  			/*	manager.getApplication().setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
+  				gabiView.getMainGraphicalForm().setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
  						Double.valueOf(spinnerCurrentYAngle.getValue().toString()),
- 						manager.getApplication().getPerspectiveCamera().getTranslateZ());*/
+ 						gabiView.getMainGraphicalForm().getPerspectiveCamera().getTranslateZ());
   			}
   		 });
          

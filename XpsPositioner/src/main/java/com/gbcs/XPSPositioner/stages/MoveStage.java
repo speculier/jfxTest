@@ -64,9 +64,9 @@ public class MoveStage extends Stage {
    	 	GridPane moveValueGrid = new GridPane();
 	   	moveValueGrid.setPadding(new Insets(5, 5, 5, 5));
 		   	 	
-	   	moveValueGrid.setHalignment(labelMove, HPos.LEFT);  
-	   	moveValueGrid.setHalignment(textFieldMoveValue, HPos.LEFT);
-	   	moveValueGrid.setHalignment(labelUnit, HPos.LEFT);
+	   	GridPane.setHalignment(labelMove, HPos.LEFT);  
+	   	GridPane.setHalignment(textFieldMoveValue, HPos.LEFT);
+	   	GridPane.setHalignment(labelUnit, HPos.LEFT);
 
 	   	moveValueGrid.add(labelMove, 0, 0);
 	   	moveValueGrid.add(textFieldMoveValue, 1, 0);
@@ -76,10 +76,10 @@ public class MoveStage extends Stage {
    	 	GridPane grid = new GridPane();
    	 	grid.setPadding(new Insets(5, 5, 5, 5));
    	 	
-	   	grid.setHalignment(axesPanel, HPos.CENTER);  
-	   	grid.setHalignment(moveValueGrid, HPos.CENTER);
-	   	grid.setHalignment(buttonOk, HPos.CENTER);
-	   	grid.setHalignment(buttonCancel, HPos.CENTER);
+   	 	GridPane.setHalignment(axesPanel, HPos.CENTER);  
+	   	GridPane.setHalignment(moveValueGrid, HPos.CENTER);
+	   	GridPane.setHalignment(buttonOk, HPos.CENTER);
+	   	GridPane.setHalignment(buttonCancel, HPos.CENTER);
 	   	
 	   	grid.add(axesPanel, 0, 0);
 	   	grid.add(moveValueGrid, 0, 1);

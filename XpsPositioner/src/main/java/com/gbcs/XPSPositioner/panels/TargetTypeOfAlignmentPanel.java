@@ -2,8 +2,6 @@ package com.gbcs.XPSPositioner.panels;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.tabs.AdminTab;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.RadioButton;
@@ -49,9 +47,9 @@ public class TargetTypeOfAlignmentPanel extends TitledPane {
 	 	grid.setHgap(10);
 	 	grid.setPadding(new Insets(5, 5, 5, 5));
 	 	
-	 	grid.setHalignment(radioTranslation, HPos.LEFT);
-		grid.setHalignment(radioRotation, HPos.LEFT);
-		grid.setHalignment(radioDoNotMove, HPos.LEFT);
+	 	GridPane.setHalignment(radioTranslation, HPos.LEFT);
+	 	GridPane.setHalignment(radioRotation, HPos.LEFT);
+	 	GridPane.setHalignment(radioDoNotMove, HPos.LEFT);
 	
 	 	grid.add(radioTranslation, 0, 0);
 	 	grid.add(radioRotation, 0, 1);

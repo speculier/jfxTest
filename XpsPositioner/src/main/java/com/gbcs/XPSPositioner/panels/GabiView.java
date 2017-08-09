@@ -1,7 +1,9 @@
 package com.gbcs.XPSPositioner.panels;
 
-import com.gbcs.XPSPositioner.GabiApplication;
-import com.gbcs.XPSPositioner.GabiManager;
+import org.apache.log4j.Logger;
+
+import com.gbcs.XPSPositioner.GabiController;
+import com.gbcs.XPSPositioner.forms.MainGraphicalForm;
 import com.gbcs.XPSPositioner.stages.AboutStage;
 import com.gbcs.XPSPositioner.stages.PasswordStage;
 import com.gbcs.XPSPositioner.tabs.AdminTab;
@@ -11,7 +13,7 @@ import com.gbcs.XPSPositioner.tabs.SequenceTab;
 import com.gbcs.XPSPositioner.tabs.TablesTab;
 
 import javafx.application.Platform;
-import javafx.scene.Node;
+import javafx.scene.Group;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -22,41 +24,37 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 
 /**
- * MainApplicationPanel
+ * GabiView
  * @author Sébastien
  *
  */
-public class MainApplicationPanel extends BorderPane {
+public class GabiView extends BorderPane {
 
-	private GabiManager gabiManager;
+	// Logger
+	private static final Logger logger = Logger.getLogger(GabiView.class);
 	
+	private MainGraphicalForm mainGraphicalForm;
+
     // Main Menu bar
     private final MenuBar menuBar = new MenuBar();
     
     // Main statusBar 
     private final StatusBarPanel statusBar = new StatusBarPanel();
     
-    private final TabPane tabPane = new TabPane();   
+    // Right tabed panels and its panels
+    private final TabPane tabPane = new TabPane();  
     private AdminTab adminTab;
     private TablesTab tablesTab;
     private MecaTab mecaTab;
     private EssaiTab essaiTab;
     private SequenceTab sequenceTab;
-    
-	/**
-	 * setManager
-	 * @param a
-	 */
-	private void setManager (GabiManager manager) {
-		gabiManager = manager;
-	}
 	
 	/**
-	 * getManager
-	 * @return GabiManager
+	 * getMainGraphicalForm
+	 * @return MainGraphicalForm
 	 */
-	public GabiManager getManager () {
-		return gabiManager;
+	public MainGraphicalForm getMainGraphicalForm () {
+		return mainGraphicalForm;
 	}
 	
 	/**
@@ -100,12 +98,18 @@ public class MainApplicationPanel extends BorderPane {
 	}
 
 	/**
-	 * MainApplicationPanel ctor
+	 * GabiView ctor
 	 */
-	public MainApplicationPanel (GabiManager manager) {
+	public GabiView () {
 		
-		setManager(manager);
-		
+		// Create graphical area
+		Group root = new Group();
+		mainGraphicalForm = new MainGraphicalForm(root, this);
+        root.getChildren().add(mainGraphicalForm);
+    	
+        // Set the 3D area in the center of the main panel
+        setCenter(mainGraphicalForm.getSubScene());
+
     	// Build menus
     	buildMenus();
     	
@@ -119,11 +123,11 @@ public class MainApplicationPanel extends BorderPane {
      */
     private void buildTabs() {
           	
-	    adminTab = new AdminTab(getManager(), "Admin");
-	    tablesTab = new TablesTab(getManager(), "Tables");
-	    mecaTab = new MecaTab(getManager(),"Méca");
-	    essaiTab = new EssaiTab(getManager(),"Essai");
-	    sequenceTab = new SequenceTab(getManager(),"Séquence");
+	    adminTab = new AdminTab(this, "Admin");
+	    tablesTab = new TablesTab(this, "Tables");
+	    mecaTab = new MecaTab(this,"Méca");
+	    essaiTab = new EssaiTab(this,"Essai");
+	    sequenceTab = new SequenceTab(this,"Séquence");
     	
     	// Disable closing panels
     	tablesTab.setClosable(false);

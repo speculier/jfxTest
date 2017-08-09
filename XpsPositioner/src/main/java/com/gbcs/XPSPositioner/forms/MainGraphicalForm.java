@@ -2,11 +2,17 @@ package com.gbcs.XPSPositioner.forms;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.GabiApplication;
+import com.gbcs.XPSPositioner.panels.GabiView;
 import com.gbcs.XPSPositioner.utils.Constants;
 
+import javafx.event.EventHandler;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
+import javafx.scene.SceneAntialiasing;
+import javafx.scene.SubScene;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
@@ -24,6 +30,8 @@ public class MainGraphicalForm extends XForm {
 	private static final Logger logger = Logger.getLogger(MainGraphicalForm.class);
 	
 	private Group root3D;
+	private SubScene scene3D;
+	private GabiView mainGabiView;
 		
     // Axis group: contains the 3 axis X, Y and Z
 	private final XForm axisGroup = new XForm();
@@ -55,20 +63,45 @@ public class MainGraphicalForm extends XForm {
     }
     
     /**
-     * getPerspectiveCamera
+     * getSubScene
      * @return
+     */
+    public SubScene getSubScene() {
+    	return scene3D;
+    }
+    
+    /**
+     * getPerspectiveCamera
+     * @return PerspectiveCamera
      */
     public PerspectiveCamera getPerspectiveCamera() {
     	return camera;
     }
     
+    /**
+     * getGabiView
+     * @return GabiView
+     */
+    public GabiView getGabiView() {
+    	return mainGabiView;
+    }
+       
 	/**
 	 * MainGraphicalForm
 	 */
-	public MainGraphicalForm(Group root) {
+	public MainGraphicalForm(Group root, GabiView view) {
 		
 		root3D = root;
+		mainGabiView = view;
 		
+        // Create 3D scene GREY with the root group
+    	scene3D = new SubScene(root3D, 1024, 768, true, SceneAntialiasing.BALANCED);
+        scene3D.setFill(Color.GREY);
+        scene3D.setCamera(camera);
+        
+        // Set mouse handlers
+        handleMouse3D(scene3D, this);
+
 	    // Build camera group
         buildCameras();
         
@@ -79,6 +112,81 @@ public class MainGraphicalForm extends XForm {
         build3DShapes();
 	}
 	
+	/**
+     * Handle Mouse for zoom and 3D rotation and translation
+     * SHIFT and CTRL are used to decrease and increase speed
+     * 
+     * @param scene
+     * @param root
+     */
+    private void handleMouse3D(SubScene scene, final Node root) {
+              
+        scene.setOnScroll(new EventHandler<ScrollEvent>() {
+            @Override public void handle(ScrollEvent se) {
+                mouseDeltaY = se.getDeltaY(); 
+                double modifier = 1.0;
+                
+                if (se.isControlDown()) {
+                    modifier = Constants.CONTROL_MULTIPLIER;
+                } 
+               
+                if (se.isShiftDown()) {
+                    modifier = Constants.SHIFT_MULTIPLIER;
+                }  
+                
+                double z = camera.getTranslateZ();
+                double newZ = z + mouseDeltaY * Constants.MOUSE_SPEED * modifier;
+                camera.setTranslateZ(newZ);
+            }
+        });
+    	
+        // Manage mouse
+        scene.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent me) {
+                mousePosX = me.getSceneX();
+                mousePosY = me.getSceneY();
+                mouseOldX = me.getSceneX();
+                mouseOldY = me.getSceneY();
+            }
+        });
+        
+        scene.setOnMouseDragged(new EventHandler<MouseEvent>() {
+            @Override public void handle(MouseEvent me) {
+                mouseOldX = mousePosX;
+                mouseOldY = mousePosY;
+                mousePosX = me.getSceneX();
+                mousePosY = me.getSceneY();
+                mouseDeltaX = (mousePosX - mouseOldX); 
+                mouseDeltaY = (mousePosY - mouseOldY); 
+
+                double modifier = 1.0;
+                
+                if (me.isControlDown()) {
+                    modifier = Constants.CONTROL_MULTIPLIER;
+                } 
+                
+                if (me.isShiftDown()) {
+                    modifier = Constants.SHIFT_MULTIPLIER;
+                }    
+                
+                // Left click : rotate scene
+                if (me.isPrimaryButtonDown()) {
+                	cameraXform.ry.setAngle(cameraXform.ry.getAngle() - mouseDeltaX * Constants.MOUSE_SPEED * modifier * Constants.ROTATION_SPEED);  
+                    cameraXform.rx.setAngle(cameraXform.rx.getAngle() + mouseDeltaY * Constants.MOUSE_SPEED * modifier * Constants.ROTATION_SPEED);
+                    
+                    getGabiView().getAdminTab().setXAngleSpinnerValue(cameraXform.rx.getAngle());
+                    getGabiView().getAdminTab().setYAngleSpinnerValue(cameraXform.ry.getAngle());
+                }
+                
+                // Right click : move scene
+                else if (me.isSecondaryButtonDown()) {
+                    cameraXform2.t.setX(cameraXform2.t.getX() + mouseDeltaX * Constants.MOUSE_SPEED * modifier * Constants.TRACK_SPEED);  
+                    cameraXform2.t.setY(cameraXform2.t.getY() + mouseDeltaY * Constants.MOUSE_SPEED * modifier * Constants.TRACK_SPEED);  
+                }
+            }
+        });
+    }
+    
     /**
      * setCurrentSceneOrientation
      * @param centerScene

@@ -9,7 +9,6 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
@@ -69,19 +68,19 @@ public class AxeRotationManagementPanel extends TitledPane {
  	 	textFieldCurrentValue.setEditable(false);
  	 	
  	 	// ComboBox
- 	 	ObservableList<String> moveValues = 
+ 	 	ObservableList<Integer> moveValues = 
  	 		    FXCollections.observableArrayList(
- 	 		        "1",
- 	 		        "10",
- 	 		        "100"
+ 	 		        1,
+ 	 		        10,
+ 	 		        100
  	 		    		);
  	 	
- 	 	ComboBox comboRelativeValue = new ComboBox(moveValues);
+ 	 	ComboBox<Integer> comboRelativeValue = new ComboBox<Integer>(moveValues);
  	 	comboRelativeValue.setEditable(false);
  	 	comboRelativeValue.getSelectionModel().selectFirst();
  	 	comboRelativeValue.setVisibleRowCount(5);
  	 	
- 	 	ComboBox comboAbsoluteValue = new ComboBox(moveValues);
+ 	 	ComboBox<Integer> comboAbsoluteValue = new ComboBox<Integer>(moveValues);
  	 	comboAbsoluteValue.setEditable(false);
  	 	comboAbsoluteValue.getSelectionModel().selectFirst();
  	 	comboAbsoluteValue.setVisibleRowCount(5);
@@ -95,18 +94,18 @@ public class AxeRotationManagementPanel extends TitledPane {
 	 	grid.setHgap(10);
 	 	
 	 	// Center all childs
-	 	grid.setHalignment(labelCurrentValue, HPos.CENTER);
-		grid.setHalignment(labelRelativeValue, HPos.CENTER);
-		grid.setHalignment(labelAbsoluteValue, HPos.CENTER);
-	 	grid.setHalignment(labelUnitRelativeValue, HPos.CENTER);
-	 	grid.setHalignment(labelUnitAbsoluteValue, HPos.CENTER);
-	 	grid.setHalignment(labelUnitCurrentValue, HPos.CENTER);
-	 	grid.setHalignment(textFieldCurrentValue, HPos.CENTER);
-	 	grid.setHalignment(comboRelativeValue, HPos.CENTER);
-	 	grid.setHalignment(comboAbsoluteValue, HPos.CENTER);
-	 	grid.setHalignment(buttonRelativeMoveMine, HPos.CENTER);
-	 	grid.setHalignment(buttonRelativeMovePlus, HPos.CENTER);
-	 	grid.setHalignment(buttonGo, HPos.CENTER);
+	 	GridPane.setHalignment(labelCurrentValue, HPos.CENTER);
+	 	GridPane.setHalignment(labelRelativeValue, HPos.CENTER);
+	 	GridPane.setHalignment(labelAbsoluteValue, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitRelativeValue, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitAbsoluteValue, HPos.CENTER);
+	 	GridPane.setHalignment(labelUnitCurrentValue, HPos.CENTER);
+	 	GridPane.setHalignment(textFieldCurrentValue, HPos.CENTER);
+	 	GridPane.setHalignment(comboRelativeValue, HPos.CENTER);
+	 	GridPane.setHalignment(comboAbsoluteValue, HPos.CENTER);
+	 	GridPane.setHalignment(buttonRelativeMoveMine, HPos.CENTER);
+	 	GridPane.setHalignment(buttonRelativeMovePlus, HPos.CENTER);
+	 	GridPane.setHalignment(buttonGo, HPos.CENTER);
 	 	
 	 	grid.setPadding(new Insets(5, 5, 5, 5));
 	 	grid.add(labelCurrentValue, 1, 0);

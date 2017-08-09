@@ -52,10 +52,10 @@ public class AxesPanel extends TitledPane {
 	 	grid.setHgap(10);
 	 	grid.setPadding(new Insets(5, 5, 5, 5));
 	 	
-	 	grid.setHalignment(radioTransateOnX, HPos.LEFT);
-		grid.setHalignment(radioTransateOnY, HPos.LEFT);
-		grid.setHalignment(radioRotateOnX, HPos.LEFT);
-		grid.setHalignment(radioRotateOnY, HPos.LEFT);
+	 	GridPane.setHalignment(radioTransateOnX, HPos.LEFT);
+	 	GridPane.setHalignment(radioTransateOnY, HPos.LEFT);
+		GridPane.setHalignment(radioRotateOnX, HPos.LEFT);
+		GridPane.setHalignment(radioRotateOnY, HPos.LEFT);
 		
 	 	grid.add(radioTransateOnX, 0, 0);
 	 	grid.add(radioTransateOnY, 0, 1);

@@ -4,12 +4,9 @@ import org.apache.log4j.Logger;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 
 /**
@@ -47,10 +44,10 @@ public class XyPointPane extends TitledPane {
 	 	grid.setHgap(10);
 	 	grid.setPadding(new Insets(5, 5, 5, 5));
 	 	 	
-	 	grid.setHalignment(labelX, HPos.LEFT);
-		grid.setHalignment(textFieldX, HPos.LEFT);
-		grid.setHalignment(labelY, HPos.LEFT);
-		grid.setHalignment(textFieldY, HPos.LEFT);
+	 	GridPane.setHalignment(labelX, HPos.LEFT);
+	 	GridPane.setHalignment(textFieldX, HPos.LEFT);
+	 	GridPane.setHalignment(labelY, HPos.LEFT);
+		GridPane.setHalignment(textFieldY, HPos.LEFT);
 		
 		grid.add(labelX, 0, 0);
 	 	grid.add(textFieldX, 1, 0);

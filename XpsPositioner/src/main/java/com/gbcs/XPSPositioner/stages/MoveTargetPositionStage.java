@@ -3,8 +3,6 @@ package com.gbcs.XPSPositioner.stages;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.panels.TargetOintPanel;
-import com.gbcs.XPSPositioner.panels.TargetTypeOfAlignmentPanel;
-import com.gbcs.XPSPositioner.panels.XyPointPane;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -56,9 +54,9 @@ public class MoveTargetPositionStage extends Stage {
    	 	GridPane mainGrid = new GridPane();
    	 	mainGrid.setPadding(new Insets(5, 5, 5, 5));
    	 	
-   	 	mainGrid.setHalignment(oIntPanel, HPos.CENTER);  
-   	 	mainGrid.setHalignment(buttonOk, HPos.CENTER);
-   	 	mainGrid.setHalignment(buttonCancel, HPos.CENTER);
+	   	 GridPane.setHalignment(oIntPanel, HPos.CENTER);  
+	   	 GridPane.setHalignment(buttonOk, HPos.CENTER);
+	   	 GridPane.setHalignment(buttonCancel, HPos.CENTER);
 	   	
 	   	mainGrid.add(oIntPanel, 0, 0);
 	   	mainGrid.add(buttonOk, 0, 1);

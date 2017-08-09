@@ -2,17 +2,13 @@ package com.gbcs.XPSPositioner.stages;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.panels.FileSequencePanel;
 import com.gbcs.XPSPositioner.panels.XyPointPane;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -20,7 +16,7 @@ import javafx.stage.Window;
 
 /**
  * SpeedStage
- * @author Sébastien
+ * @author Sebastien
  *
  */
 public class SpeedStage extends Stage {
@@ -64,11 +60,11 @@ public class SpeedStage extends Stage {
    	 	GridPane grid = new GridPane();
    	 	grid.setPadding(new Insets(5, 5, 5, 5));
    	 	
-	   	grid.setHalignment(pointPaneM1, HPos.CENTER);  
-	   	grid.setHalignment(pointPaneM2, HPos.CENTER);
-	   	grid.setHalignment(buttonCurrentSpeeds, HPos.CENTER);
-	   	grid.setHalignment(buttonOk, HPos.CENTER);
-	   	grid.setHalignment(buttonCancel, HPos.CENTER);
+   	 	GridPane.setHalignment(pointPaneM1, HPos.CENTER);  
+	   	GridPane.setHalignment(pointPaneM2, HPos.CENTER);
+	   	GridPane.setHalignment(buttonCurrentSpeeds, HPos.CENTER);
+	   	GridPane.setHalignment(buttonOk, HPos.CENTER);
+	   	GridPane.setHalignment(buttonCancel, HPos.CENTER);
 	   	
 	   	grid.add(pointPaneM1, 0, 0);
 	   	grid.add(pointPaneM2, 0, 1);

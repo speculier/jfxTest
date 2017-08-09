@@ -52,10 +52,10 @@ public class SequenceActionPanel extends TitledPane {
 	 	grid.setHgap(10);
 	 	grid.setPadding(new Insets(5, 5, 5, 5));
 	 	
-	 	grid.setHalignment(radioInsertBefore, HPos.LEFT);
-		grid.setHalignment(radioInsertAfter, HPos.LEFT);
-		grid.setHalignment(radioReplace, HPos.LEFT);
-		grid.setHalignment(radioDelete, HPos.LEFT);
+	 	GridPane.setHalignment(radioInsertBefore, HPos.LEFT);
+	 	GridPane.setHalignment(radioInsertAfter, HPos.LEFT);
+		GridPane.setHalignment(radioReplace, HPos.LEFT);
+		GridPane.setHalignment(radioDelete, HPos.LEFT);
 		
 	 	grid.add(radioInsertBefore, 0, 0);
 	 	grid.add(radioInsertAfter, 0, 1);

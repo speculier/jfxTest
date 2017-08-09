@@ -7,7 +7,6 @@ import com.gbcs.XPSPositioner.stages.MoveStage;
 import com.gbcs.XPSPositioner.stages.MoveTableStage;
 import com.gbcs.XPSPositioner.stages.MoveTargetPositionStage;
 
-import javafx.event.ActionEvent;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -115,19 +114,19 @@ public class EditSequencePanel extends TitledPane {
 	 	grid.setHgap(10);
 	 	grid.setPadding(new Insets(5, 5, 5, 5));
 	 	 	
-	 	grid.setHalignment(actionPanel, HPos.LEFT);
-		grid.setHalignment(buttonInitializeAxes, HPos.LEFT);
-		grid.setHalignment(buttonTablesRelative, HPos.LEFT);
-		grid.setHalignment(buttonTablesAbsolute, HPos.LEFT);
-		grid.setHalignment(buttonMecaRelative, HPos.LEFT);
-		grid.setHalignment(buttonMecaAbsolute, HPos.LEFT);
-		grid.setHalignment(buttonEssaiRelative, HPos.LEFT);
-		grid.setHalignment(buttonEssaiAbsolute, HPos.LEFT);
-		grid.setHalignment(buttonPositionOint, HPos.LEFT);
-		grid.setHalignment(buttonRepeat, HPos.LEFT);
-		grid.setHalignment(buttonEndLoop, HPos.LEFT);
-		grid.setHalignment(buttonDelay, HPos.LEFT);
-		grid.setHalignment(buttonWaiting, HPos.LEFT);
+	 	GridPane.setHalignment(actionPanel, HPos.LEFT);
+	 	GridPane.setHalignment(buttonInitializeAxes, HPos.LEFT);
+		GridPane.setHalignment(buttonTablesRelative, HPos.LEFT);
+		GridPane.setHalignment(buttonTablesAbsolute, HPos.LEFT);
+		GridPane.setHalignment(buttonMecaRelative, HPos.LEFT);
+		GridPane.setHalignment(buttonMecaAbsolute, HPos.LEFT);
+		GridPane.setHalignment(buttonEssaiRelative, HPos.LEFT);
+		GridPane.setHalignment(buttonEssaiAbsolute, HPos.LEFT);
+		GridPane.setHalignment(buttonPositionOint, HPos.LEFT);
+		GridPane.setHalignment(buttonRepeat, HPos.LEFT);
+		GridPane.setHalignment(buttonEndLoop, HPos.LEFT);
+		GridPane.setHalignment(buttonDelay, HPos.LEFT);
+		GridPane.setHalignment(buttonWaiting, HPos.LEFT);
 		
 		grid.add(actionPanel, 0, 0);
 	 	grid.add(buttonInitializeAxes, 0, 1);

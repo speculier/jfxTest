@@ -2,24 +2,17 @@ package com.gbcs.XPSPositioner.tabs;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.GabiApplication;
-import com.gbcs.XPSPositioner.GabiManager;
+import com.gbcs.XPSPositioner.GabiController;
 import com.gbcs.XPSPositioner.panels.AxeRotationManagementPanel;
 import com.gbcs.XPSPositioner.panels.AxeTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panels.EssaiPointManagementPanel;
+import com.gbcs.XPSPositioner.panels.GabiView;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.ToolBar;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.TextAlignment;
 
 /**
  * EssaiTab
@@ -31,16 +24,16 @@ public class EssaiTab extends Tab {
 	// Logger
 	private static final Logger logger = Logger.getLogger(EssaiTab.class);
 	
-	private GabiManager gabiManager;
+	private GabiView gabiView;
 	
 	/**
 	 * EssaiTab ctor
-	 * @param manager
+	 * @param view
 	 * @param text
 	 */
-	public EssaiTab(GabiManager manager, String text) {
+	public EssaiTab(GabiView view, String text) {
 		
-		gabiManager = manager;
+		gabiView = view;
 		setClosable(false);
 		setText(text);
    	 	
@@ -73,7 +66,7 @@ public class EssaiTab extends Tab {
 	 	
 	 	// Main panel grid
 	 	GridPane mainGrid = new GridPane();
-	 	mainGrid.setHalignment(buttonEmergencyStop, HPos.RIGHT);
+	 	GridPane.setHalignment(buttonEmergencyStop, HPos.RIGHT);
 	 	mainGrid.setVgap(20);
 	 	mainGrid.setHgap(20);
 	 	mainGrid.setPadding(new Insets(5, 5, 5, 5));

@@ -8,7 +8,7 @@ import javafx.beans.value.ObservableValue;
  * @author Sébastien
  *
  */
-public class XpsPositionerChangeListener implements ChangeListener {
+public class XpsPositionerChangeListener implements ChangeListener<Object> {
 
 	/**
 	 * XpsPositionerChangeListener ctor
@@ -21,7 +21,7 @@ public class XpsPositionerChangeListener implements ChangeListener {
 	 * 
 	 */
 	@Override
-	public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+	public void changed(ObservableValue<?> observable, Object oldValue, Object newValue) {
 		
 	}
 }
