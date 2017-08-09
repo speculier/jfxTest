@@ -57,7 +57,7 @@ public class AdminTab extends Tab {
     	 buttonInitialPosition.setOnAction(e->{
     		 
          	// Home zoom/rotation/distance to camera
-    		 manager.getApplication().setCurrentSceneOrientation(true, Constants.CAMERA_INITIAL_X_ANGLE, Constants.CAMERA_INITIAL_Y_ANGLE, Constants.CAMERA_INITIAL_DISTANCE);
+    		// manager.getApplication().setCurrentSceneOrientation(true, Constants.CAMERA_INITIAL_X_ANGLE, Constants.CAMERA_INITIAL_Y_ANGLE, Constants.CAMERA_INITIAL_DISTANCE);
          	
          	// Reset spinners to default values
          	spinnerCurrentXAngle.setDefaultValueFactory();
@@ -68,7 +68,7 @@ public class AdminTab extends Tab {
          checkBoxDisplayAxes = new CheckBox("Display/hide axes");
          checkBoxDisplayAxes.setSelected(true);
          checkBoxDisplayAxes.setOnAction(e->{
-        	 manager.getApplication().getAxisGroup().setVisible(checkBoxDisplayAxes.isSelected());
+        	// manager.getApplication().getAxisGroup().setVisible(checkBoxDisplayAxes.isSelected());
          });
          
          // Spinners for the current X & Y angle values
@@ -78,18 +78,18 @@ public class AdminTab extends Tab {
          spinnerCurrentXAngle.valueProperty().addListener(new ChangeListener<Double>() {
  			@Override
  			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
- 				manager.getApplication().setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
+ 		/*		manager.getApplication().setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
  						Double.valueOf(spinnerCurrentYAngle.getValue().toString()),
- 						manager.getApplication().getPerspectiveCamera().getTranslateZ());
+ 						manager.getApplication().getPerspectiveCamera().getTranslateZ());*/
  			}
  		 });
          
          spinnerCurrentYAngle.valueProperty().addListener(new ChangeListener<Double>() {
   			@Override
   			public void changed(ObservableValue<? extends Double> observable, Double oldValue, Double newValue) {
-  				manager.getApplication().setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
+  			/*	manager.getApplication().setCurrentSceneOrientation(false, Double.valueOf(spinnerCurrentXAngle.getValue().toString()), 
  						Double.valueOf(spinnerCurrentYAngle.getValue().toString()),
- 						manager.getApplication().getPerspectiveCamera().getTranslateZ());
+ 						manager.getApplication().getPerspectiveCamera().getTranslateZ());*/
   			}
   		 });
          
