@@ -4,7 +4,7 @@ package com.gbcs.XPSPositioner;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.panels.GabiView;
+import com.gbcs.XPSPositioner.panel.GabiView;
 
 import javafx.application.Application;
 import javafx.application.Platform;

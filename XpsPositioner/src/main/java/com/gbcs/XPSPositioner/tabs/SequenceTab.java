@@ -3,15 +3,16 @@ package com.gbcs.XPSPositioner.tabs;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.GabiController;
-import com.gbcs.XPSPositioner.panels.EditSequencePanel;
-import com.gbcs.XPSPositioner.panels.ExecuteSequencePanel;
-import com.gbcs.XPSPositioner.panels.FileSequencePanel;
-import com.gbcs.XPSPositioner.panels.GabiView;
+import com.gbcs.XPSPositioner.panel.EditSequencePanel;
+import com.gbcs.XPSPositioner.panel.ExecuteSequencePanel;
+import com.gbcs.XPSPositioner.panel.FileSequencePanel;
+import com.gbcs.XPSPositioner.panel.GabiView;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.Tab;
 import javafx.scene.layout.GridPane;
 
@@ -49,6 +50,7 @@ public class SequenceTab extends Tab {
 		// ListBox
 		listviewSequences = new ListView<String>();
 		listviewSequences.setEditable(true);
+		listviewSequences.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
 		
 		EditSequencePanel editSequencePanel = new EditSequencePanel(listviewSequences, "Edition");
 		FileSequencePanel fileSequencePanel = new FileSequencePanel(new GabiController(), listviewSequences, "Fichier");

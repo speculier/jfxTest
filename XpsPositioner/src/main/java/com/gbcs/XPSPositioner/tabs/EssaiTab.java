@@ -3,10 +3,10 @@ package com.gbcs.XPSPositioner.tabs;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.GabiController;
-import com.gbcs.XPSPositioner.panels.AxeRotationManagementPanel;
-import com.gbcs.XPSPositioner.panels.AxeTranslationManagementPanel;
-import com.gbcs.XPSPositioner.panels.EssaiPointManagementPanel;
-import com.gbcs.XPSPositioner.panels.GabiView;
+import com.gbcs.XPSPositioner.panel.AxeRotationManagementPanel;
+import com.gbcs.XPSPositioner.panel.AxeTranslationManagementPanel;
+import com.gbcs.XPSPositioner.panel.EssaiPointManagementPanel;
+import com.gbcs.XPSPositioner.panel.GabiView;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
