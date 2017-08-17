@@ -56,17 +56,17 @@ public class EssaiPointManagementPanel extends TitledPane {
  	 		    );
  	 	
  	 	ComboBox<String> comboX = new ComboBox<String>(moveValues);
- 	 	comboX.setEditable(false);
+ 	 	comboX.setEditable(true);
  	 	comboX.getSelectionModel().selectFirst();
  	 	comboX.setVisibleRowCount(5);
  	 	
  	 	ComboBox<String> comboY = new ComboBox<String>(moveValues);
- 	 	comboY.setEditable(false);
+ 	 	comboY.setEditable(true);
  	 	comboY.getSelectionModel().selectFirst();
  	 	comboY.setVisibleRowCount(5);
  	 	
  	 	ComboBox<String> comboZ = new ComboBox<String>(moveValues);
- 	 	comboZ.setEditable(false);
+ 	 	comboZ.setEditable(true);
  	 	comboZ.getSelectionModel().selectFirst();
  	 	comboZ.setVisibleRowCount(5);
  	 	

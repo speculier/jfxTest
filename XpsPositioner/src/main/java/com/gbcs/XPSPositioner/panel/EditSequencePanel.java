@@ -2,16 +2,22 @@ package com.gbcs.XPSPositioner.panel;
 
 import java.util.Optional;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
+import com.gbcs.XPSPositioner.data.DelayData;
 import com.gbcs.XPSPositioner.data.MoveTargetPositionData;
+import com.gbcs.XPSPositioner.data.NbLoopData;
 import com.gbcs.XPSPositioner.data.RelativeMecaMoveData;
 import com.gbcs.XPSPositioner.data.RelativeTablePositionData;
+import com.gbcs.XPSPositioner.dialog.DelayDialog;
 import com.gbcs.XPSPositioner.dialog.MoveDialog;
 import com.gbcs.XPSPositioner.dialog.MovePositionDialog;
 import com.gbcs.XPSPositioner.dialog.MoveTableDialog;
 import com.gbcs.XPSPositioner.dialog.MoveTargetPositionDialog;
+import com.gbcs.XPSPositioner.dialog.NbLoopDialog;
+import com.gbcs.XPSPositioner.enumeration.MoveType;
 import com.gbcs.XPSPositioner.enumeration.SequenceAction;
 
 import javafx.event.ActionEvent;
@@ -54,10 +60,10 @@ public class EditSequencePanel extends TitledPane {
  	 	Button buttonTablesAbsolute = new Button("Tables absolu");
  	 	buttonTablesAbsolute.setOnAction(e-> insertMoveTableAbsolute(e));
  	 	
- 	 	Button buttonMecaRelative = new Button("Meca relatif");
+ 	 	Button buttonMecaRelative = new Button("Méca relatif");
  	 	buttonMecaRelative.setOnAction(e-> insertMoveMecaRelative(e));
  	 	
- 	 	Button buttonMecaAbsolute = new Button("Meca absolu");
+ 	 	Button buttonMecaAbsolute = new Button("Méca absolu");
  	 	buttonMecaAbsolute.setOnAction(e-> insertMoveMecaAbsolute(e));
  	 	
  	 	Button buttonEssaiRelative = new Button("Essai relatif");
@@ -70,7 +76,7 @@ public class EditSequencePanel extends TitledPane {
  	 	buttonPositionOint.setOnAction(e-> insertMovePositionOint(e));
  	 	
  	 	Button buttonRepeat = new Button("Répeter N fois");
- 	 	buttonRepeat.setOnAction(e-> insertRepeat(e));
+ 	 	buttonRepeat.setOnAction(e-> insertLoop(e));
  	 	
  	 	Button buttonEndLoop = new Button("Fin de boucle");
  	 	buttonEndLoop.setOnAction(e-> insertEndLoop(e));
@@ -133,17 +139,21 @@ public class EditSequencePanel extends TitledPane {
 
 		if (listviewSequences.getItems().size() == 0 && action != SequenceAction.DELETE) {
 			listviewSequences.getItems().add(text);
+			logger.log(Level.DEBUG, "Add " + text);
 		} else {
 			for(Integer currentIndice : listviewSequences.getSelectionModel().getSelectedIndices()){
 				switch(action) {
 				case INSERT_BEFORE:
 		            listviewSequences.getItems().add(currentIndice, text);
+		    		logger.log(Level.DEBUG, "Insert before " + text);
 					break;
 				case REPLACE:
 		            listviewSequences.getItems().set(currentIndice, text);
+		            logger.log(Level.DEBUG, "Replace " + text);
 					break;
 				case INSERT_AFTER:
 		            listviewSequences.getItems().add(currentIndice + 1, text);
+		            logger.log(Level.DEBUG, "Insert after " + text);
 		            break;
 				case DELETE:
 					default:
@@ -159,7 +169,6 @@ public class EditSequencePanel extends TitledPane {
 	 */
 	private void insertInitializeAxes(ActionEvent e) {
 		insertInList(e, actionPanel.getSelectedAction(), "I ; Initialisation des axes");
-		 System.out.println("I");
 	}
 
 	/**
@@ -171,7 +180,7 @@ public class EditSequencePanel extends TitledPane {
  		
  		Optional<AbsoluteTablePositionData> result = absoluteMoveDialog.showAndWait();
  		if (result.isPresent()) {
- 		   System.out.println(result.get().toString());
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
  		}
 	}
 	
@@ -184,7 +193,7 @@ public class EditSequencePanel extends TitledPane {
  		
  		Optional<RelativeTablePositionData> result = relativeMoveDialog.showAndWait();
  		if (result.isPresent()) {
- 		   System.out.println(result.get().toString());
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
  		}
 	}
 	
@@ -192,11 +201,11 @@ public class EditSequencePanel extends TitledPane {
 	 * insertMoveMecaAbsolute
 	 */
 	private void insertMoveMecaAbsolute(ActionEvent e) {
- 		MoveDialog relativeMoveDialog = new MoveDialog("Déplacement absolu suivant un axe");
+ 		MoveDialog relativeMoveDialog = new MoveDialog("Déplacement absolu suivant un axe", MoveType.ABSOLUTE_MECA);
 
-		Optional<RelativeMecaMoveData> result = relativeMoveDialog.showAndWait();
+		Optional<?> result = relativeMoveDialog.showAndWait();
  		if (result.isPresent()) {
- 		   System.out.println(result.get().toString());
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
  		}
 	}
 	
@@ -204,11 +213,11 @@ public class EditSequencePanel extends TitledPane {
 	 * insertMoveMecaRelative
 	 */
 	private void insertMoveMecaRelative(ActionEvent e) {
-		MoveDialog relativeMoveDialog = new MoveDialog("Déplacement relatif suivant un axe");
+		MoveDialog relativeMoveDialog = new MoveDialog("Déplacement relatif suivant un axe", MoveType.RELATIVE_MECA);
  		
-		Optional<RelativeMecaMoveData> result = relativeMoveDialog.showAndWait();
+		Optional<?> result = relativeMoveDialog.showAndWait();
  		if (result.isPresent()) {
- 		   System.out.println(result.get().toString());
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
  		}
 	}
 	
@@ -216,11 +225,11 @@ public class EditSequencePanel extends TitledPane {
 	 * insertMoveEssaiAbsolute
 	 */
 	private void insertMoveEssaiAbsolute(ActionEvent e) {
- 		MoveDialog relativeMoveDialog = new MoveDialog("Déplacement absolu  \"essai\"");
+ 		MoveDialog relativeMoveDialog = new MoveDialog("Déplacement absolu \"essai\"", MoveType.ABSOLUTE_ESSAI);
  		
-		Optional<RelativeMecaMoveData> result = relativeMoveDialog.showAndWait();
+		Optional<?> result = relativeMoveDialog.showAndWait();
  		if (result.isPresent()) {
- 		   System.out.println(result.get().toString());
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
  		}
 	}
 	
@@ -228,11 +237,11 @@ public class EditSequencePanel extends TitledPane {
 	 * insertMoveEssaiRelative
 	 */
 	private void insertMoveEssaiRelative(ActionEvent e) {
- 		MoveDialog relativeMoveDialog = new MoveDialog("Déplacement relatif suivant \"essai\"");
+ 		MoveDialog relativeMoveDialog = new MoveDialog("Déplacement relatif suivant \"essai\"",  MoveType.RELATIVE_ESSAI);
 
-		Optional<RelativeMecaMoveData> result = relativeMoveDialog.showAndWait();
+		Optional<?> result = relativeMoveDialog.showAndWait();
  		if (result.isPresent()) {
- 		   System.out.println(result.get().toString());
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
  		}
 	}
 	
@@ -244,35 +253,45 @@ public class EditSequencePanel extends TitledPane {
 
 		Optional<MoveTargetPositionData> result = moveTargetPositionDialog.showAndWait();
  		if (result.isPresent()) {
- 		   System.out.println(result.get().toString());
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
  		}
 	}
 	
 	/**
-	 * insertRepeat
+	 * insertLoop
 	 */
-	private void insertRepeat(ActionEvent e) {
-		
+	private void insertLoop(ActionEvent e) {
+		NbLoopDialog loopDialog = new NbLoopDialog("Boucle");
+
+		Optional<NbLoopData> result = loopDialog.showAndWait();
+ 		if (result.isPresent()) {
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
+ 		}
 	}
 	
 	/**
 	 * insertEndLoop
 	 */
 	private void insertEndLoop(ActionEvent e) {
-		
+		insertInList(e, actionPanel.getSelectedAction(), "F ; Fin de boucle");
 	}
 	
 	/**
 	 * insertDelay
 	 */
 	private void insertDelay(ActionEvent e) {
-		
+ 		DelayDialog delayDialog = new DelayDialog("Délai");
+
+		Optional<DelayData> result = delayDialog.showAndWait();
+ 		if (result.isPresent()) {
+ 			insertInList(e, actionPanel.getSelectedAction(), result.get().toString());
+ 		}
 	}
 	
 	/**
 	 * insertWaiting
 	 */
 	private void insertWaiting(ActionEvent e) {
-		
+		insertInList(e, actionPanel.getSelectedAction(), "H ; Attente opérateur");
 	}
 }

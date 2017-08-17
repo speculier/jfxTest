@@ -2,7 +2,7 @@ package com.gbcs.XPSPositioner.panel;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.enumeration.MoveType;
+import com.gbcs.XPSPositioner.enumeration.MoveTypeOnAxe;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -35,19 +35,19 @@ public class AxesPanel extends TitledPane {
  	 	
 		// Radio buttons		
 		radioTransateOnX.setToggleGroup(group);
-		radioTransateOnX.setUserData(MoveType.TX);
+		radioTransateOnX.setUserData(MoveTypeOnAxe.TX);
 		radioTransateOnX.setSelected(true);
 		
 		radioTransateOnY.setToggleGroup(group);
-		radioTransateOnY.setUserData(MoveType.TY);
+		radioTransateOnY.setUserData(MoveTypeOnAxe.TY);
 		radioTransateOnY.setSelected(false);
 		
 		radioRotateOnX.setToggleGroup(group);
-		radioRotateOnX.setUserData(MoveType.RX);
+		radioRotateOnX.setUserData(MoveTypeOnAxe.RX);
 		radioRotateOnX.setSelected(false);
 		
 		radioRotateOnY.setToggleGroup(group);
-		radioRotateOnY.setUserData(MoveType.RY);
+		radioRotateOnY.setUserData(MoveTypeOnAxe.RY);
 		radioRotateOnY.setSelected(false);
 		
 	 	setText(text);
@@ -72,10 +72,10 @@ public class AxesPanel extends TitledPane {
 	}
 	
 	/**
-	 * getMoveType
+	 * getMoveTypeOnAxe
 	 * @return MoveType
 	 */
-	public MoveType getMoveType() {
-		return (MoveType) group.getSelectedToggle().getUserData();
+	public MoveTypeOnAxe getMoveTypeOnAxe() {
+		return (MoveTypeOnAxe) group.getSelectedToggle().getUserData();
 	}
 }

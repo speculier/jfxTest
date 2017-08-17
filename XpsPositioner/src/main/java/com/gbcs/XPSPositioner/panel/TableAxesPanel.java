@@ -36,19 +36,19 @@ public class TableAxesPanel extends TitledPane {
  	 	
 		// Radio buttons	
 		radioXM1.setToggleGroup(group);
-		radioXM1.setUserData(MoveAxe.X_M1);
+		radioXM1.setUserData(MoveAxe.X1);
 		radioXM1.setSelected(true);
 		
 		radioYM1.setToggleGroup(group);
-		radioYM1.setUserData(MoveAxe.Y_M1);
+		radioYM1.setUserData(MoveAxe.Y1);
 		radioYM1.setSelected(false);
 		
 		radioXM2.setToggleGroup(group);
-		radioXM2.setUserData(MoveAxe.X_M2);
+		radioXM2.setUserData(MoveAxe.X2);
 		radioXM2.setSelected(false);
 		
 		radioYM2.setToggleGroup(group);
-		radioYM2.setUserData(MoveAxe.Y_M2);
+		radioYM2.setUserData(MoveAxe.Y2);
 		radioYM2.setSelected(false);
 		
 	 	setText(text);

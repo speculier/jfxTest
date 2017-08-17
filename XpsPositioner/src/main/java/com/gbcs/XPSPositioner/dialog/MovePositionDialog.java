@@ -1,5 +1,6 @@
 package com.gbcs.XPSPositioner.dialog;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
@@ -41,7 +42,7 @@ public class MovePositionDialog extends Dialog<AbsoluteTablePositionData> {
 		
    	 	Button buttonCurrentPosition = new Button("Position courante");
    	 	buttonCurrentPosition.setOnAction(e->{
-
+   	 		logger.log(Level.TRACE, "Position courante");
         });
    	 	  	 	
    	 	// Position panels
@@ -75,7 +76,13 @@ public class MovePositionDialog extends Dialog<AbsoluteTablePositionData> {
  	 		    public AbsoluteTablePositionData call(ButtonType b) {
 
  	 		        if (b == butonTypeOk) {
- 	 		            return new AbsoluteTablePositionData(pointPaneM1.getX(), pointPaneM2.getX(), pointPaneM1.getY(), pointPaneM2.getY());
+ 	 		        	try {
+ 	 		        		return new AbsoluteTablePositionData(pointPaneM1.getX(), pointPaneM2.getX(), pointPaneM1.getY(), pointPaneM2.getY());
+ 	 		        	} catch (NumberFormatException ex) {
+ 	 		        		logger.log(Level.ERROR, "Bad M1 or M2 values (x,y). MoveTargetPositionDialog cancelled");
+ 	 		        	}
+ 	 		        } else {
+ 	 		        	logger.log(Level.TRACE, "MovePositionDialog cancelled");
  	 		        }
 
  	 		        return null;

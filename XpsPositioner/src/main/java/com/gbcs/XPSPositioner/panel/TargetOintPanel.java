@@ -21,9 +21,9 @@ public class TargetOintPanel extends TitledPane {
 	// Logger
 	private static final Logger logger = Logger.getLogger(TargetOintPanel.class);
 	
-	private TextField textFieldMoveXValue = new TextField();
-	private TextField textFieldMoveYValue = new TextField();
-	private	TextField textFieldMoveZValue = new TextField();
+	private TextField textFieldMoveXValue = new TextField("0");
+	private TextField textFieldMoveYValue = new TextField("0");
+	private	TextField textFieldMoveZValue = new TextField("3000");
 	private TargetTypeOfAlignmentPanel typeOfAlignmentPanel = new TargetTypeOfAlignmentPanel("Alignement");
 	
 	/**

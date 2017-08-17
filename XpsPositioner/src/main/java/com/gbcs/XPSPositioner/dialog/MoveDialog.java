@@ -1,18 +1,22 @@
 package com.gbcs.XPSPositioner.dialog;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
+import com.gbcs.XPSPositioner.data.AbsoluteEssaiMoveData;
+import com.gbcs.XPSPositioner.data.AbsoluteMecaMoveData;
+import com.gbcs.XPSPositioner.data.RelativeEssaiMoveData;
 import com.gbcs.XPSPositioner.data.RelativeMecaMoveData;
-import com.gbcs.XPSPositioner.data.RelativeTablePositionData;
+import com.gbcs.XPSPositioner.enumeration.MoveType;
 import com.gbcs.XPSPositioner.panel.AxesPanel;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
@@ -21,29 +25,36 @@ import javafx.util.Callback;
  * @author Sébastien
  *
  */
-public class MoveDialog extends Dialog<RelativeMecaMoveData> {
+public class MoveDialog extends Dialog<Object> {
 
 	// Logger
 	private static final Logger logger = Logger.getLogger(MoveDialog.class);
 	
+	private TextField textFieldMoveValue = new TextField();
+	
+	private AxesPanel axesPanel = new AxesPanel("Axe");
+
 	/**
 	 * MoveDialog ctor
 	 * @param text
+	 * @param type
 	 */
-	public MoveDialog(String text) {
+	public MoveDialog(String text, MoveType type) {
 
 		setTitle(text);
    	 	
    	 	// Labels
-   	 	Label labelMove = new Label("Déplacement:");
+		Label labelMove;
+		if (type == MoveType.ABSOLUTE_ESSAI || type == MoveType.ABSOLUTE_MECA) {
+   	 		labelMove = new Label("Ciblet:");
+		} else {
+			labelMove = new Label("Déplacement:");
+		}
+		
    	 	Label labelUnit = new Label("mm");
    	 	
    	 	// TextField
-   	 	TextField textFieldMoveValue = new TextField();
    	 	textFieldMoveValue.setEditable(true);
- 	 	
-   	 	// Axes panels
-   	 	AxesPanel axesPanel = new AxesPanel("Axe");
    	 	
    	 	// Grid
    	 	GridPane moveValueGrid = new GridPane();
@@ -76,13 +87,30 @@ public class MoveDialog extends Dialog<RelativeMecaMoveData> {
  	 	getDialogPane().getButtonTypes().add(butonTypeCancelClose);
  	 	
  	 	// Convert result to DAO
- 	 	setResultConverter(new Callback<ButtonType, RelativeMecaMoveData>() {
+ 	 	setResultConverter(new Callback<ButtonType, Object>() {
  	 		
  		    @Override
- 		    public RelativeMecaMoveData call(ButtonType b) {
+ 		    public Object call(ButtonType b) {
 
  		        if (b == butonTypeOk) {
- 		            return new RelativeMecaMoveData(Double.parseDouble(textFieldMoveValue.getText()), axesPanel.getMoveType());
+ 		        	try {
+ 		        		switch (type) {
+ 		        			case ABSOLUTE_ESSAI:
+ 		        				return new AbsoluteEssaiMoveData(Double.parseDouble(textFieldMoveValue.getText()), axesPanel.getMoveTypeOnAxe());
+ 		        			case ABSOLUTE_MECA:
+ 		        				return new AbsoluteMecaMoveData(Double.parseDouble(textFieldMoveValue.getText()), axesPanel.getMoveTypeOnAxe());
+ 		        			case RELATIVE_ESSAI:
+ 		        				return new RelativeEssaiMoveData(Double.parseDouble(textFieldMoveValue.getText()), axesPanel.getMoveTypeOnAxe());
+ 		        			case RELATIVE_MECA:
+ 		        				return new RelativeMecaMoveData(Double.parseDouble(textFieldMoveValue.getText()), axesPanel.getMoveTypeOnAxe());
+ 		        			default:
+ 		        				break;
+ 		        		} 
+ 		        	} catch (NumberFormatException ex) {
+	 		        	logger.log(Level.ERROR, "Bad move value. MoveDialog cancelled");
+	 		        }
+ 		        } else {
+ 		        	logger.log(Level.TRACE, "MoveDialog cancelled");
  		        }
 
  		        return null;

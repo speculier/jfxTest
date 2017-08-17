@@ -1,5 +1,6 @@
 package com.gbcs.XPSPositioner.dialog;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.RelativeTablePositionData;
@@ -81,7 +82,13 @@ public class MoveTableDialog extends Dialog<RelativeTablePositionData>  {
  		    public RelativeTablePositionData call(ButtonType b) {
 
  		        if (b == butonTypeOk) {
- 		            return new RelativeTablePositionData(Double.parseDouble(textFieldMoveValue.getText()), tableAxesPanel.getAxe());
+ 		        	try {
+ 		        		return new RelativeTablePositionData(Double.parseDouble(textFieldMoveValue.getText()), tableAxesPanel.getAxe());
+ 		        	} catch (NumberFormatException ex) {
+	 		        	logger.log(Level.ERROR, "Bad move value. MoveTableDialog cancelled");
+	 		        }
+ 		        } else {
+ 		        	logger.log(Level.TRACE, "MoveTableDialog cancelled");
  		        }
 
  		        return null;

@@ -1,9 +1,12 @@
 package com.gbcs.XPSPositioner.panel;
 
+import java.util.Optional;
+
 import org.apache.log4j.Logger;
 
+import com.gbcs.XPSPositioner.data.PasswordData;
 import com.gbcs.XPSPositioner.dialog.AboutDialog;
-import com.gbcs.XPSPositioner.dialog.PasswordStage;
+import com.gbcs.XPSPositioner.dialog.PasswordDialog;
 import com.gbcs.XPSPositioner.form.MainGraphicalForm;
 import com.gbcs.XPSPositioner.tabs.AdminTab;
 import com.gbcs.XPSPositioner.tabs.EssaiTab;
@@ -163,7 +166,7 @@ public class GabiView extends BorderPane {
     	//
     	// File
     	//
-	    Menu menuFile = new Menu("File");
+	    Menu menuFile = new Menu("Fichier");
 	    
 	    MenuItem menuItemFileQuit = new MenuItem("Quitter");
 	    menuItemFileQuit.setOnAction(e->{
@@ -178,8 +181,12 @@ public class GabiView extends BorderPane {
 	    Menu menuAdvancedFeatures = new Menu("Fonctionnalités avancées");
 	    MenuItem menuItemShowAdvancedFeatures = new MenuItem("Afficher les fonctionnalités avancées...");
 	    menuAdvancedFeatures.setOnAction(e->{
-	    	PasswordStage passwordDialog = new PasswordStage("Mot de passe", null);
-	    	passwordDialog.showAndWait();
+	    	PasswordDialog passwordDialog = new PasswordDialog("Mot de passe");
+
+ 	 		Optional<PasswordData> result = passwordDialog.showAndWait();
+ 	 		if (result.isPresent()) {
+ 	 		   System.out.println(result.get().toString());
+ 	 		}
         });
 	    menuAdvancedFeatures.getItems().addAll(menuItemShowAdvancedFeatures);
 	    

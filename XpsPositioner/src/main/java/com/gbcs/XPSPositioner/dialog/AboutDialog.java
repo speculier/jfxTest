@@ -1,13 +1,10 @@
 package com.gbcs.XPSPositioner.dialog;
 
-import org.apache.log4j.Logger;
-
 import com.gbcs.XPSPositioner.panel.AboutPane;
 
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.stage.Window;
 
 /**
  * AboutDialog
@@ -15,9 +12,6 @@ import javafx.stage.Window;
  *
  */
 public class AboutDialog extends Dialog<Object> {
-
-	// Logger
-	private static final Logger logger = Logger.getLogger(AboutDialog.class);
 	
 	/**
 	 * AboutDialog ctor
@@ -32,6 +26,5 @@ public class AboutDialog extends Dialog<Object> {
  	 	
  	 	// Set Ok button
  	 	getDialogPane().getButtonTypes().add(new ButtonType("OK", ButtonData.OK_DONE));
-
  	}
 }

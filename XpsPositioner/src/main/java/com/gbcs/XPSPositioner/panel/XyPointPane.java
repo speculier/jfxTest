@@ -22,8 +22,8 @@ public class XyPointPane extends TitledPane {
 	// Logger
 	private static final Logger logger = Logger.getLogger(XyPointPane.class);
 	
-	private TextField textFieldX = new TextField();
-	private TextField textFieldY = new TextField();
+	private TextField textFieldX = new TextField("");
+	private TextField textFieldY = new TextField("");
 	
 	/**
 	 * XyPointPane ctor

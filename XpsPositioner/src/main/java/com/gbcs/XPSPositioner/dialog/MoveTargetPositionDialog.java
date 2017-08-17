@@ -1,10 +1,9 @@
 package com.gbcs.XPSPositioner.dialog;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
 import com.gbcs.XPSPositioner.data.MoveTargetPositionData;
-import com.gbcs.XPSPositioner.data.RelativeMecaMoveData;
 import com.gbcs.XPSPositioner.panel.TargetOintPanel;
 
 import javafx.geometry.HPos;
@@ -58,7 +57,13 @@ public class MoveTargetPositionDialog extends Dialog<MoveTargetPositionData> {
  		    public MoveTargetPositionData call(ButtonType b) {
 
  		        if (b == butonTypeOk) {
- 		            return new MoveTargetPositionData(oIntPanel.getX(), oIntPanel.getY(), oIntPanel.getZ(), oIntPanel.getTypeOfAlignment());
+ 		        	try {
+ 		        		return new MoveTargetPositionData(oIntPanel.getX(), oIntPanel.getY(), oIntPanel.getZ(), oIntPanel.getTypeOfAlignment());
+ 		        	} catch (NumberFormatException ex) {
+ 		        		logger.log(Level.ERROR, "Bad target x, y or z values. MoveTargetPositionDialog cancelled");
+ 		        	}
+ 		        } else {
+ 		        	logger.log(Level.TRACE, "MoveTargetPositionDialog cancelled");
  		        }
 
  		        return null;

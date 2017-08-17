@@ -68,20 +68,20 @@ public class AxeTranslationManagementPanel extends TitledPane {
  	 	textFieldCurrentValue.setEditable(false);
  	 	
  	 	// ComboBox
- 	 	ObservableList<Integer> moveValues = 
+ 	 	ObservableList<Double> moveValues = 
  	 		    FXCollections.observableArrayList(
- 	 		        1,
- 	 		        10,
- 	 		        100
+ 	 		        1.0D,
+ 	 		        10.0D,
+ 	 		        100.0D
  	 		    		);
  	 	
- 	 	ComboBox<Integer> comboRelativeValue = new ComboBox<Integer>(moveValues);
- 	 	comboRelativeValue.setEditable(false);
+ 	 	ComboBox<?> comboRelativeValue = new ComboBox<Double>(moveValues);
+ 	 	comboRelativeValue.setEditable(true);
  	 	comboRelativeValue.getSelectionModel().selectFirst();
  	 	comboRelativeValue.setVisibleRowCount(5);
  	 	
- 	 	ComboBox<Integer> comboAbsoluteValue = new ComboBox<Integer>(moveValues);
- 	 	comboAbsoluteValue.setEditable(false);
+ 	 	ComboBox<?> comboAbsoluteValue = new ComboBox<Double>(moveValues);
+ 	 	comboAbsoluteValue.setEditable(true);
  	 	comboAbsoluteValue.getSelectionModel().selectFirst();
  	 	comboAbsoluteValue.setVisibleRowCount(5);
  	 	

@@ -1,15 +1,18 @@
 package com.gbcs.XPSPositioner.tabs;
 
+import java.util.Optional;
+
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.GabiController;
-import com.gbcs.XPSPositioner.dialog.SpeedStage;
+import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
+import com.gbcs.XPSPositioner.data.SpeedData;
+import com.gbcs.XPSPositioner.dialog.SpeedDialog;
 import com.gbcs.XPSPositioner.panel.AxeTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panel.GabiView;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tab;
 import javafx.scene.control.ToolBar;
@@ -58,8 +61,12 @@ public class TablesTab extends Tab {
    	 	
  	 	Button buttonVitesses = new Button("Vitesses");
  	 	buttonVitesses.setOnAction(e->{
- 	 		SpeedStage speedDialog = new SpeedStage("Vitesses", ((Node)e.getSource()).getScene().getWindow());
- 	 		speedDialog.showAndWait();
+ 	 		SpeedDialog speedDialog = new SpeedDialog("Vitesses");
+
+ 	 		Optional<SpeedData> result = speedDialog.showAndWait();
+ 	 		if (result.isPresent()) {
+  	 		   logger.log(Level.DEBUG, result.get().toString());
+ 	 		}
         });
  	 	
 	 	Button buttonEmergencyStop = new Button("Arrêt d'urgence");
