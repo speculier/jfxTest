@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.swing.text.html.Option;
-
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.GabiController;

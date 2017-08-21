@@ -5,9 +5,9 @@ import java.util.Optional;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
 import com.gbcs.XPSPositioner.data.SpeedData;
 import com.gbcs.XPSPositioner.dialog.SpeedDialog;
+import com.gbcs.XPSPositioner.enumeration.MoveAxe;
 import com.gbcs.XPSPositioner.panel.AxeTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panel.GabiView;
 
@@ -45,44 +45,29 @@ public class TablesTab extends Tab {
 		// Buttons for managing axes
 		//
    	 	Button buttonInitialisation = new Button("Initialisation");
-   	 	buttonInitialisation.setOnAction(e->{
-
-        });
+   	 	buttonInitialisation.setOnAction(e-> initialization());
    	 	
    	 	Button buttonOrigine = new Button("Origine");
-   	 	buttonOrigine.setOnAction(e->{
-
-        });
+   	 	buttonOrigine.setOnAction(e-> origin());
    	 	
- 	 	Button buttonMoteurOff = new Button("Moteur Off");
- 	 	buttonMoteurOff.setOnAction(e->{
-
-        });
+ 	 	Button buttonEngineOff = new Button("Moteur Off");
+ 	 	buttonEngineOff.setOnAction(e-> engineOff());
    	 	
  	 	Button buttonVitesses = new Button("Vitesses");
- 	 	buttonVitesses.setOnAction(e->{
- 	 		SpeedDialog speedDialog = new SpeedDialog("Vitesses");
-
- 	 		Optional<SpeedData> result = speedDialog.showAndWait();
- 	 		if (result.isPresent()) {
-  	 		   logger.log(Level.DEBUG, result.get().toString());
- 	 		}
-        });
+ 	 	buttonVitesses.setOnAction(e-> setSpeed());
  	 	
 	 	Button buttonEmergencyStop = new Button("Arrêt d'urgence");
-	 	buttonEmergencyStop.setOnAction(e->{
-
-        });
+	 	buttonEmergencyStop.setOnAction(e-> emergency());
  	 	
- 	 	ToolBar buttonToolBar = new ToolBar(buttonInitialisation, buttonOrigine, buttonMoteurOff, buttonVitesses);
+ 	 	ToolBar buttonToolBar = new ToolBar(buttonInitialisation, buttonOrigine, buttonEngineOff, buttonVitesses);
  	 	
  	 	//
  	 	// Axes panels
  	 	//	 	
- 	 	AxeTranslationManagementPanel axesPanelX1 = new AxeTranslationManagementPanel("X1");
-	 	AxeTranslationManagementPanel axesPanelX2 = new AxeTranslationManagementPanel("X2");
-	 	AxeTranslationManagementPanel axesPanelY1 = new AxeTranslationManagementPanel("Y1");
-	 	AxeTranslationManagementPanel axesPanelY2 = new AxeTranslationManagementPanel("Y2");
+ 	 	AxeTranslationManagementPanel axesPanelX1 = new AxeTranslationManagementPanel(gabiView, MoveAxe.X1);
+ 	 	AxeTranslationManagementPanel axesPanelX2 = new AxeTranslationManagementPanel(gabiView, MoveAxe.X2);
+ 	 	AxeTranslationManagementPanel axesPanelY1 = new AxeTranslationManagementPanel(gabiView, MoveAxe.Y1);
+ 	 	AxeTranslationManagementPanel axesPanelY2 = new AxeTranslationManagementPanel(gabiView, MoveAxe.Y2);
 	 	
 	 	GridPane axesPanelsGrid = new GridPane();
 	 	axesPanelsGrid.setVgap(20);
@@ -107,5 +92,45 @@ public class TablesTab extends Tab {
    	 	
         // Add components in the tables tab
         setContent(mainGrid);
+	}
+	
+	/**
+	 * initialization
+	 */
+	private void initialization() {
+		
+	}
+	
+	/**
+	 * origin
+	 */
+	private void origin() {
+		
+	}
+	
+	/**
+	 * engineOff
+	 */
+	private void engineOff() {
+		
+	}
+	
+	/**
+	 * setSpeed
+	 */
+	private void setSpeed() {
+ 		SpeedDialog speedDialog = new SpeedDialog("Vitesses");
+
+ 		Optional<SpeedData> result = speedDialog.showAndWait();
+ 		if (result.isPresent()) {
+ 		   logger.log(Level.DEBUG, result.get().toString());
+ 		}
+	}
+	
+	/**
+	 * emergency
+	 */
+	private void emergency() {
+		
 	}
 }

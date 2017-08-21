@@ -50,7 +50,7 @@ public class PasswordDialog extends Dialog<PasswordData> {
 
 	   	
 	   	mainGrid.add(labelPassword, 0, 0);
-	   	mainGrid.add(fieldPassword, 0, 1);
+	   	mainGrid.add(fieldPassword, 1, 0);
 
 	   	getDialogPane().setContent(mainGrid);
 

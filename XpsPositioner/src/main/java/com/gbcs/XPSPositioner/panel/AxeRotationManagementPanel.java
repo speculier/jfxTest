@@ -1,126 +1,137 @@
 package com.gbcs.XPSPositioner.panel;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.GridPane;
+import com.gbcs.XPSPositioner.enumeration.MoveAxe;
+import com.gbcs.XPSPositioner.enumeration.MoveSign;
+import com.gbcs.XPSPositioner.enumeration.MoveTypeOnAxe;
 
 /**
  * AxeRotationManagementPanel
  * @author Sébastien
  *
  */
-public class AxeRotationManagementPanel extends TitledPane {
+public class AxeRotationManagementPanel extends AbstractRotationManagementPanel {
 
 	// Logger
 	private static final Logger logger = Logger.getLogger(AxeRotationManagementPanel.class);
 	
+	private MoveTypeOnAxe typeOnAxe;
+	
 	/**
 	 * AxeRotationManagementPanel ctor
+	 * @param view
 	 * @param text
 	 */
-	public AxeRotationManagementPanel(String text) {
+	public AxeRotationManagementPanel(GabiView view, MoveTypeOnAxe a) {
 		
-		// Buttons
- 	 	Button buttonRelativeMovePlus = new Button("+");
- 	 	buttonRelativeMovePlus.setOnAction(e->{
+		super(view);
+		typeOnAxe = a;
+		
+		setText(typeOnAxe.name());
+	}
+	
+	/**
+	 * relativeMovePlus
+	 */
+	@Override
+	protected void relativeMoveMine() {
+		relativeMove(MoveSign.MOVE_MINE);
+	}
+	
+	/**
+	 * relativeMovePlus
+	 */
+	@Override
+	protected void relativeMovePlus() {
+		relativeMove(MoveSign.MOVE_PLUS);
+	}
+	
+	/**
+	 * relativeMove
+	 * @param sign
+	 */
+	protected void relativeMove(MoveSign sign) {
+		
+		try {
+			double initialvalue  = 0;
+			double relativeValue  = Double.parseDouble(comboRelativeValue.getSelectionModel().getSelectedItem().toString());
 
-        });
- 	 	
- 	 	Button buttonRelativeMoveMine = new Button("-");
- 	 	buttonRelativeMoveMine.setOnAction(e->{
+			switch (typeOnAxe) {
+				case RX:
+					initialvalue = gabiView.getMainGraphicalForm().getTranslationTable1Group().getTranslateX();
+					gabiView.getMainGraphicalForm().getTranslationTable1Group().setTranslateX((sign == MoveSign.MOVE_MINE) ? (initialvalue - relativeValue) : (initialvalue + relativeValue));
+					break;
+				case RY:
+					initialvalue = gabiView.getMainGraphicalForm().getTranslationTable2Group().getTranslateX();
+					gabiView.getMainGraphicalForm().getTranslationTable2Group().setTranslateX((sign == MoveSign.MOVE_MINE) ? (initialvalue - relativeValue) : (initialvalue + relativeValue));
+					break;
+			}
+			
+			updateCurrentValue();
+			
+			comboRelativeValue.getItems().add(relativeValue);
+			
+			logger.log(Level.INFO, "Relative move " + typeOnAxe + ": " + Double.parseDouble(comboRelativeValue.getSelectionModel().getSelectedItem().toString()));
+		} catch (NumberFormatException ex) {
+	        logger.error("Bad relative move value. Move operation cancelled");
+	    } catch (NullPointerException ex) {
+	    	logger.error("Bad relative move value. Move operation cancelled");
+	    }
+	}
+		
+	/**
+	 * absoluteMove
+	 */
+	@Override
+	protected void absoluteMove() {
+		try {
+			double value  = Double.parseDouble(comboAbsoluteValue.getSelectionModel().getSelectedItem().toString());
+			
+			switch (typeOnAxe) {
+				case RX:
+					gabiView.getMainGraphicalForm().getTranslationTable1Group().setTranslateX(value);
+					break;
+				case RY:
+					gabiView.getMainGraphicalForm().getTranslationTable2Group().setTranslateX(value);
+					break;				
+			}
+			
+			updateCurrentValue();
+			
+			comboAbsoluteValue.getItems().add(value);
+			
+			logger.log(Level.INFO, "Absolute move " + typeOnAxe + ": " + Double.parseDouble(comboAbsoluteValue.getSelectionModel().getSelectedItem().toString()));
+		} catch (NumberFormatException ex) {
+	        logger.error("Bad absolute move value. Move operation cancelled");
+	    } catch (NullPointerException ex) {
+	    	logger.error("Bad absolute move value. Move operation cancelled");
+	    }
+	}
+	
+	/**
+	 * updateCurrentValue
+	 * @return 
+	 */
+	private void updateCurrentValue() {
+		
+		try {
+			double value  = 0;
 
-        });
- 	 	
- 	 	Button buttonAbsoluteMovePlus = new Button("+");
- 	 	buttonAbsoluteMovePlus.setOnAction(e->{
-
-        });
- 	 	
- 	 	Button buttonAbsoluteMoveMine = new Button("-");
- 	 	buttonAbsoluteMoveMine.setOnAction(e->{
-
-        });
- 	 	
- 	 	Button buttonGo = new Button("Go");
- 	 	buttonGo.setOnAction(e->{
-
-        });
- 	 	
- 	 	// Labels
- 	 	Label labelCurrentValue = new Label("Courant");
- 	 	Label labelRelativeValue = new Label("Relatif");
- 	 	Label labelAbsoluteValue = new Label("Absolu");
- 	 	Label labelUnitCurrentValue = new Label("µRad");
- 	 	Label labelUnitRelativeValue = new Label("µRad");
- 	 	Label labelUnitAbsoluteValue = new Label("µRad");
- 	 	
- 	 	// TextField
- 	 	TextField textFieldCurrentValue = new TextField();
- 	 	textFieldCurrentValue.setEditable(false);
- 	 	
- 	 	// ComboBox
- 	 	ObservableList<Double> moveValues = 
- 	 		    FXCollections.observableArrayList(
- 	 		        1.0D,
- 	 		        10.0D,
- 	 		        100.0D
- 	 		    		);
- 	 	
- 	 	ComboBox<?> comboRelativeValue = new ComboBox<Double>(moveValues);
- 	 	comboRelativeValue.setEditable(true);
- 	 	comboRelativeValue.getSelectionModel().selectFirst();
- 	 	comboRelativeValue.setVisibleRowCount(5);
- 	 	
- 	 	ComboBox<?> comboAbsoluteValue = new ComboBox<Double>(moveValues);
- 	 	comboAbsoluteValue.setEditable(true);
- 	 	comboAbsoluteValue.getSelectionModel().selectFirst();
- 	 	comboAbsoluteValue.setVisibleRowCount(5);
- 	 	
-	 	setText(text);
-	 	setCollapsible(false);
-	 	
-	 	GridPane grid = new GridPane();
-	 	// Distance foe separating components in the grid
-	 	grid.setVgap(5);
-	 	grid.setHgap(10);
-	 	
-	 	// Center all childs
-	 	GridPane.setHalignment(labelCurrentValue, HPos.CENTER);
-	 	GridPane.setHalignment(labelRelativeValue, HPos.CENTER);
-	 	GridPane.setHalignment(labelAbsoluteValue, HPos.CENTER);
-	 	GridPane.setHalignment(labelUnitRelativeValue, HPos.CENTER);
-	 	GridPane.setHalignment(labelUnitAbsoluteValue, HPos.CENTER);
-	 	GridPane.setHalignment(labelUnitCurrentValue, HPos.CENTER);
-	 	GridPane.setHalignment(textFieldCurrentValue, HPos.CENTER);
-	 	GridPane.setHalignment(comboRelativeValue, HPos.CENTER);
-	 	GridPane.setHalignment(comboAbsoluteValue, HPos.CENTER);
-	 	GridPane.setHalignment(buttonRelativeMoveMine, HPos.CENTER);
-	 	GridPane.setHalignment(buttonRelativeMovePlus, HPos.CENTER);
-	 	GridPane.setHalignment(buttonGo, HPos.CENTER);
-	 	
-	 	grid.setPadding(new Insets(5, 5, 5, 5));
-	 	grid.add(labelCurrentValue, 1, 0);
-	 	grid.add(textFieldCurrentValue, 1, 1);
-	 	grid.add(labelUnitCurrentValue, 2, 1);
-	 	grid.add(labelRelativeValue, 1, 2);
-	 	grid.add(buttonRelativeMoveMine, 0, 3);
-	 	grid.add(comboRelativeValue, 1, 3);
-	 	grid.add(labelUnitRelativeValue, 2, 3);
-	 	grid.add(buttonRelativeMovePlus, 3, 3);
-	 	grid.add(labelAbsoluteValue, 1, 4);
-	 	grid.add(comboAbsoluteValue, 1, 5);
-	 	grid.add(labelUnitAbsoluteValue, 2, 5);
-	 	grid.add(buttonGo, 3, 5);
-
-	 	setContent(grid);
+			switch (typeOnAxe) {
+			case RX:
+				value = gabiView.getMainGraphicalForm().getTranslationTable1Group().getTranslateX();
+				break;
+			case RY:
+				value = gabiView.getMainGraphicalForm().getTranslationTable2Group().getTranslateX();
+				break;
+			}
+			
+			textFieldCurrentValue.setText(String.valueOf(value));
+			
+		} catch (NumberFormatException ex) {
+	        logger.error("Bad current value calculated. Updating current value cancelled");
+	    }
 	}
 }

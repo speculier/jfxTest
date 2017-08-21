@@ -2,7 +2,6 @@ package com.gbcs.XPSPositioner.panel;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.enumeration.MoveAxe;
 import com.gbcs.XPSPositioner.enumeration.TypeOfAlignment;
 
 import javafx.geometry.HPos;

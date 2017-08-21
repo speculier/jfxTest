@@ -2,9 +2,10 @@ package com.gbcs.XPSPositioner.tabs;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.GabiController;
+import com.gbcs.XPSPositioner.enumeration.MoveTypeOnAxe;
 import com.gbcs.XPSPositioner.panel.AxeRotationManagementPanel;
-import com.gbcs.XPSPositioner.panel.AxeTranslationManagementPanel;
+import com.gbcs.XPSPositioner.panel.AbstractTranslationManagementPanel;
+import com.gbcs.XPSPositioner.panel.TypeOnAxeTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panel.GabiView;
 
 import javafx.geometry.HPos;
@@ -57,10 +58,10 @@ public class MecaTab extends Tab {
  	 	//
  	 	// Axes panels
  	 	//	 	
- 	 	AxeTranslationManagementPanel axesPanelX1 = new AxeTranslationManagementPanel("TX");
-	 	AxeRotationManagementPanel axesPanelX2 = new AxeRotationManagementPanel("RX");
-	 	AxeTranslationManagementPanel axesPanelY1 = new AxeTranslationManagementPanel("TY");
-	 	AxeRotationManagementPanel axesPanelY2 = new AxeRotationManagementPanel("RY");
+ 	 	AbstractTranslationManagementPanel axesPanelX1 = new TypeOnAxeTranslationManagementPanel(gabiView, MoveTypeOnAxe.TX);
+	 	AxeRotationManagementPanel axesPanelX2 = new AxeRotationManagementPanel(gabiView, MoveTypeOnAxe.RX);
+	 	AbstractTranslationManagementPanel axesPanelY1 = new TypeOnAxeTranslationManagementPanel(gabiView, MoveTypeOnAxe.TX);
+	 	AxeRotationManagementPanel axesPanelY2 = new AxeRotationManagementPanel(gabiView, MoveTypeOnAxe.RY);
 	 	
 	 	GridPane axesPanelsGrid = new GridPane();
 	 	axesPanelsGrid.setVgap(20);

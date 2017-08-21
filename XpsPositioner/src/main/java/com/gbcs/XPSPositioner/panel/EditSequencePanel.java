@@ -9,7 +9,6 @@ import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
 import com.gbcs.XPSPositioner.data.DelayData;
 import com.gbcs.XPSPositioner.data.MoveTargetPositionData;
 import com.gbcs.XPSPositioner.data.NbLoopData;
-import com.gbcs.XPSPositioner.data.RelativeMecaMoveData;
 import com.gbcs.XPSPositioner.data.RelativeTablePositionData;
 import com.gbcs.XPSPositioner.dialog.DelayDialog;
 import com.gbcs.XPSPositioner.dialog.MoveDialog;

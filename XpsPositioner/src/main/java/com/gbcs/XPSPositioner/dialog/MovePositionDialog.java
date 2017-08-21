@@ -4,7 +4,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
-import com.gbcs.XPSPositioner.panel.XyPointPane;
+import com.gbcs.XPSPositioner.panel.XyPointPanel;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -26,8 +26,8 @@ public class MovePositionDialog extends Dialog<AbsoluteTablePositionData> {
 	private static final Logger logger = Logger.getLogger(MovePositionDialog.class);
 	
 	// Position panels
-	private XyPointPane pointPaneM1;
-	private XyPointPane pointPaneM2;
+	private XyPointPanel pointPaneM1;
+	private XyPointPanel pointPaneM2;
 	 	
 	/**
 	 * MovePositionDialog ctor
@@ -46,8 +46,8 @@ public class MovePositionDialog extends Dialog<AbsoluteTablePositionData> {
         });
    	 	  	 	
    	 	// Position panels
-   	 	pointPaneM1 = new XyPointPane ("M1");
-   	 	pointPaneM2 = new XyPointPane ("M2");
+   	 	pointPaneM1 = new XyPointPanel ("M1");
+   	 	pointPaneM2 = new XyPointPanel ("M2");
    	 	
    	 	// Grid
    	 	GridPane grid = new GridPane();

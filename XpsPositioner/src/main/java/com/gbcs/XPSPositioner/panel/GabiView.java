@@ -2,6 +2,7 @@ package com.gbcs.XPSPositioner.panel;
 
 import java.util.Optional;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.PasswordData;
@@ -15,6 +16,7 @@ import com.gbcs.XPSPositioner.tabs.SequenceTab;
 import com.gbcs.XPSPositioner.tabs.TablesTab;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.control.CheckMenuItem;
 import javafx.scene.control.Menu;
@@ -39,6 +41,8 @@ public class GabiView extends BorderPane {
 
     // Main Menu bar
     private final MenuBar menuBar = new MenuBar();
+    private Menu menuConfiguration = new Menu("Configuration");
+    private Menu menuMaintenance = new Menu("Maintenance");
     
     // Main statusBar 
     private final StatusBarPanel statusBar = new StatusBarPanel();
@@ -163,37 +167,19 @@ public class GabiView extends BorderPane {
      */
     private void buildMenus() {
    
-    	//
     	// File
-    	//
 	    Menu menuFile = new Menu("Fichier");
-	    
 	    MenuItem menuItemFileQuit = new MenuItem("Quitter");
-	    menuItemFileQuit.setOnAction(e->{
-	    	Platform.exit();
-        });
-	    
+	    menuItemFileQuit.setOnAction(e -> exitApplication(e));
 	    menuFile.getItems().addAll(menuItemFileQuit);
 	    
-		//
     	// Password
-    	//
 	    Menu menuAdvancedFeatures = new Menu("Fonctionnalités avancées");
 	    MenuItem menuItemShowAdvancedFeatures = new MenuItem("Afficher les fonctionnalités avancées...");
-	    menuAdvancedFeatures.setOnAction(e->{
-	    	PasswordDialog passwordDialog = new PasswordDialog("Mot de passe");
-
- 	 		Optional<PasswordData> result = passwordDialog.showAndWait();
- 	 		if (result.isPresent()) {
- 	 		   System.out.println(result.get().toString());
- 	 		}
-        });
+	    menuAdvancedFeatures.setOnAction(e -> showAdvancedFeatures(e));
 	    menuAdvancedFeatures.getItems().addAll(menuItemShowAdvancedFeatures);
 	    
-		//
     	// Configuration
-    	//
-	    Menu menuConfiguration = new Menu("Configuration");
 	    menuConfiguration.setVisible(false);
 	    MenuItem menuItemConfigurationAdresseXps = new MenuItem("Adresse XPS");
 	    MenuItem menuItemConfigurationSelectAxes = new MenuItem("Sélection des axes");
@@ -227,26 +213,16 @@ public class GabiView extends BorderPane {
 	    MenuItem menuItemConfigurationPassword = new MenuItem("Mot de passe");
 	    menuConfiguration.getItems().addAll(menuItemConfigurationAdresseXps, menuItemConfigurationSelectAxes, menuItemConfigurationArrowsSize, menuItemConfigurationShow, menuItemConfigurationRotations, menuItemConfigurationOrderNumber, menuItemConfigurationPassword);
 	    
-		//
     	// Maintenance
-    	//
-	    Menu menuMaintenance = new Menu("Maintenance");
 	    menuMaintenance.setVisible(false);
 	    MenuItem menuItemMaintenanceXps = new MenuItem("XPS");
 	    MenuItem menuItemMaintenanceDebug = new MenuItem("Debug");
 	    menuMaintenance.getItems().addAll(menuItemMaintenanceXps, menuItemMaintenanceDebug);
 	    
-		//
     	// Help
-    	//
 	    Menu menuHelp = new Menu("Aide");
-	    
 	    MenuItem menuHelpAPropos = new MenuItem("A Propos...");
-	    menuHelpAPropos.setOnAction(e->{
-	    	AboutDialog about = new AboutDialog("A Propos de GABI");
-	    	about.showAndWait();
-        });
-	    
+	    menuHelpAPropos.setOnAction(e-> showAboutDialog(e));
 	    MenuItem menuHelpManual = new MenuItem("Manuel");
 	    menuHelpManual.setOnAction(e->{
 	    	
@@ -256,4 +232,41 @@ public class GabiView extends BorderPane {
 	    
 	    menuBar.getMenus().addAll(menuFile, menuAdvancedFeatures, menuConfiguration, menuMaintenance, menuHelp);
     }
+    
+    /**
+     * showAdvancedFeatures
+     * @param e
+     */
+	private void showAdvancedFeatures(ActionEvent e) {
+    	PasswordDialog passwordDialog = new PasswordDialog("Mot de passe");
+
+ 		Optional<PasswordData> result = passwordDialog.showAndWait();
+ 		if (result.isPresent()) {
+ 			if (result.get().getPassword().equals("JPGMS")) {
+ 				menuMaintenance.setVisible(true);
+ 			    menuConfiguration.setVisible(true);
+ 			} else {
+ 				logger.log(Level.INFO, "Bad password !");
+				menuMaintenance.setVisible(false);
+ 			    menuConfiguration.setVisible(false);
+ 			}
+ 		}
+	}
+	
+    /**
+     * exitApplication
+     * @param e
+     */
+	private void exitApplication(ActionEvent e) {
+		Platform.exit();
+	}
+	
+	/**
+	 * showAboutDialog
+	 * @param e
+	 */
+	private void showAboutDialog(ActionEvent e) {
+	    AboutDialog about = new AboutDialog("A Propos de GABI");
+	    about.showAndWait();
+	}
 }

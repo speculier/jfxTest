@@ -4,7 +4,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.SpeedData;
-import com.gbcs.XPSPositioner.panel.XyPointPane;
+import com.gbcs.XPSPositioner.panel.XyPointPanel;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -25,8 +25,8 @@ public class SpeedDialog extends Dialog<SpeedData> {
 	// Logger
 	private static final Logger logger = Logger.getLogger(SpeedDialog.class);
 	
-	private XyPointPane pointPaneM1 = new XyPointPane ("M1");
-	private XyPointPane pointPaneM2 = new XyPointPane ("M2");
+	private XyPointPanel pointPaneM1 = new XyPointPanel ("M1");
+	private XyPointPanel pointPaneM2 = new XyPointPanel ("M2");
    	 	
 	/**
 	 * SpeedDialog ctor

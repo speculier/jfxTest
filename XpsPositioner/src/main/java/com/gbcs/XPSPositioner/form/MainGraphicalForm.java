@@ -35,14 +35,20 @@ public class MainGraphicalForm extends XForm {
 		
     // Axis group: contains the 3 axis X, Y and Z
 	private final XForm axisGroup = new XForm();
-    
-    // Main group that contain useful shapes for the application
-	private final XForm shapesGroup = new XForm();
-	
+    	
 	private final XForm cameraXform = new XForm();
 	private final XForm cameraXform2 = new XForm();
     private final XForm cameraXform3 = new XForm();
     
+    // Shapes and group
+  	private final XForm shapesGroup = new XForm();
+ 	private final XForm translationTable1Group = new XForm();
+ 	private final XForm translationTable2Group = new XForm();
+ 	private final XForm sphereM1Group = new XForm();
+ 	private final XForm sphereM2Group = new XForm();  
+ 	private final XForm gabiGroup = new XForm();
+ 	private final XForm telescopeGroup = new XForm();
+ 	
     // 3D perspective Camera
     private final PerspectiveCamera camera = new PerspectiveCamera(true);
     
@@ -54,6 +60,11 @@ public class MainGraphicalForm extends XForm {
     private double mouseDeltaX;
     private double mouseDeltaY;
     
+    // Materials
+    private final PhongMaterial bodyTelescopeCylinderMaterial = new PhongMaterial(Color.DARKRED);
+    private final PhongMaterial baseSphereMaterial = new PhongMaterial(Color.WHITE);
+    private final PhongMaterial translationTableMaterial = new PhongMaterial(Color.DARKBLUE);
+
     /**
      * getAxisGroup
      * @return
@@ -85,6 +96,26 @@ public class MainGraphicalForm extends XForm {
     public GabiView getGabiView() {
     	return mainGabiView;
     }
+    
+	public XForm getTranslationTable1Group() {
+		return translationTable1Group;
+	}
+
+	public XForm getTranslationTable2Group() {
+		return translationTable2Group;
+	}
+
+	public XForm getSphereM1Group() {
+		return sphereM1Group;
+	}
+
+	public XForm getSphereM2Group() {
+		return sphereM2Group;
+	}
+
+	public XForm getTelescopeGroup() {
+		return telescopeGroup;
+	}
        
 	/**
 	 * MainGraphicalForm
@@ -109,7 +140,7 @@ public class MainGraphicalForm extends XForm {
         buildAxes();
         
         // Build 3D shapes
-        build3DShapes();
+        buildShapes();
 	}
 	
 	/**
@@ -246,12 +277,12 @@ public class MainGraphicalForm extends XForm {
         blueMaterial.setDiffuseColor(Color.DARKBLUE);
         blueMaterial.setSpecularColor(Color.BLUE);
 
-        final Box xAxis = new Box(Constants.AXIS_LENGTH, 1, 1);
-        final Box yAxis = new Box(1, Constants.AXIS_LENGTH, 1);
+        final Box xAxis = new Box(1, Constants.AXIS_LENGTH, 1);
+        final Box yAxis = new Box(Constants.AXIS_LENGTH, 1, 1);
         final Box zAxis = new Box(1, 1, Constants.AXIS_LENGTH);
 
-        xAxis.setMaterial(redMaterial);
-        yAxis.setMaterial(greenMaterial);
+        xAxis.setMaterial(greenMaterial);
+        yAxis.setMaterial(redMaterial);
         zAxis.setMaterial(blueMaterial);
 
         // Add the axes in the 'axis' group
@@ -262,84 +293,91 @@ public class MainGraphicalForm extends XForm {
     }
 
     /**
-     * build3DShapes
+     * buildShapes
      */
-    private void build3DShapes() {
+    private void buildShapes() {
 
-    	// Materials
-        final PhongMaterial bodySatelliteMaterial = new PhongMaterial();
-        bodySatelliteMaterial.setDiffuseColor(Color.DARKRED);
-        bodySatelliteMaterial.setSpecularColor(Color.RED);
-
-        final PhongMaterial baseSphereMaterial = new PhongMaterial();
-        baseSphereMaterial.setDiffuseColor(Color.WHITE);
-        baseSphereMaterial.setSpecularColor(Color.LIGHTBLUE);
-
-        final PhongMaterial boxMaterial = new PhongMaterial();
-        boxMaterial.setDiffuseColor(Color.DARKBLUE);
-        boxMaterial.setSpecularColor(Color.BLUE);
-
-        Box sampleBox = new Box(10.0,10.0,10.0);
-        sampleBox.setTranslateX(30.0);
-        sampleBox.setTranslateY(30.0);
-        sampleBox.setTranslateZ(30.0);
+    	buildTranslationTables();
+    	
+    	// buildPalettas();
+    	
+    	// buildCylinder();
+    	 
+        // Add base forms group in the groups
+        gabiGroup.getChildren().add(telescopeGroup);
+        gabiGroup.getChildren().add(sphereM1Group);
+        gabiGroup.getChildren().add(sphereM2Group);
+        gabiGroup.getChildren().add(translationTable1Group);
+        gabiGroup.getChildren().add(translationTable2Group);
         
-        // Body cylinder
-        Cylinder bodySatelliteCylinder = new Cylinder(40.0,100.0);
-        bodySatelliteCylinder.setMaterial(bodySatelliteMaterial);
-        bodySatelliteCylinder.setRotate(90.0);
-        
-        // Spheres
-        Sphere baseSphere1 = new Sphere(10.0);
-        baseSphere1.setMaterial(baseSphereMaterial);
-        baseSphere1.setTranslateX(0.0);
-        Sphere baseSphere2 = new Sphere(10.0);
-        baseSphere2.setMaterial(baseSphereMaterial);
-        baseSphere2.setTranslateX(0.0);
-        
-        // Cubes
-        Box box1 = new Box(5, 40, 40);
-        box1.setMaterial(boxMaterial);
-        box1.setTranslateX(0.0);
-        Box box2 = new Box(5, 40, 40);
-        box2.setMaterial(boxMaterial);
-        box2.setTranslateX(0.0);
-
-        // Define satellite groups
-        XForm satelliteXForm = new XForm();
-        XForm mainCylinderXForm = new XForm();
-        XForm sphere1XForm = new XForm();
-        XForm sphere2XForm = new XForm();
-        XForm box1XForm = new XForm();
-        XForm box2XForm = new XForm();
-        
-        // Add base forms group in the satellite group
-        satelliteXForm.getChildren().add(mainCylinderXForm);
-        satelliteXForm.getChildren().add(sphere1XForm);
-        satelliteXForm.getChildren().add(sphere2XForm);
-        satelliteXForm.getChildren().add(box1XForm);
-        satelliteXForm.getChildren().add(box2XForm);
-        
-        // Add shapes in each group
-        mainCylinderXForm.getChildren().add(bodySatelliteCylinder);
-        mainCylinderXForm.getChildren().add(sampleBox);
-        sphere1XForm.getChildren().add(baseSphere1);
-        sphere2XForm.getChildren().add(baseSphere2);
-        box1XForm.getChildren().add(box1);
-        box2XForm.getChildren().add(box2);
-        
-        // Set sphere group at each cylinder base
-        sphere1XForm.setTx(45.0);
-        sphere2XForm.setTx(-45.0);
-        
-        // Set Boxes position 
-        box1XForm.setTx(100.0);
-        box2XForm.setTx(-100.0);
-
-        // Add the satellite form in the 'shapes' group
-        shapesGroup.getChildren().add(satelliteXForm);
+        // Add the gabi form in the 'shapes' group
+        shapesGroup.getChildren().add(gabiGroup);
 
         // Add the 'main shapes' group in the 'world3D' group
         getChildren().addAll(shapesGroup);
     }
+    
+    /**
+     * buildCylinder
+     */
+    private void buildCylinder() {
+    	
+    	// Materials
+        bodyTelescopeCylinderMaterial.setSpecularColor(Color.RED);
+ 
+        // Cylinder
+        Cylinder telescopeCylinder = new Cylinder(40.0,100.0);
+        telescopeCylinder.setMaterial(bodyTelescopeCylinderMaterial);
+        telescopeCylinder.setRotate(90.0);
+        
+        // Add shapes in each group
+        telescopeGroup.getChildren().add(telescopeCylinder);
+    }
+    
+    /**
+     * buildPalettas
+     */
+    private void buildPalettas() {
+    	
+        baseSphereMaterial.setSpecularColor(Color.LIGHTBLUE);
+
+        // M1 and M2 spheres
+        Sphere patellaM1 = new Sphere(5.0);
+        patellaM1.setMaterial(baseSphereMaterial);
+        patellaM1.setTranslateX(0.0);
+        Sphere patellaM2 = new Sphere(5.0);
+        patellaM2.setMaterial(baseSphereMaterial);
+        patellaM2.setTranslateX(0.0);
+        
+        sphereM1Group.getChildren().add(patellaM1);
+        sphereM2Group.getChildren().add(patellaM2);
+    	
+        // Set sphere group at each cylinder base
+        sphereM1Group.setTx(100);
+        sphereM2Group.setTx(-100.0);
+    }
+    
+    /**
+     * buildTranslationTables
+     */
+    private void buildTranslationTables() {
+    	
+        translationTableMaterial.setSpecularColor(Color.BLUE);
+        
+        Box translationTableM1 = new Box(5, 100, 40);
+        translationTableM1.setMaterial(translationTableMaterial);
+        translationTableM1.setTranslateX(0.0);
+        Box translationTableM2 = new Box(5, 100, 40);
+        translationTableM2.setMaterial(translationTableMaterial);
+        translationTableM2.setTranslateX(0.0);
+        
+        // Set Boxes position 
+      //  translationTable1Group.setTx(100.0);
+      //  translationTable2Group.setTx(-100.0);
+        
+        translationTable1Group.getChildren().add(translationTableM1);
+        translationTable2Group.getChildren().add(translationTableM2);
+    }
+
+
 }

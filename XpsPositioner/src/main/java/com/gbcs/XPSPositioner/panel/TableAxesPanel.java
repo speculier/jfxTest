@@ -3,7 +3,6 @@ package com.gbcs.XPSPositioner.panel;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.enumeration.MoveAxe;
-import com.gbcs.XPSPositioner.enumeration.SequenceAction;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;

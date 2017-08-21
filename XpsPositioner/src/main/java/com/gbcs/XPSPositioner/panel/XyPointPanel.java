@@ -2,34 +2,31 @@ package com.gbcs.XPSPositioner.panel;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.data.DoubleRangeStringConverter;
-
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
 
 /**
- * XyPointPane
+ * XyPointPanel
  * @author Sébastien
  *
  */
-public class XyPointPane extends TitledPane {
+public class XyPointPanel extends TitledPane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(XyPointPane.class);
+	private static final Logger logger = Logger.getLogger(XyPointPanel.class);
 	
 	private TextField textFieldX = new TextField("");
 	private TextField textFieldY = new TextField("");
 	
 	/**
-	 * XyPointPane ctor
+	 * XyPointPanel ctor
 	 * @param text
 	 */
-	public XyPointPane(String text) {
+	public XyPointPanel(String text) {
 		
  	 	// Labels
  	 	Label labelX = new Label("X");

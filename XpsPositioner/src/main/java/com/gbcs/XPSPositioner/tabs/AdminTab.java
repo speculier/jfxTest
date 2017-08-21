@@ -2,7 +2,6 @@ package com.gbcs.XPSPositioner.tabs;
 
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.GabiController;
 import com.gbcs.XPSPositioner.components.XpsAngleSpinner;
 import com.gbcs.XPSPositioner.panel.GabiView;
 import com.gbcs.XPSPositioner.util.Constants;
