@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import com.gbcs.XPSPositioner.data.SpeedData;
 import com.gbcs.XPSPositioner.dialog.SpeedDialog;
 import com.gbcs.XPSPositioner.enumeration.MoveAxe;
+import com.gbcs.XPSPositioner.form.XForm;
 import com.gbcs.XPSPositioner.panel.AxeTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panel.GabiView;
 
@@ -105,7 +106,11 @@ public class TablesTab extends Tab {
 	 * origin
 	 */
 	private void origin() {
-		
+		gabiView.getMainGraphicalForm().getTranslationTable1Group().reset();
+		gabiView.getMainGraphicalForm().getTranslationTable2Group().reset();
+		gabiView.getMainGraphicalForm().getSphereM1Group().reset();
+		gabiView.getMainGraphicalForm().getSphereM2Group().reset();
+		gabiView.getMainGraphicalForm().getTelescopeGroup().reset();
 	}
 	
 	/**

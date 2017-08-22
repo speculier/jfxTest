@@ -41,7 +41,7 @@ public class MainGraphicalForm extends XForm {
     private final XForm cameraXform3 = new XForm();
     
     // Shapes and group
-  	private final XForm shapesGroup = new XForm();
+  	public final XForm shapesGroup = new XForm();
  	private final XForm translationTable1Group = new XForm();
  	private final XForm translationTable2Group = new XForm();
  	private final XForm sphereM1Group = new XForm();

@@ -107,16 +107,28 @@ public class XForm extends Group {
     // public void setTranslateZ(double z) { t.setZ(z); }
     // Use these methods instead:
     /**
-     * setTx
-     * @param x
-     */
-    public void setTx(double x) { t.setX(x); }
-    
-    /**
      * setTy
      * @param y
      */
-    public void setTy(double y) { t.setY(y); }
+    public void setTy(double y) { t.setX(y); }
+    
+    /**
+     * getTy
+     * @param double
+     */
+    public double getTy() { return t.getX(); }
+    
+    /**
+     * setTx
+     * @param x
+     */
+    public void setTx(double x) { t.setY(x); }
+    
+    /**
+     * getTx
+     * return double
+     */
+    public double getTx() { return t.getY(); }
     
     /**
      * setTz
@@ -124,6 +136,12 @@ public class XForm extends Group {
      */
     public void setTz(double z) { t.setZ(z); }
 
+    /**
+     * getTz
+     * return double
+     */
+    public double getTz() { return t.getZ(); }
+    
     /**
      * setRotate
      * @param x

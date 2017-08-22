@@ -75,9 +75,9 @@ public class AxeRotationManagementPanel extends AbstractRotationManagementPanel 
 			
 			logger.log(Level.INFO, "Relative move " + typeOnAxe + ": " + Double.parseDouble(comboRelativeValue.getSelectionModel().getSelectedItem().toString()));
 		} catch (NumberFormatException ex) {
-	        logger.error("Bad relative move value. Move operation cancelled");
+	        logger.error("Bad relative rotation value. Rotation operation cancelled");
 	    } catch (NullPointerException ex) {
-	    	logger.error("Bad relative move value. Move operation cancelled");
+	    	logger.error("Bad relative rotation value. Rotation operation cancelled");
 	    }
 	}
 		
@@ -102,11 +102,11 @@ public class AxeRotationManagementPanel extends AbstractRotationManagementPanel 
 			
 			comboAbsoluteValue.getItems().add(value);
 			
-			logger.log(Level.INFO, "Absolute move " + typeOnAxe + ": " + Double.parseDouble(comboAbsoluteValue.getSelectionModel().getSelectedItem().toString()));
+			logger.log(Level.INFO, "Absolute rotation " + typeOnAxe + ": " + Double.parseDouble(comboAbsoluteValue.getSelectionModel().getSelectedItem().toString()));
 		} catch (NumberFormatException ex) {
-	        logger.error("Bad absolute move value. Move operation cancelled");
+	        logger.error("Bad absolute rotation value. Rotation operation cancelled");
 	    } catch (NullPointerException ex) {
-	    	logger.error("Bad absolute move value. Move operation cancelled");
+	    	logger.error("Bad absolute rotation value. Rotation operation cancelled");
 	    }
 	}
 	
