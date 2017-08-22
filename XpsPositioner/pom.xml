@@ -55,7 +55,7 @@
 							<Implementation-Vendor>GB Conseils et Services</Implementation-Vendor>
 							<Implementation-URL>www.google.fr</Implementation-URL>
 							<Build-Date>${buildNumber}</Build-Date>
-							<Main-Class>com.gbcs.XPSPositioner.XPSPositionerApplication</Main-Class>
+							<Main-Class>com.gbcs.XPSPositioner.GabiLauncher</Main-Class>
 						</manifestEntries>
 					</archive>
 				</configuration>
@@ -91,6 +91,29 @@
 			        <mainClass>com.gbcs.TestJavaFX.JavaFXApp</mainClass>
 			    </configuration>
 			</plugin>
+		    <plugin>
+	        <artifactId>maven-assembly-plugin</artifactId>
+	        <configuration>
+	            <archive>
+	                <manifest>
+	                    <addClasspath>true</addClasspath>
+	                    <mainClass>com.gbcs.XPSPositioner.GabiLauncher</mainClass>
+	                </manifest>
+	            </archive>
+	            <descriptorRefs>
+	                <descriptorRef>jar-with-dependencies</descriptorRef>
+	            </descriptorRefs>
+	        </configuration>
+	        <executions>
+	            <execution>
+	                <id>make-my-jar-with-dependencies</id>
+	                <phase>package</phase>
+	                <goals>
+	                    <goal>single</goal>
+	                </goals>
+	            </execution>
+	        </executions>
+	    </plugin>
 	 </plugins>
   </build>
 </project>
