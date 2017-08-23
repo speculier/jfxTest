@@ -1,9 +1,7 @@
 package com.gbcs.XPSPositioner;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -16,33 +14,15 @@ import org.apache.log4j.Logger;
 import javafx.collections.ObservableList;
 
 /**
- * GabiManager
+ * GabiController
  * @author Sébastien
  *
  */
-public class GabiManager {
+public class GabiController {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(GabiManager.class);
+	private static final Logger logger = Logger.getLogger(GabiController.class);
 
-	private GabiApplication mainApplication;
-	   
-	/**
-	 * GabiManager ctor
-	 * @param application
-	 */
-	public GabiManager(GabiApplication application) {
-		mainApplication = application;
-	}
-	
-	/**
-	 * getApplication
-	 * @return
-	 */
-	public GabiApplication getApplication() {
-		return mainApplication;
-	}
-	
 	/**
 	 * saveSequenceToFile
 	 * @param fileToSave

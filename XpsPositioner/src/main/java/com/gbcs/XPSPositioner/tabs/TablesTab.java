@@ -39,6 +39,7 @@ public class TablesTab extends Tab {
 	public TablesTab(GabiView view, String text) {
 		
 		gabiView = view;
+		
 		setClosable(false);
 		setText(text);
 		

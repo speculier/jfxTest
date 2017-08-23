@@ -205,8 +205,8 @@ public class MainGraphicalForm extends XForm {
                 	cameraXform.ry.setAngle(cameraXform.ry.getAngle() - mouseDeltaX * Constants.MOUSE_SPEED * modifier * Constants.ROTATION_SPEED);  
                     cameraXform.rx.setAngle(cameraXform.rx.getAngle() + mouseDeltaY * Constants.MOUSE_SPEED * modifier * Constants.ROTATION_SPEED);
                     
-                    getGabiView().getAdminTab().setXAngleSpinnerValue(cameraXform.rx.getAngle());
-                    getGabiView().getAdminTab().setYAngleSpinnerValue(cameraXform.ry.getAngle());
+                    getGabiView().getToto().getAdminTab().setXAngleSpinnerValue(cameraXform.rx.getAngle());
+                    getGabiView().getToto().getAdminTab().setYAngleSpinnerValue(cameraXform.ry.getAngle());
                 }
                 
                 // Right click : move scene
