@@ -8,8 +8,10 @@ package com.gbcs.XPSPositioner.util;
 public class Constants {
 	
     public static final double CAMERA_INITIAL_DISTANCE = -450;
+    public static final double CAMERA_INITIAL_X_POSITION = -48;
+    public static final double CAMERA_INITIAL_Y_POSITION = 51;
     public static final double CAMERA_INITIAL_X_ANGLE = 20.0;
-    public static final double CAMERA_INITIAL_Y_ANGLE = 210.0;
+    public static final double CAMERA_INITIAL_Y_ANGLE = 140.0;
     public static final double CAMERA_NEAR_CLIP = 0.1;
     public static final double CAMERA_FAR_CLIP = 10000.0;
     public static final double AXIS_LENGTH = 500.0;

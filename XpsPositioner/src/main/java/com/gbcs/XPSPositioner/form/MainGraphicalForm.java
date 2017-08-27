@@ -6,6 +6,7 @@ import com.gbcs.XPSPositioner.panel.GabiView;
 import com.gbcs.XPSPositioner.util.Constants;
 
 import javafx.event.EventHandler;
+import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
@@ -18,6 +19,7 @@ import javafx.scene.paint.PhongMaterial;
 import javafx.scene.shape.Box;
 import javafx.scene.shape.Cylinder;
 import javafx.scene.shape.Sphere;
+import javafx.scene.transform.Rotate;
 
 /**
  * MainGraphicalForm
@@ -64,7 +66,7 @@ public class MainGraphicalForm extends XForm {
     private final PhongMaterial bodyTelescopeCylinderMaterial = new PhongMaterial(Color.DARKRED);
     private final PhongMaterial baseSphereMaterial = new PhongMaterial(Color.WHITE);
     private final PhongMaterial translationTableMaterial = new PhongMaterial(Color.DARKBLUE);
-
+    		
     /**
      * getAxisGroup
      * @return
@@ -126,7 +128,7 @@ public class MainGraphicalForm extends XForm {
 		mainGabiView = view;
 		
         // Create 3D scene GREY with the root group
-    	scene3D = new SubScene(root3D, 1024, 768, true, SceneAntialiasing.BALANCED);
+    	scene3D = new SubScene(root3D, 1100, 900, true, SceneAntialiasing.BALANCED);
         scene3D.setFill(Color.GREY);
         scene3D.setCamera(camera);
         
@@ -141,6 +143,9 @@ public class MainGraphicalForm extends XForm {
         
         // Build 3D shapes
         buildShapes();
+        
+        // Set initial scene orientation
+        setCurrentSceneOrientation(true, Constants.CAMERA_INITIAL_X_ANGLE, Constants.CAMERA_INITIAL_Y_ANGLE, Constants.CAMERA_INITIAL_DISTANCE);
 	}
 	
 	/**
@@ -205,8 +210,8 @@ public class MainGraphicalForm extends XForm {
                 	cameraXform.ry.setAngle(cameraXform.ry.getAngle() - mouseDeltaX * Constants.MOUSE_SPEED * modifier * Constants.ROTATION_SPEED);  
                     cameraXform.rx.setAngle(cameraXform.rx.getAngle() + mouseDeltaY * Constants.MOUSE_SPEED * modifier * Constants.ROTATION_SPEED);
                     
-                    getGabiView().getToto().getAdminTab().setXAngleSpinnerValue(cameraXform.rx.getAngle());
-                    getGabiView().getToto().getAdminTab().setYAngleSpinnerValue(cameraXform.ry.getAngle());
+                    getGabiView().getAdminTab().setXAngleSpinnerValue(cameraXform.rx.getAngle());
+                    getGabiView().getAdminTab().setYAngleSpinnerValue(cameraXform.ry.getAngle());
                 }
                 
                 // Right click : move scene
@@ -227,10 +232,10 @@ public class MainGraphicalForm extends XForm {
      */
     public void setCurrentSceneOrientation(boolean centerScene, double xAngle, double yAngle, double distanceFromCamera) {
     	
-    	// Center in the middle of the scene
+    	// Do not center in the middle of the scene, center with main shapes
     	if (centerScene) {
-    		cameraXform2.t.setX(0.0);
-    		cameraXform2.t.setY(0.0);
+    		cameraXform2.t.setX(Constants.CAMERA_INITIAL_X_POSITION);
+    		cameraXform2.t.setY(Constants.CAMERA_INITIAL_Y_POSITION);
     	}
     	
     	// Set distance from camera and the scene
@@ -299,9 +304,9 @@ public class MainGraphicalForm extends XForm {
 
     	buildTranslationTables();
     	
-    	// buildPalettas();
+    	buildPalettas();
     	
-    	// buildCylinder();
+    	buildCylinder();
     	 
         // Add base forms group in the groups
         gabiGroup.getChildren().add(telescopeGroup);
@@ -326,9 +331,12 @@ public class MainGraphicalForm extends XForm {
         bodyTelescopeCylinderMaterial.setSpecularColor(Color.RED);
  
         // Cylinder
-        Cylinder telescopeCylinder = new Cylinder(40.0,100.0);
+        Cylinder telescopeCylinder = new Cylinder(40.0,140.0);
         telescopeCylinder.setMaterial(bodyTelescopeCylinderMaterial);
-        telescopeCylinder.setRotate(90.0);
+        telescopeCylinder.setRotationAxis(Rotate.Z_AXIS);
+        telescopeCylinder.setRotate(100.0);
+        telescopeCylinder.setTranslateY(107);
+        telescopeCylinder.setTranslateX(62);
         
         // Add shapes in each group
         telescopeGroup.getChildren().add(telescopeCylinder);
@@ -342,19 +350,16 @@ public class MainGraphicalForm extends XForm {
         baseSphereMaterial.setSpecularColor(Color.LIGHTBLUE);
 
         // M1 and M2 spheres
-        Sphere patellaM1 = new Sphere(5.0);
+        Sphere patellaM1 = new Sphere(3.0);
         patellaM1.setMaterial(baseSphereMaterial);
-        patellaM1.setTranslateX(0.0);
-        Sphere patellaM2 = new Sphere(5.0);
+        Sphere patellaM2 = new Sphere(3.0);
         patellaM2.setMaterial(baseSphereMaterial);
-        patellaM2.setTranslateX(0.0);
         
         sphereM1Group.getChildren().add(patellaM1);
         sphereM2Group.getChildren().add(patellaM2);
-    	
-        // Set sphere group at each cylinder base
-        sphereM1Group.setTx(100);
-        sphereM2Group.setTx(-100.0);
+        patellaM1.setTranslateY(53);
+        patellaM2.setTranslateY(76);
+        patellaM2.setTranslateX(135);
     }
     
     /**
@@ -366,18 +371,12 @@ public class MainGraphicalForm extends XForm {
         
         Box translationTableM1 = new Box(5, 100, 40);
         translationTableM1.setMaterial(translationTableMaterial);
-        translationTableM1.setTranslateX(0.0);
         Box translationTableM2 = new Box(5, 100, 40);
         translationTableM2.setMaterial(translationTableMaterial);
-        translationTableM2.setTranslateX(0.0);
-        
-        // Set Boxes position 
-      //  translationTable1Group.setTx(100.0);
-      //  translationTable2Group.setTx(-100.0);
+        translationTableM2.setTranslateY(23);
+        translationTableM2.setTranslateX(135);
         
         translationTable1Group.getChildren().add(translationTableM1);
         translationTable2Group.getChildren().add(translationTableM2);
     }
-
-
 }

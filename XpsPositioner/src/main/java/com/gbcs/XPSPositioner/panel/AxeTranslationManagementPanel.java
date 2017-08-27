@@ -6,6 +6,9 @@ import org.apache.log4j.Logger;
 import com.gbcs.XPSPositioner.enumeration.MoveAxe;
 import com.gbcs.XPSPositioner.enumeration.MoveSign;
 
+import javafx.geometry.Point3D;
+import javafx.scene.transform.Rotate;
+
 /**
  * AxeTranslationManagementPanel
  * @author Sébastien
@@ -43,7 +46,7 @@ public class AxeTranslationManagementPanel extends AbstractTranslationManagement
 	 * relativeMovePlus
 	 */
 	@Override
-	protected void relativeMovePlus() {
+	protected void relativeMovePlus() {		        		
 		relativeMove(MoveSign.MOVE_PLUS);
 	}
 	
@@ -56,8 +59,6 @@ public class AxeTranslationManagementPanel extends AbstractTranslationManagement
 		try {
 			double initialvalue = 0;
 			double relativeValue = Double.parseDouble(comboRelativeValue.getEditor().getText());
-			logger.log(Level.DEBUG, "initialvalue:" + initialvalue);
-			logger.log(Level.DEBUG, "relativeValue:" + relativeValue);
 			
 			switch (axe) {
 			case X1:

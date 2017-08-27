@@ -137,6 +137,6 @@ public class TablesTab extends Tab {
 	 * emergency
 	 */
 	private void emergency() {
-		
+
 	}
 }

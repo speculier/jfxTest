@@ -34,19 +34,4 @@ public abstract class AbstractTranslationManagementPanel extends AbstractMoveMan
  	 	labelUnitRelativeValue.setText(unit.toString());
  	 	labelUnitAbsoluteValue.setText(unit.toString());
  	 }
-	
-	/**
-	 * relativeMovePlus
-	 */
-	//protected abstract void relativeMoveMine();
-	
-	/**
-	 * relativeMovePlus
-	 */
-//	protected abstract void relativeMovePlus();
-	
-	/**
-	 * absoluteMove
-	 */
-	//protected abstract void absoluteMove();
 }

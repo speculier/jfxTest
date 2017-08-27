@@ -110,13 +110,13 @@ public class XForm extends Group {
      * setTy
      * @param y
      */
-    public void setTy(double y) { t.setX(y); }
+    public void setTy(double y) { t.setZ(y); }
     
     /**
      * getTy
      * @param double
      */
-    public double getTy() { return t.getX(); }
+    public double getTy() { return t.getZ(); }
     
     /**
      * setTx
@@ -134,13 +134,13 @@ public class XForm extends Group {
      * setTz
      * @param z
      */
-    public void setTz(double z) { t.setZ(z); }
+    public void setTz(double z) { t.setX(z); }
 
     /**
      * getTz
      * return double
      */
-    public double getTz() { return t.getZ(); }
+    public double getTz() { return t.getX(); }
     
     /**
      * setRotate

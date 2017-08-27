@@ -23,6 +23,7 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioMenuItem;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
@@ -46,6 +47,9 @@ public class GabiView extends BorderPane {
     
     // Main statusBar 
     private final StatusBarPanel statusBar = new StatusBarPanel();
+    
+    // Split pane
+    private SplitPane splitPanel;
     
     // Right tabed panels and its panels
     private final TabPane tabPane = new TabPane();  
@@ -112,15 +116,24 @@ public class GabiView extends BorderPane {
 		Group root = new Group();
 		mainGraphicalForm = new MainGraphicalForm(root, this);
         root.getChildren().add(mainGraphicalForm);
-    	
-        // Set the 3D area in the center of the main panel
-        setCenter(mainGraphicalForm.getSubScene());
 
     	// Build menus
     	buildMenus();
     	
     	// Build tabs
     	buildTabs();
+    
+    	// Insert in the center a split panel, that contains:
+    	// - on the left the 3D scene area
+    	// - on the right the tab pane (tables, meca, ...)
+    	splitPanel = new SplitPane(new BorderPane(mainGraphicalForm.getSubScene()),tabPane);    	
+    	setCenter(splitPanel);
+      
+        // Set menu bar to the top
+	    setTop(menuBar);
+	    
+	    // Set status bar to the bottom
+		setBottom(statusBar);
 	}
 	
     /**
@@ -148,18 +161,6 @@ public class GabiView extends BorderPane {
         tabPane.getTabs().add(essaiTab);
         tabPane.getTabs().add(sequenceTab);
         tabPane.getTabs().add(adminTab);
-        
-        // Set the tab pane to the right 
-        setRight(tabPane);
-        
-        // Set menu bar to the top
-	    setTop(menuBar);
-	    
-	    // Set status bar to the bottom
-		setBottom(statusBar);
-        
-		// Set size
-        setPrefSize(800,600);
     }
 	
     /**
