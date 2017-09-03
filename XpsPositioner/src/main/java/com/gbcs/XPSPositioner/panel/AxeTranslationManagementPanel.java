@@ -57,31 +57,14 @@ public class AxeTranslationManagementPanel extends AbstractTranslationManagement
 	protected void relativeMove(MoveSign sign) {
 		
 		try {
-			double initialvalue = 0;
 			double relativeValue = Double.parseDouble(comboRelativeValue.getEditor().getText());
-			
-			switch (axe) {
-			case X1:
-				initialvalue = gabiView.getMainGraphicalForm().getTranslationTable1Group().getTx();
-				gabiView.getMainGraphicalForm().getTranslationTable1Group().setTx((sign == MoveSign.MOVE_MINE) ? (initialvalue - relativeValue) : (initialvalue + relativeValue));
-				break;
-			case X2:
-				initialvalue = gabiView.getMainGraphicalForm().getTranslationTable2Group().getTx();
-				gabiView.getMainGraphicalForm().getTranslationTable2Group().setTx((sign == MoveSign.MOVE_MINE) ? (initialvalue - relativeValue) : (initialvalue + relativeValue));
-				break;
-			case Y1:
-				initialvalue = gabiView.getMainGraphicalForm().getTranslationTable1Group().getTy();
-				gabiView.getMainGraphicalForm().getTranslationTable1Group().setTy((sign == MoveSign.MOVE_MINE) ? (initialvalue - relativeValue) : (initialvalue + relativeValue));
-				break;	
-			case Y2:
-				initialvalue = gabiView.getMainGraphicalForm().getTranslationTable2Group().getTy();
-				gabiView.getMainGraphicalForm().getTranslationTable2Group().setTy((sign == MoveSign.MOVE_MINE) ? (initialvalue - relativeValue) : (initialvalue + relativeValue));
-				break;	
-			}
-			
+			gabiView.getMainGraphicalForm().doRelativeTableTranslation(axe, sign,relativeValue);		
+						
 			updateCurrentValue();
 			
-			// comboRelativeValue.getItems().add(relativeValue);
+			if (comboRelativeValue.getItems().contains(relativeValue) == false) {
+				comboRelativeValue.getItems().add(relativeValue);
+			}
 			
 			logger.log(Level.INFO, "Relative translation " + axe + ": " + relativeValue);
 		} catch (NumberFormatException ex) {
@@ -99,25 +82,13 @@ public class AxeTranslationManagementPanel extends AbstractTranslationManagement
 				
 		try {
 			double value = Double.parseDouble(comboAbsoluteValue.getEditor().getText());
-			
-			switch (axe) {
-				case X1:
-					gabiView.getMainGraphicalForm().getTranslationTable1Group().setTx(value);
-					break;
-				case X2:
-					gabiView.getMainGraphicalForm().getTranslationTable2Group().setTx(value);
-					break;
-				case Y1:
-					gabiView.getMainGraphicalForm().getTranslationTable1Group().setTy(value);
-					break;	
-				case Y2:
-					gabiView.getMainGraphicalForm().getTranslationTable2Group().setTy(value);
-					break;					
-			}
+			gabiView.getMainGraphicalForm().doAbsoluteTableTranslation(axe, value);
 			
 			updateCurrentValue();
 			
-			// comboAbsoluteValue.getItems().add(value);
+			if (comboAbsoluteValue.getItems().contains(value) == false) {
+				comboAbsoluteValue.getItems().add(value);
+			}
 			
 			logger.log(Level.INFO, "Absolute translation " + axe + ": " + value);
 		} catch (NumberFormatException ex) {

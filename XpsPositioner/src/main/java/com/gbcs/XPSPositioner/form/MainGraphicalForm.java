@@ -2,11 +2,13 @@ package com.gbcs.XPSPositioner.form;
 
 import org.apache.log4j.Logger;
 
+import com.gbcs.XPSPositioner.enumeration.MoveAxe;
+import com.gbcs.XPSPositioner.enumeration.MoveSign;
 import com.gbcs.XPSPositioner.panel.GabiView;
+import com.gbcs.XPSPositioner.parameters.GabiParameters;
 import com.gbcs.XPSPositioner.util.Constants;
 
 import javafx.event.EventHandler;
-import javafx.geometry.Point3D;
 import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.PerspectiveCamera;
@@ -34,15 +36,16 @@ public class MainGraphicalForm extends XForm {
 	private Group root3D;
 	private SubScene scene3D;
 	private GabiView mainGabiView;
-		
+
     // Axis group: contains the 3 axis X, Y and Z
 	private final XForm axisGroup = new XForm();
-    	
+    
+	// CAmera groups
 	private final XForm cameraXform = new XForm();
 	private final XForm cameraXform2 = new XForm();
     private final XForm cameraXform3 = new XForm();
     
-    // Shapes and group
+    // Shapes groups
   	public final XForm shapesGroup = new XForm();
  	private final XForm translationTable1Group = new XForm();
  	private final XForm translationTable2Group = new XForm();
@@ -51,10 +54,25 @@ public class MainGraphicalForm extends XForm {
  	private final XForm gabiGroup = new XForm();
  	private final XForm telescopeGroup = new XForm();
  	
+ 	// Reference point
+ 	private ReferencePoint referencePoint = new ReferencePoint(0, 0, 0);
+	
+ 	// Shapes
+    private Cylinder telescopeCylinder = new Cylinder(GabiParameters.getInstance().getGabiDataParameters().getCylinderRadius(),
+    		GabiParameters.getInstance().getGabiDataParameters().getCylinderHeight());
+    private Sphere patellaM1 = new Sphere(GabiParameters.getInstance().getGabiDataParameters().getPatellaRadius());
+    private Sphere patellaM2 = new Sphere(GabiParameters.getInstance().getGabiDataParameters().getPatellaRadius());
+    private Box translationTableM1 = new Box(GabiParameters.getInstance().getGabiDataParameters().getTableWidth(), 
+    		GabiParameters.getInstance().getGabiDataParameters().getTableHeight(), 
+    		GabiParameters.getInstance().getGabiDataParameters().getTableDepth());
+    private Box translationTableM2 = new Box(GabiParameters.getInstance().getGabiDataParameters().getTableWidth(), 
+    		GabiParameters.getInstance().getGabiDataParameters().getTableHeight(), 
+    		GabiParameters.getInstance().getGabiDataParameters().getTableDepth());
+ 	
     // 3D perspective Camera
     private final PerspectiveCamera camera = new PerspectiveCamera(true);
     
-    // Positions variables
+    // Mouse positions variables
     private double mousePosX;
     private double mousePosY;
     private double mouseOldX;
@@ -66,15 +84,7 @@ public class MainGraphicalForm extends XForm {
     private final PhongMaterial bodyTelescopeCylinderMaterial = new PhongMaterial(Color.DARKRED);
     private final PhongMaterial baseSphereMaterial = new PhongMaterial(Color.WHITE);
     private final PhongMaterial translationTableMaterial = new PhongMaterial(Color.DARKBLUE);
-    		
-    /**
-     * getAxisGroup
-     * @return
-     */
-    public XForm getAxisGroup() {
-    	return axisGroup;
-    }
-    
+
     /**
      * getSubScene
      * @return
@@ -99,22 +109,50 @@ public class MainGraphicalForm extends XForm {
     	return mainGabiView;
     }
     
+    /**
+     * getMainReferencePoint
+     * @return
+     */
+    public ReferencePoint getMainReferencePoint() {
+    	return referencePoint;
+    }
+    
+    /**
+     * getTranslationTable1Group
+     * @return
+     */
 	public XForm getTranslationTable1Group() {
 		return translationTable1Group;
 	}
 
+	/**
+	 * getTranslationTable2Group
+	 * @return
+	 */
 	public XForm getTranslationTable2Group() {
 		return translationTable2Group;
 	}
 
+	/**
+	 * getSphereM1Group
+	 * @return
+	 */
 	public XForm getSphereM1Group() {
 		return sphereM1Group;
 	}
 
+	/**
+	 * getSphereM2Group
+	 * @return
+	 */
 	public XForm getSphereM2Group() {
 		return sphereM2Group;
 	}
 
+	/**
+	 * getTelescopeGroup
+	 * @return
+	 */
 	public XForm getTelescopeGroup() {
 		return telescopeGroup;
 	}
@@ -138,8 +176,8 @@ public class MainGraphicalForm extends XForm {
 	    // Build camera group
         buildCameras();
         
-        // Build Axis group
-        buildAxes();
+        // Build reference group
+        buildReference();
         
         // Build 3D shapes
         buildShapes();
@@ -224,6 +262,76 @@ public class MainGraphicalForm extends XForm {
     }
     
     /**
+     * doRelativeTableTranslation
+     * @param axe
+     * @param value
+     */
+    public void doAbsoluteTableTranslation(MoveAxe axe, double value) {
+		switch (axe) {
+		case X1:
+			getTranslationTable1Group().setTx(value);
+			break;
+		case X2:
+			getTranslationTable2Group().setTx(value);
+			break;
+		case Y1:
+			getTranslationTable1Group().setTy(value);
+			break;	
+		case Y2:
+			getTranslationTable2Group().setTy(value);
+			break;					
+		}
+    }
+    
+    /**
+     * doRelativeTableTranslation
+     * @param axe
+     * @param sign
+     * @param value
+     */
+    public void doRelativeTableTranslation(MoveAxe axe, MoveSign sign, double value) {
+
+		double initialTranslateValue = 0;
+		double initialRotateValue = getTelescopeGroup().getRz();
+
+    	// Rotate telescope
+    	switch (GabiParameters.getInstance().getGabiDataParameters().getRotationCenter()) {
+		case NEAR_M2_PATELLA:
+			getTelescopeGroup().setZRotationPivot(patellaM2.getTranslateX(), patellaM2.getTranslateY(), patellaM2.getTranslateZ());
+			getTelescopeGroup().setRz((sign == MoveSign.MOVE_MINE) ? (initialRotateValue - 10) : (initialRotateValue + 10));
+			break;	
+		case NEAR_MIDDLE_OF_M1M2:
+			getTelescopeGroup().setZRotationPivot(patellaM1.getTranslateX(), patellaM1.getTranslateY(), patellaM1.getTranslateZ());
+			getTelescopeGroup().setRz((sign == MoveSign.MOVE_MINE) ? (initialRotateValue - 10) : (initialRotateValue + 10));
+			break;	
+		case VIRTUAL_PATELLA_UNDER_M1:
+			getTelescopeGroup().setZRotationPivot(patellaM1.getTranslateX(), patellaM1.getTranslateY(), patellaM1.getTranslateZ());
+			getTelescopeGroup().setRz((sign == MoveSign.MOVE_MINE) ? (initialRotateValue - 10) : (initialRotateValue + 10));
+			break;	
+    	}
+    	
+    	// Translate table
+		switch (axe) {
+		case X1:
+			initialTranslateValue = getTranslationTable1Group().getTx();
+	    	getTranslationTable1Group().setTx((sign == MoveSign.MOVE_MINE) ? (initialTranslateValue - value) : (initialTranslateValue + value));
+	    	break;
+		case X2:
+			initialTranslateValue = getTranslationTable2Group().getTx();
+			getTranslationTable2Group().setTx((sign == MoveSign.MOVE_MINE) ? (initialTranslateValue - value) : (initialTranslateValue + value));
+			break;
+		case Y1:
+			initialTranslateValue = getTranslationTable1Group().getTy();
+			getTranslationTable1Group().setTy((sign == MoveSign.MOVE_MINE) ? (initialTranslateValue - value) : (initialTranslateValue + value));
+			break;	
+		case Y2:
+			initialTranslateValue = getTranslationTable2Group().getTy();
+			getTranslationTable2Group().setTy((sign == MoveSign.MOVE_MINE) ? (initialTranslateValue - value) : (initialTranslateValue + value));
+			break;	
+		}
+    }
+    
+    /**
      * setCurrentSceneOrientation
      * @param centerScene
      * @param xAngle
@@ -266,35 +374,15 @@ public class MainGraphicalForm extends XForm {
     }
     
     /**
-     * buildAxes
+     * buildReference
      */
-    private void buildAxes() {
-
-        final PhongMaterial redMaterial = new PhongMaterial();
-        redMaterial.setDiffuseColor(Color.DARKRED);
-        redMaterial.setSpecularColor(Color.RED);
-
-        final PhongMaterial greenMaterial = new PhongMaterial();
-        greenMaterial.setDiffuseColor(Color.DARKGREEN);
-        greenMaterial.setSpecularColor(Color.GREEN);
-
-        final PhongMaterial blueMaterial = new PhongMaterial();
-        blueMaterial.setDiffuseColor(Color.DARKBLUE);
-        blueMaterial.setSpecularColor(Color.BLUE);
-
-        final Box xAxis = new Box(1, Constants.AXIS_LENGTH, 1);
-        final Box yAxis = new Box(Constants.AXIS_LENGTH, 1, 1);
-        final Box zAxis = new Box(1, 1, Constants.AXIS_LENGTH);
-
-        xAxis.setMaterial(greenMaterial);
-        yAxis.setMaterial(redMaterial);
-        zAxis.setMaterial(blueMaterial);
+    private void buildReference() {
 
         // Add the axes in the 'axis' group
-        axisGroup.getChildren().addAll(xAxis, yAxis, zAxis);
+        axisGroup.getChildren().add(referencePoint);
         
         // Add the 'axis' group in the 'world3D' group
-        getChildren().addAll(axisGroup);
+        getChildren().add(axisGroup);
     }
 
     /**
@@ -307,7 +395,7 @@ public class MainGraphicalForm extends XForm {
     	buildPalettas();
     	
     	buildCylinder();
-    	 
+    	
         // Add base forms group in the groups
         gabiGroup.getChildren().add(telescopeGroup);
         gabiGroup.getChildren().add(sphereM1Group);
@@ -329,15 +417,14 @@ public class MainGraphicalForm extends XForm {
     	
     	// Materials
         bodyTelescopeCylinderMaterial.setSpecularColor(Color.RED);
- 
-        // Cylinder
-        Cylinder telescopeCylinder = new Cylinder(40.0,140.0);
+        
+        // Cylinder       
         telescopeCylinder.setMaterial(bodyTelescopeCylinderMaterial);
         telescopeCylinder.setRotationAxis(Rotate.Z_AXIS);
-        telescopeCylinder.setRotate(100.0);
-        telescopeCylinder.setTranslateY(107);
-        telescopeCylinder.setTranslateX(62);
-        
+        telescopeCylinder.setRotate(GabiParameters.getInstance().getGabiDataParameters().getCylinderZAngle());
+        telescopeCylinder.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getCylinderX());
+        telescopeCylinder.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getCylinderY());
+ 
         // Add shapes in each group
         telescopeGroup.getChildren().add(telescopeCylinder);
     }
@@ -350,16 +437,16 @@ public class MainGraphicalForm extends XForm {
         baseSphereMaterial.setSpecularColor(Color.LIGHTBLUE);
 
         // M1 and M2 spheres
-        Sphere patellaM1 = new Sphere(3.0);
         patellaM1.setMaterial(baseSphereMaterial);
-        Sphere patellaM2 = new Sphere(3.0);
         patellaM2.setMaterial(baseSphereMaterial);
         
+        patellaM1.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getPatella1_X());
+        patellaM1.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getPatella1_Y());
+        patellaM2.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getPatella2_X());
+        patellaM2.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getPatella2_Y());
+
         sphereM1Group.getChildren().add(patellaM1);
         sphereM2Group.getChildren().add(patellaM2);
-        patellaM1.setTranslateY(53);
-        patellaM2.setTranslateY(76);
-        patellaM2.setTranslateX(135);
     }
     
     /**
@@ -369,12 +456,13 @@ public class MainGraphicalForm extends XForm {
     	
         translationTableMaterial.setSpecularColor(Color.BLUE);
         
-        Box translationTableM1 = new Box(5, 100, 40);
         translationTableM1.setMaterial(translationTableMaterial);
-        Box translationTableM2 = new Box(5, 100, 40);
         translationTableM2.setMaterial(translationTableMaterial);
-        translationTableM2.setTranslateY(23);
-        translationTableM2.setTranslateX(135);
+        
+        translationTableM1.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getTable1_X());
+        translationTableM1.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getTable1_Y());
+        translationTableM2.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getTable2_X());
+        translationTableM2.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getTable2_Y());
         
         translationTable1Group.getChildren().add(translationTableM1);
         translationTable2Group.getChildren().add(translationTableM2);

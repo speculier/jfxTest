@@ -8,7 +8,9 @@ import org.apache.log4j.Logger;
 import com.gbcs.XPSPositioner.data.PasswordData;
 import com.gbcs.XPSPositioner.dialog.AboutDialog;
 import com.gbcs.XPSPositioner.dialog.PasswordDialog;
+import com.gbcs.XPSPositioner.enumeration.RotationCenter;
 import com.gbcs.XPSPositioner.form.MainGraphicalForm;
+import com.gbcs.XPSPositioner.parameters.GabiParameters;
 import com.gbcs.XPSPositioner.tabs.AdminTab;
 import com.gbcs.XPSPositioner.tabs.EssaiTab;
 import com.gbcs.XPSPositioner.tabs.MecaTab;
@@ -44,12 +46,20 @@ public class GabiView extends BorderPane {
     private final MenuBar menuBar = new MenuBar();
     private Menu menuConfiguration = new Menu("Configuration");
     private Menu menuMaintenance = new Menu("Maintenance");
+    private Menu menuFile = new Menu("Fichier");
+    private Menu menuAdvancedFeatures = new Menu("Fonctionnalités avancées");
+    private Menu menuHelp = new Menu("Aide");
+    private CheckMenuItem checkMenuItemShowMainAxes = new CheckMenuItem("Axes principaux");
+    private CheckMenuItem checkMenuItemShowM1Axes = new CheckMenuItem("Axes M1");
+    private CheckMenuItem checkMenuItemShowM2Axes = new CheckMenuItem("Axes M2");
+    private CheckMenuItem checkMenuItemShowOintAxes = new CheckMenuItem("Axes Oint");
+    private CheckMenuItem checkMenuItemShowMainArrows = new CheckMenuItem("Flèches principales");
+    private CheckMenuItem checkMenuItemShowM1Arrows = new CheckMenuItem("Flèches M1");
+    private CheckMenuItem checkMenuItemShowM2Arrows = new CheckMenuItem("Flèches M2");
+    private CheckMenuItem checkMenuItemShowOintArrows = new CheckMenuItem("Flèches Oint");
     
     // Main statusBar 
     private final StatusBarPanel statusBar = new StatusBarPanel();
-    
-    // Split pane
-    private SplitPane splitPanel;
     
     // Right tabed panels and its panels
     private final TabPane tabPane = new TabPane();  
@@ -125,9 +135,8 @@ public class GabiView extends BorderPane {
     
     	// Insert in the center a split panel, that contains:
     	// - on the left the 3D scene area
-    	// - on the right the tab pane (tables, meca, ...)
-    	splitPanel = new SplitPane(new BorderPane(mainGraphicalForm.getSubScene()),tabPane);    	
-    	setCenter(splitPanel);
+    	// - on the right the tab pane (tables, meca, ...)  	
+    	setCenter(new SplitPane(new BorderPane(mainGraphicalForm.getSubScene()),tabPane));
       
         // Set menu bar to the top
 	    setTop(menuBar);
@@ -169,15 +178,15 @@ public class GabiView extends BorderPane {
     private void buildMenus() {
    
     	// File
-	    Menu menuFile = new Menu("Fichier");
 	    MenuItem menuItemFileQuit = new MenuItem("Quitter");
 	    menuItemFileQuit.setOnAction(e -> exitApplication(e));
+	    
 	    menuFile.getItems().addAll(menuItemFileQuit);
 	    
     	// Password
-	    Menu menuAdvancedFeatures = new Menu("Fonctionnalités avancées");
 	    MenuItem menuItemShowAdvancedFeatures = new MenuItem("Afficher les fonctionnalités avancées...");
 	    menuAdvancedFeatures.setOnAction(e -> showAdvancedFeatures(e));
+	    
 	    menuAdvancedFeatures.getItems().addAll(menuItemShowAdvancedFeatures);
 	    
     	// Configuration
@@ -188,13 +197,25 @@ public class GabiView extends BorderPane {
 	    
 	    // Show / hide
 	    Menu menuItemConfigurationShow = new Menu("Montrer");
-	    CheckMenuItem checkMenuItemShowM1Axes = new CheckMenuItem("Axes M1");
-	    CheckMenuItem checkMenuItemShowM2Axes = new CheckMenuItem("Axes M1");
-	    CheckMenuItem checkMenuItemShowOintAxes = new CheckMenuItem("Axes Oint");
-	    CheckMenuItem checkMenuItemShowM1Arrows = new CheckMenuItem("Flèches M1");
-	    CheckMenuItem checkMenuItemShowM2Arrows = new CheckMenuItem("Flèches M2");
-	    CheckMenuItem checkMenuItemShowOintArrows = new CheckMenuItem("Flèches Oint");
-	    menuItemConfigurationShow.getItems().addAll(checkMenuItemShowM1Axes, checkMenuItemShowM2Axes, checkMenuItemShowOintAxes, checkMenuItemShowM1Arrows, checkMenuItemShowM2Arrows, checkMenuItemShowOintArrows);
+	    checkMenuItemShowMainAxes.setSelected(true);
+	    checkMenuItemShowM1Axes.setSelected(false);
+	    checkMenuItemShowM2Axes.setSelected(false);
+	    checkMenuItemShowOintAxes.setSelected(false);
+	    checkMenuItemShowMainArrows.setSelected(true);
+	    checkMenuItemShowM1Arrows.setSelected(false);
+	    checkMenuItemShowM2Arrows.setSelected(false);
+	    checkMenuItemShowOintArrows.setSelected(false);
+	    
+	    checkMenuItemShowMainAxes.setOnAction(e -> showMainAxes(e));
+	    checkMenuItemShowM1Axes.setOnAction(e -> showM1Axes(e));
+	    checkMenuItemShowM2Axes.setOnAction(e -> showM2Axes(e));
+	    checkMenuItemShowOintAxes.setOnAction(e -> showOintAxes(e));
+	    checkMenuItemShowMainArrows.setOnAction(e -> showMainArrows(e));
+	    checkMenuItemShowM1Arrows.setOnAction(e -> showM1Arrows(e));
+	    checkMenuItemShowM2Arrows.setOnAction(e -> showM2Arrows(e));
+	    checkMenuItemShowOintArrows.setOnAction(e -> showOintArrows(e));
+	    
+	    menuItemConfigurationShow.getItems().addAll(checkMenuItemShowMainAxes, checkMenuItemShowM1Axes, checkMenuItemShowM2Axes, checkMenuItemShowOintAxes, checkMenuItemShowMainArrows, checkMenuItemShowM1Arrows, checkMenuItemShowM2Arrows, checkMenuItemShowOintArrows);
 
 	    // Rotations
 	    final ToggleGroup rotationGroup = new ToggleGroup();
@@ -204,12 +225,30 @@ public class GabiView extends BorderPane {
 	    radioMenuItemVirtualPointUnderM1.setSelected(false);
 	    RadioMenuItem radioMenuItemNearCenterOfM1M2 = new RadioMenuItem("Proche du milieu de M1 M2");
 	    radioMenuItemNearCenterOfM1M2.setToggleGroup(rotationGroup);
-	    radioMenuItemNearCenterOfM1M2.setSelected(true);
+	    radioMenuItemNearCenterOfM1M2.setSelected(false);
 	    RadioMenuItem radioMenuItemNearPointUnderM2 = new RadioMenuItem("Proche de la rotule sous M2");
 	    radioMenuItemNearPointUnderM2.setToggleGroup(rotationGroup);
 	    radioMenuItemNearPointUnderM2.setSelected(false);
+	    
+	    radioMenuItemVirtualPointUnderM1.setOnAction(e -> setRotationCenterUnderM1(e));
+	    radioMenuItemNearCenterOfM1M2.setOnAction(e -> setRotationCenterCenterOfM1M2(e));
+	    radioMenuItemNearPointUnderM2.setOnAction(e -> setRotationCenterNearUnderM2(e));
+	    
 	    menuItemConfigurationRotations.getItems().addAll(radioMenuItemVirtualPointUnderM1, radioMenuItemNearCenterOfM1M2, radioMenuItemNearPointUnderM2);
 
+	    switch(GabiParameters.getInstance().getGabiDataParameters().getRotationCenter()) {
+	    	case NEAR_MIDDLE_OF_M1M2:
+	    		radioMenuItemNearCenterOfM1M2.setSelected(true);
+	    		break;
+	    	case NEAR_M2_PATELLA:
+	    		radioMenuItemNearPointUnderM2.setSelected(true);
+	    		break;
+	    	case VIRTUAL_PATELLA_UNDER_M1:
+	    	default:
+	    		radioMenuItemVirtualPointUnderM1.setSelected(true);
+	    		break;
+	    }
+	    
 	    MenuItem menuItemConfigurationOrderNumber = new MenuItem("Numéro d'ordre");
 	    MenuItem menuItemConfigurationPassword = new MenuItem("Mot de passe");
 	    menuConfiguration.getItems().addAll(menuItemConfigurationAdresseXps, menuItemConfigurationSelectAxes, menuItemConfigurationArrowsSize, menuItemConfigurationShow, menuItemConfigurationRotations, menuItemConfigurationOrderNumber, menuItemConfigurationPassword);
@@ -221,17 +260,104 @@ public class GabiView extends BorderPane {
 	    menuMaintenance.getItems().addAll(menuItemMaintenanceXps, menuItemMaintenanceDebug);
 	    
     	// Help
-	    Menu menuHelp = new Menu("Aide");
 	    MenuItem menuHelpAPropos = new MenuItem("A Propos...");
 	    menuHelpAPropos.setOnAction(e-> showAboutDialog(e));
 	    MenuItem menuHelpManual = new MenuItem("Manuel");
 	    menuHelpManual.setOnAction(e->{
 	    	
         });
-	   
+
 	    menuHelp.getItems().addAll(menuHelpAPropos, menuHelpManual);
 	    
 	    menuBar.getMenus().addAll(menuFile, menuAdvancedFeatures, menuConfiguration, menuMaintenance, menuHelp);
+    }
+    
+    /**
+     * showMainAxes
+     * @param e
+     */
+    private void showMainAxes(ActionEvent e) {
+        getMainGraphicalForm().getMainReferencePoint().setAxesVisible(checkMenuItemShowMainAxes.isSelected());
+    }
+    
+    /**
+     * showM1Axes
+     * @param e
+     */
+    private void showM1Axes(ActionEvent e) {
+       // getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowM1Axes.isSelected());
+    }
+    
+    /**
+     * showM2Axes
+     * @param e
+     */
+    private void showM2Axes(ActionEvent e) {
+    //    getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowM2Axes.isSelected());
+    }
+    
+    /**
+     * showOintAxes
+     * @param e
+     */
+    private void showOintAxes(ActionEvent e) {
+      //  getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowOintAxes.isSelected());
+    }
+    
+    /**
+     * showMainArrows
+     * @param e
+     */
+    private void showMainArrows(ActionEvent e) {
+        getMainGraphicalForm().getMainReferencePoint().setArrowsVisible(checkMenuItemShowMainArrows.isSelected());
+    }
+    
+    /**
+     * showM1Arrows
+     * @param e
+     */
+    private void showM1Arrows(ActionEvent e) {
+     //   getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowM1Arrows.isSelected());
+    }
+    
+    /**
+     * showM2Arrows
+     * @param e
+     */
+    private void showM2Arrows(ActionEvent e) {
+    //    getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowM2Arrows.isSelected());
+    }
+    
+    /**
+     * showOintArrows
+     * @param e
+     */
+    private void showOintArrows(ActionEvent e) {
+  //      getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowOintArrows.isSelected());
+    }
+
+    /**
+     * setRotationCenterUnderM1
+     * @param e
+     */
+    private void setRotationCenterUnderM1(ActionEvent e) {
+    	GabiParameters.getInstance().getGabiDataParameters().setRotationCenter(RotationCenter.VIRTUAL_PATELLA_UNDER_M1);
+    }
+    
+    /**
+     * setRotationCenterCenterOfM1M2
+     * @param e
+     */
+    private void setRotationCenterCenterOfM1M2(ActionEvent e) {
+    	GabiParameters.getInstance().getGabiDataParameters().setRotationCenter(RotationCenter.NEAR_MIDDLE_OF_M1M2);
+    }
+    
+    /**
+     * setRotationCenterNearUnderM2
+     * @param e
+     */
+    private void setRotationCenterNearUnderM2(ActionEvent e) {
+    	GabiParameters.getInstance().getGabiDataParameters().setRotationCenter(RotationCenter.NEAR_M2_PATELLA);
     }
     
     /**
@@ -254,14 +380,6 @@ public class GabiView extends BorderPane {
  		}
 	}
 	
-    /**
-     * exitApplication
-     * @param e
-     */
-	private void exitApplication(ActionEvent e) {
-		Platform.exit();
-	}
-	
 	/**
 	 * showAboutDialog
 	 * @param e
@@ -269,5 +387,13 @@ public class GabiView extends BorderPane {
 	private void showAboutDialog(ActionEvent e) {
 	    AboutDialog about = new AboutDialog("A Propos de GABI");
 	    about.showAndWait();
+	}
+	
+    /**
+     * exitApplication
+     * @param e
+     */
+	private void exitApplication(ActionEvent e) {
+		Platform.exit();
 	}
 }

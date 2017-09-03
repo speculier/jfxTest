@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.enumeration.MoveTypeOnAxe;
 import com.gbcs.XPSPositioner.panel.AxeRotationManagementPanel;
+import com.gbcs.XPSPositioner.panel.AbstractMoveManagementPanel;
+import com.gbcs.XPSPositioner.panel.AbstractRotationManagementPanel;
 import com.gbcs.XPSPositioner.panel.AbstractTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panel.TypeOnAxeTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panel.GabiView;
@@ -51,17 +53,15 @@ public class MecaTab extends Tab {
    	 	
 	 	// Buttons
 	 	Button buttonEmergencyStop = new Button("Arrêt d'urgence");
-	 	buttonEmergencyStop.setOnAction(e->{
-
-        });
+	 	buttonEmergencyStop.setOnAction(e-> emergency());
 	 	
  	 	//
  	 	// Axes panels
  	 	//	 	
- 	 	AbstractTranslationManagementPanel axesPanelX1 = new TypeOnAxeTranslationManagementPanel(gabiView, MoveTypeOnAxe.TX);
-	 	AxeRotationManagementPanel axesPanelX2 = new AxeRotationManagementPanel(gabiView, MoveTypeOnAxe.RX);
-	 	AbstractTranslationManagementPanel axesPanelY1 = new TypeOnAxeTranslationManagementPanel(gabiView, MoveTypeOnAxe.TX);
-	 	AxeRotationManagementPanel axesPanelY2 = new AxeRotationManagementPanel(gabiView, MoveTypeOnAxe.RY);
+	 	AbstractMoveManagementPanel axesPanelX1 = new TypeOnAxeTranslationManagementPanel(gabiView, MoveTypeOnAxe.TX);
+	 	AbstractRotationManagementPanel axesPanelX2 = new AxeRotationManagementPanel(gabiView, MoveTypeOnAxe.RX);
+	 	AbstractMoveManagementPanel axesPanelY1 = new TypeOnAxeTranslationManagementPanel(gabiView, MoveTypeOnAxe.TY);
+	 	AbstractRotationManagementPanel axesPanelY2 = new AxeRotationManagementPanel(gabiView, MoveTypeOnAxe.RY);
 	 	
 	 	GridPane axesPanelsGrid = new GridPane();
 	 	axesPanelsGrid.setVgap(20);
@@ -85,5 +85,12 @@ public class MecaTab extends Tab {
    	 	
         // Add components in the tables tab
         setContent(mainGrid);
+	}
+	
+	/**
+	 * emergency
+	 */
+	private void emergency() {
+
 	}
 }

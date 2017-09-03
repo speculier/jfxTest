@@ -110,37 +110,37 @@ public class XForm extends Group {
      * setTy
      * @param y
      */
-    public void setTy(double y) { t.setZ(y); }
+    public void setTy(double y) { t.setY(y); }
     
     /**
      * getTy
      * @param double
      */
-    public double getTy() { return t.getZ(); }
+    public double getTy() { return t.getY(); }
     
     /**
      * setTx
      * @param x
      */
-    public void setTx(double x) { t.setY(x); }
+    public void setTx(double x) { t.setX(x); }
     
     /**
      * getTx
      * return double
      */
-    public double getTx() { return t.getY(); }
+    public double getTx() { return t.getX(); }
     
     /**
      * setTz
      * @param z
      */
-    public void setTz(double z) { t.setX(z); }
+    public void setTz(double z) { t.setZ(z); }
 
     /**
      * getTz
      * return double
      */
-    public double getTz() { return t.getX(); }
+    public double getTz() { return t.getZ(); }
     
     /**
      * setRotate
@@ -161,6 +161,10 @@ public class XForm extends Group {
     public void setRy(double y) { ry.setAngle(y); }
     public void setRz(double z) { rz.setAngle(z); }
 
+    public double getRx() { return rx.getAngle(); }
+    public double getRy() { return ry.getAngle(); }
+    public double getRz() { return rz.getAngle(); }
+    
     /**
      * setScale
      * @param scaleFactor
@@ -221,6 +225,42 @@ public class XForm extends Group {
         ip.setY(-y);
         ip.setZ(-z);
     }
+    
+    /**
+     * setXRotationPivot
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void setXRotationPivot(double x, double y, double z) {
+    	rx.setPivotX(x);
+    	rx.setPivotY(y);
+    	rx.setPivotY(y);
+    }
+    
+    /**
+     * setYRotationPivot
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void setYRotationPivot(double x, double y, double z) {
+    	ry.setPivotX(x);
+    	ry.setPivotY(y);
+    	ry.setPivotY(y);
+    }
+    
+    /**
+     * setZRotationPivot
+     * @param x
+     * @param y
+     * @param z
+     */
+    public void setZRotationPivot(double x, double y, double z) {
+    	rz.setPivotX(x);
+    	rz.setPivotY(y);
+    	rz.setPivotY(y);
+    }
 
     /**
      * reset
@@ -232,6 +272,9 @@ public class XForm extends Group {
         rx.setAngle(0.0);
         ry.setAngle(0.0);
         rz.setAngle(0.0);
+        setXRotationPivot(0.0,0.0,0.0);
+        setYRotationPivot(0.0,0.0,0.0);
+        setZRotationPivot(0.0,0.0,0.0);
         s.setX(1.0);
         s.setY(1.0);
         s.setZ(1.0);

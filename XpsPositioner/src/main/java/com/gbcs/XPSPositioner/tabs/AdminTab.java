@@ -28,7 +28,6 @@ public class AdminTab extends Tab {
 	
 	private GabiView gabiView;
 	
-    private CheckBox checkBoxDisplayAxes;
     private XpsAngleSpinner spinnerCurrentXAngle;
     private XpsAngleSpinner spinnerCurrentYAngle;
     
@@ -52,13 +51,6 @@ public class AdminTab extends Tab {
          	// Reset spinners to default values
          	spinnerCurrentXAngle.setDefaultValueFactory();
          	spinnerCurrentYAngle.setDefaultValueFactory();
-         });
-         
-         // Display axis or not
-         checkBoxDisplayAxes = new CheckBox("Display/hide axes");
-         checkBoxDisplayAxes.setSelected(true);
-         checkBoxDisplayAxes.setOnAction(e->{
-        	 gabiView.getMainGraphicalForm().getAxisGroup().setVisible(checkBoxDisplayAxes.isSelected());
          });
          
          // Spinners for the current X & Y angle values
@@ -86,7 +78,7 @@ public class AdminTab extends Tab {
          Label labelXAngle = new Label("X angle");
          Label labelYAngle = new Label("Y angle");
 
-         ToolBar toolBar = new ToolBar(checkBoxDisplayAxes, buttonInitialPosition, labelXAngle, spinnerCurrentXAngle, labelYAngle, spinnerCurrentYAngle);
+         ToolBar toolBar = new ToolBar(buttonInitialPosition, labelXAngle, spinnerCurrentXAngle, labelYAngle, spinnerCurrentYAngle);
          toolBar.setOrientation(Orientation.HORIZONTAL);
          
          // Add components in the tables tab

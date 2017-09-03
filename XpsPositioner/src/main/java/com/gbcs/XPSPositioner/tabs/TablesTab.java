@@ -9,6 +9,7 @@ import com.gbcs.XPSPositioner.data.SpeedData;
 import com.gbcs.XPSPositioner.dialog.SpeedDialog;
 import com.gbcs.XPSPositioner.enumeration.MoveAxe;
 import com.gbcs.XPSPositioner.form.XForm;
+import com.gbcs.XPSPositioner.panel.AbstractMoveManagementPanel;
 import com.gbcs.XPSPositioner.panel.AxeTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panel.GabiView;
 
@@ -66,10 +67,10 @@ public class TablesTab extends Tab {
  	 	//
  	 	// Axes panels
  	 	//	 	
- 	 	AxeTranslationManagementPanel axesPanelX1 = new AxeTranslationManagementPanel(gabiView, MoveAxe.X1);
- 	 	AxeTranslationManagementPanel axesPanelX2 = new AxeTranslationManagementPanel(gabiView, MoveAxe.X2);
- 	 	AxeTranslationManagementPanel axesPanelY1 = new AxeTranslationManagementPanel(gabiView, MoveAxe.Y1);
- 	 	AxeTranslationManagementPanel axesPanelY2 = new AxeTranslationManagementPanel(gabiView, MoveAxe.Y2);
+ 	 	AbstractMoveManagementPanel axesPanelX1 = new AxeTranslationManagementPanel(gabiView, MoveAxe.X1);
+ 	 	AbstractMoveManagementPanel axesPanelX2 = new AxeTranslationManagementPanel(gabiView, MoveAxe.X2);
+ 	 	AbstractMoveManagementPanel axesPanelY1 = new AxeTranslationManagementPanel(gabiView, MoveAxe.Y1);
+ 	 	AbstractMoveManagementPanel axesPanelY2 = new AxeTranslationManagementPanel(gabiView, MoveAxe.Y2);
 	 	
 	 	GridPane axesPanelsGrid = new GridPane();
 	 	axesPanelsGrid.setVgap(20);

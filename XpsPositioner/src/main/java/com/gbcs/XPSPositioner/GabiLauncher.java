@@ -5,6 +5,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.panel.GabiView;
+import com.gbcs.XPSPositioner.parameters.GabiParameters;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -50,9 +51,9 @@ public class GabiLauncher extends Application {
     	
     	// Initialize log4j
     	org.apache.log4j.BasicConfigurator.configure();
-    	    	
-    	logger.log(Level.INFO, "Starting application...");
     	
+    	logger.log(Level.INFO, "Starting application...");
+    	    	
     	// Style sheet
         setUserAgentStylesheet(STYLESHEET_MODENA);
         

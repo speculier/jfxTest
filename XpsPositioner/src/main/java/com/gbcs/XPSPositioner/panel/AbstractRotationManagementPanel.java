@@ -1,19 +1,6 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Logger;
-
 import com.gbcs.XPSPositioner.enumeration.MoveUnit;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
-import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TitledPane;
-import javafx.scene.layout.GridPane;
 
 /**
  * AbstractRotationManagementPanel
