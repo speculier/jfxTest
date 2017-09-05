@@ -3,7 +3,6 @@ package com.gbcs.XPSPositioner.panel;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.enumeration.MoveAxe;
 import com.gbcs.XPSPositioner.enumeration.MoveSign;
 import com.gbcs.XPSPositioner.enumeration.MoveTypeOnAxe;
 

@@ -2,9 +2,6 @@ package com.gbcs.XPSPositioner.form;
 
 import com.gbcs.XPSPositioner.util.Constants;
 
-import javafx.scene.paint.Color;
-import javafx.scene.paint.PhongMaterial;
-import javafx.scene.shape.Box;
 import javafx.scene.shape.Sphere;
 
 /**
@@ -30,6 +27,13 @@ public class ReferencePoint extends XForm {
 		arrows = new OrthogonalArrows(x, y, z);
 		referencePoint = new Sphere(Constants.REFERENCE_POINT_RADIUS);
 
+        // Translate reference
+        axes.setTranslate(x, y, z);
+        arrows.setTranslate(x, y, z);
+        referencePoint.setTranslateX(x);
+        referencePoint.setTranslateY(y);
+        referencePoint.setTranslateZ(z);
+        
         // Add the axes in the 'axis' group
         getChildren().addAll(axes, arrows, referencePoint);
 	}

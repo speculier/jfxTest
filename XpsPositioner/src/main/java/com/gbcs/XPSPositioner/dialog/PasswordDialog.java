@@ -5,6 +5,7 @@ import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.PasswordData;
 
+import javafx.application.Platform;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -40,6 +41,7 @@ public class PasswordDialog extends Dialog<PasswordData> {
    	 	
    	 	// TextField
    	 	fieldPassword.setEditable(true);
+   	 	Platform.runLater(() -> fieldPassword.requestFocus());
    	 
    	 	// Grid
    	 	GridPane mainGrid = new GridPane();
@@ -48,7 +50,6 @@ public class PasswordDialog extends Dialog<PasswordData> {
 	    GridPane.setHalignment(labelPassword, HPos.CENTER);  
 	   	GridPane.setHalignment(fieldPassword, HPos.CENTER);
 
-	   	
 	   	mainGrid.add(labelPassword, 0, 0);
 	   	mainGrid.add(fieldPassword, 1, 0);
 

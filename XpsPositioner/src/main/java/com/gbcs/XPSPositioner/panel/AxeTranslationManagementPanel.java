@@ -73,7 +73,7 @@ public class AxeTranslationManagementPanel extends AbstractTranslationManagement
 	    	logger.error("Bad relative translation value. Translation operation cancelled");
 	    }
 	}
-		
+
 	/**
 	 * absoluteMove
 	 */

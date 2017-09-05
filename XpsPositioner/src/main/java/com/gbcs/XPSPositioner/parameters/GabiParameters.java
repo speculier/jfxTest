@@ -10,16 +10,8 @@ import java.util.Properties;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-import com.gbcs.XPSPositioner.data.AbsoluteEssaiMoveData;
-import com.gbcs.XPSPositioner.data.AbsoluteMecaMoveData;
 import com.gbcs.XPSPositioner.data.GabiParametersData;
-import com.gbcs.XPSPositioner.data.RelativeEssaiMoveData;
-import com.gbcs.XPSPositioner.data.RelativeMecaMoveData;
 import com.gbcs.XPSPositioner.enumeration.RotationCenter;
-import com.gbcs.XPSPositioner.tabs.AdminTab;
-
-import javafx.scene.control.ButtonType;
-import javafx.util.Callback;
 
 /**
  * GabiParameters
@@ -47,7 +39,6 @@ public class GabiParameters {
 	}
 
 	private static GabiParameters instance;
-	private static Object objetSynchrone;
 	
 	/**
 	 * 
@@ -67,11 +58,9 @@ public class GabiParameters {
 	 */
 	public static GabiParameters getInstance() {
 	    if (null == instance) { // Premier appel
-	      //  synchronized(objetSynchrone) {
 	            if (null == instance) {
 	                instance = new GabiParameters();
 	            }
-	       // }
 	    }
 	    return instance;
 	}
@@ -87,11 +76,19 @@ public class GabiParameters {
 			prop.load(input);
 
 			try {
+				gabiDataParameters.setPwd(prop.getProperty("pwd"));
 				gabiDataParameters.setCylinderRadius(Double.parseDouble(prop.getProperty("cylinderRadius")));
 				gabiDataParameters.setCylinderHeight(Double.parseDouble(prop.getProperty("cylinderHeight")));
-				gabiDataParameters.setCylinderZAngle(Double.parseDouble(prop.getProperty("cylinderZAngle")));
-				gabiDataParameters.setCylinderX(Double.parseDouble(prop.getProperty("cylinder_X")));
 				gabiDataParameters.setCylinderY(Double.parseDouble(prop.getProperty("cylinder_Y")));
+				
+				gabiDataParameters.setMirror1Radius(Double.parseDouble(prop.getProperty("mirror1Radius")));
+				gabiDataParameters.setMirror1Height(Double.parseDouble(prop.getProperty("mirror1Height")));
+				gabiDataParameters.setMirror1_X(Double.parseDouble(prop.getProperty("mirror1_X")));
+				gabiDataParameters.setMirror1_Y(Double.parseDouble(prop.getProperty("mirror1_Y")));
+				gabiDataParameters.setMirror2Radius(Double.parseDouble(prop.getProperty("mirror2Radius")));
+				gabiDataParameters.setMirror2Height(Double.parseDouble(prop.getProperty("mirror2Height")));
+				gabiDataParameters.setMirror2_X(Double.parseDouble(prop.getProperty("mirror2_X")));
+				gabiDataParameters.setMirror2_Y(Double.parseDouble(prop.getProperty("mirror2_Y")));
 				
 				gabiDataParameters.setPatellaRadius(Double.parseDouble(prop.getProperty("patellaRadius")));
 				gabiDataParameters.setPatella1_X(Double.parseDouble(prop.getProperty("patella1_X")));
@@ -115,9 +112,17 @@ public class GabiParameters {
 			
 			logger.log(Level.DEBUG, "cylinderRadius=" + gabiDataParameters.getCylinderRadius());
 			logger.log(Level.DEBUG, "cylinderHeight=" + gabiDataParameters.getCylinderHeight());
-			logger.log(Level.DEBUG, "cylinderZAngle=" + gabiDataParameters.getCylinderZAngle());
-			logger.log(Level.DEBUG, "cylinder_X=" + gabiDataParameters.getCylinderX());
 			logger.log(Level.DEBUG, "cylinder_Y=" + gabiDataParameters.getCylinderY());
+			
+			logger.log(Level.DEBUG, "mirror1Radius=" + gabiDataParameters.getMirror1Radius());
+			logger.log(Level.DEBUG, "mirror1Height=" + gabiDataParameters.getMirror1Height());
+			logger.log(Level.DEBUG, "mirror1_X=" + gabiDataParameters.getMirror1_X());
+			logger.log(Level.DEBUG, "mirror1_Y=" + gabiDataParameters.getMirror1_Y());
+			
+			logger.log(Level.DEBUG, "mirror2Radius=" + gabiDataParameters.getMirror2Radius());
+			logger.log(Level.DEBUG, "mirror2Height=" + gabiDataParameters.getMirror2Height());
+			logger.log(Level.DEBUG, "mirror2_X=" + gabiDataParameters.getMirror2_X());
+			logger.log(Level.DEBUG, "mirror2_Y=" + gabiDataParameters.getMirror2_Y());
 			
 			logger.log(Level.DEBUG, "patellaRadius=" + gabiDataParameters.getPatellaRadius());
 			logger.log(Level.DEBUG, "patella1_X=" + gabiDataParameters.getPatella1_X());
@@ -159,8 +164,41 @@ public class GabiParameters {
 			output = new FileOutputStream(GABI_CONFILE_FILE);
 	
 			// Set properties values
-			//prop.setProperty("cylinderDiameter", String.valueOf(gabiDataParameters.getCylinderDiameter()));
+			prop.setProperty("pwd", String.valueOf(gabiDataParameters.getPwd()));
 	
+		/*
+				gabiDataParameters.setCylinderRadius(Double.parseDouble(prop.getProperty("cylinderRadius")));
+				gabiDataParameters.setCylinderHeight(Double.parseDouble(prop.getProperty("cylinderHeight")));
+				gabiDataParameters.setCylinderZAngle(Double.parseDouble(prop.getProperty("cylinderZAngle")));
+				gabiDataParameters.setCylinderX(Double.parseDouble(prop.getProperty("cylinder_X")));
+				gabiDataParameters.setCylinderY(Double.parseDouble(prop.getProperty("cylinder_Y")));
+				
+				gabiDataParameters.setMirror1Radius(Double.parseDouble(prop.getProperty("mirror1Radius")));
+				gabiDataParameters.setMirror1Height(Double.parseDouble(prop.getProperty("mirror1Height")));
+				gabiDataParameters.setMirror1_X(Double.parseDouble(prop.getProperty("mirror1_X")));
+				gabiDataParameters.setMirror1_Y(Double.parseDouble(prop.getProperty("mirror1_Y")));
+				gabiDataParameters.setMirror2Radius(Double.parseDouble(prop.getProperty("mirror2Radius")));
+				gabiDataParameters.setMirror2Height(Double.parseDouble(prop.getProperty("mirror2Height")));
+				gabiDataParameters.setMirror2_X(Double.parseDouble(prop.getProperty("mirror2_X")));
+				gabiDataParameters.setMirror2_Y(Double.parseDouble(prop.getProperty("mirror2_Y")));
+				
+				gabiDataParameters.setPatellaRadius(Double.parseDouble(prop.getProperty("patellaRadius")));
+				gabiDataParameters.setPatella1_X(Double.parseDouble(prop.getProperty("patella1_X")));
+				gabiDataParameters.setPatella1_Y(Double.parseDouble(prop.getProperty("patella1_Y")));
+				gabiDataParameters.setPatella2_X(Double.parseDouble(prop.getProperty("patella2_X")));
+				gabiDataParameters.setPatella2_Y(Double.parseDouble(prop.getProperty("patella2_Y")));
+				
+				gabiDataParameters.setTableWidth(Double.parseDouble(prop.getProperty("tableWidth")));
+				gabiDataParameters.setTableHeight(Double.parseDouble(prop.getProperty("tableHeight")));
+				gabiDataParameters.setTableDepth(Double.parseDouble(prop.getProperty("tableDepth")));
+				gabiDataParameters.setTable1_X(Double.parseDouble(prop.getProperty("table1_X")));
+				gabiDataParameters.setTable1_Y(Double.parseDouble(prop.getProperty("table1_Y")));
+				gabiDataParameters.setTable2_X(Double.parseDouble(prop.getProperty("table2_X")));
+				gabiDataParameters.setTable2_Y(Double.parseDouble(prop.getProperty("table2_Y")));
+
+				gabiDataParameters.setRotationCenter(RotationCenter.valueOf(prop.getProperty("rotationCenter")));
+				*/
+			
 			// Save properties to project root folder
 			prop.store(output, null);
 	

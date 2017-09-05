@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.PasswordData;
 import com.gbcs.XPSPositioner.dialog.AboutDialog;
+import com.gbcs.XPSPositioner.dialog.ChangePasswordDialog;
 import com.gbcs.XPSPositioner.dialog.PasswordDialog;
 import com.gbcs.XPSPositioner.enumeration.RotationCenter;
 import com.gbcs.XPSPositioner.form.MainGraphicalForm;
@@ -16,6 +17,7 @@ import com.gbcs.XPSPositioner.tabs.EssaiTab;
 import com.gbcs.XPSPositioner.tabs.MecaTab;
 import com.gbcs.XPSPositioner.tabs.SequenceTab;
 import com.gbcs.XPSPositioner.tabs.TablesTab;
+import com.gbcs.XPSPositioner.util.PasswordEncrypter;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -191,20 +193,24 @@ public class GabiView extends BorderPane {
 	    
     	// Configuration
 	    menuConfiguration.setVisible(false);
-	    MenuItem menuItemConfigurationAdresseXps = new MenuItem("Adresse XPS");
-	    MenuItem menuItemConfigurationSelectAxes = new MenuItem("Sélection des axes");
-	    MenuItem menuItemConfigurationArrowsSize = new MenuItem("Taille des flèches");
+	    MenuItem menuItemConfigurationAdresseXps = new MenuItem("Adresse XPS...");
+	    MenuItem menuItemConfigurationSelectAxes = new MenuItem("Sélection des axes...");
+	    MenuItem menuItemConfigurationArrowsSize = new MenuItem("Taille des flèches...");
+	    
+	    menuItemConfigurationAdresseXps.setOnAction(e -> setXpsAddress(e));
+	    menuItemConfigurationSelectAxes.setOnAction(e -> selectAxes(e));
+	    menuItemConfigurationArrowsSize.setOnAction(e -> setArrowSize(e));
 	    
 	    // Show / hide
 	    Menu menuItemConfigurationShow = new Menu("Montrer");
 	    checkMenuItemShowMainAxes.setSelected(true);
-	    checkMenuItemShowM1Axes.setSelected(false);
-	    checkMenuItemShowM2Axes.setSelected(false);
-	    checkMenuItemShowOintAxes.setSelected(false);
+	    checkMenuItemShowM1Axes.setSelected(true);
+	    checkMenuItemShowM2Axes.setSelected(true);
+	    checkMenuItemShowOintAxes.setSelected(true);
 	    checkMenuItemShowMainArrows.setSelected(true);
-	    checkMenuItemShowM1Arrows.setSelected(false);
-	    checkMenuItemShowM2Arrows.setSelected(false);
-	    checkMenuItemShowOintArrows.setSelected(false);
+	    checkMenuItemShowM1Arrows.setSelected(true);
+	    checkMenuItemShowM2Arrows.setSelected(true);
+	    checkMenuItemShowOintArrows.setSelected(true);
 	    
 	    checkMenuItemShowMainAxes.setOnAction(e -> showMainAxes(e));
 	    checkMenuItemShowM1Axes.setOnAction(e -> showM1Axes(e));
@@ -249,23 +255,30 @@ public class GabiView extends BorderPane {
 	    		break;
 	    }
 	    
-	    MenuItem menuItemConfigurationOrderNumber = new MenuItem("Numéro d'ordre");
-	    MenuItem menuItemConfigurationPassword = new MenuItem("Mot de passe");
+	    MenuItem menuItemConfigurationOrderNumber = new MenuItem("Numéro d'ordre...");
+	    MenuItem menuItemConfigurationPassword = new MenuItem("Mot de passe...");
+	    
+	    menuItemConfigurationOrderNumber.setOnAction(e -> setOrderNumber(e));
+	    menuItemConfigurationPassword.setOnAction(e -> modifyPassword(e));
+	    
 	    menuConfiguration.getItems().addAll(menuItemConfigurationAdresseXps, menuItemConfigurationSelectAxes, menuItemConfigurationArrowsSize, menuItemConfigurationShow, menuItemConfigurationRotations, menuItemConfigurationOrderNumber, menuItemConfigurationPassword);
 	    
     	// Maintenance
 	    menuMaintenance.setVisible(false);
-	    MenuItem menuItemMaintenanceXps = new MenuItem("XPS");
-	    MenuItem menuItemMaintenanceDebug = new MenuItem("Debug");
+	    MenuItem menuItemMaintenanceXps = new MenuItem("XPS...");
+	    MenuItem menuItemMaintenanceDebug = new MenuItem("Debug...");
+	    
+	    menuItemMaintenanceXps.setOnAction(e -> xps(e));
+	    menuItemMaintenanceDebug.setOnAction(e -> debug(e));
+	    
 	    menuMaintenance.getItems().addAll(menuItemMaintenanceXps, menuItemMaintenanceDebug);
 	    
     	// Help
 	    MenuItem menuHelpAPropos = new MenuItem("A Propos...");
-	    menuHelpAPropos.setOnAction(e-> showAboutDialog(e));
 	    MenuItem menuHelpManual = new MenuItem("Manuel");
-	    menuHelpManual.setOnAction(e->{
-	    	
-        });
+
+	    menuHelpAPropos.setOnAction(e-> showAboutDialog(e));
+	    menuHelpManual.setOnAction(e-> showUserManual(e));
 
 	    menuHelp.getItems().addAll(menuHelpAPropos, menuHelpManual);
 	    
@@ -285,7 +298,7 @@ public class GabiView extends BorderPane {
      * @param e
      */
     private void showM1Axes(ActionEvent e) {
-       // getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowM1Axes.isSelected());
+        getMainGraphicalForm().getM1ReferencePoint().setAxesVisible(checkMenuItemShowM1Axes.isSelected());
     }
     
     /**
@@ -293,7 +306,7 @@ public class GabiView extends BorderPane {
      * @param e
      */
     private void showM2Axes(ActionEvent e) {
-    //    getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowM2Axes.isSelected());
+        getMainGraphicalForm().getM2ReferencePoint().setAxesVisible(checkMenuItemShowM2Axes.isSelected());
     }
     
     /**
@@ -301,7 +314,7 @@ public class GabiView extends BorderPane {
      * @param e
      */
     private void showOintAxes(ActionEvent e) {
-      //  getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowOintAxes.isSelected());
+       // getMainGraphicalForm().getM2ReferencePoint().setVisible(checkMenuItemShowOintAxes.isSelected());
     }
     
     /**
@@ -317,7 +330,7 @@ public class GabiView extends BorderPane {
      * @param e
      */
     private void showM1Arrows(ActionEvent e) {
-     //   getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowM1Arrows.isSelected());
+        getMainGraphicalForm().getM1ReferencePoint().setArrowsVisible(checkMenuItemShowM1Arrows.isSelected());
     }
     
     /**
@@ -325,7 +338,7 @@ public class GabiView extends BorderPane {
      * @param e
      */
     private void showM2Arrows(ActionEvent e) {
-    //    getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowM2Arrows.isSelected());
+        getMainGraphicalForm().getM2ReferencePoint().setArrowsVisible(checkMenuItemShowM2Arrows.isSelected());
     }
     
     /**
@@ -333,7 +346,7 @@ public class GabiView extends BorderPane {
      * @param e
      */
     private void showOintArrows(ActionEvent e) {
-  //      getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowOintArrows.isSelected());
+       // getMainGraphicalForm().getAxisGroup().setVisible(checkMenuItemShowOintArrows.isSelected());
     }
 
     /**
@@ -366,10 +379,11 @@ public class GabiView extends BorderPane {
      */
 	private void showAdvancedFeatures(ActionEvent e) {
     	PasswordDialog passwordDialog = new PasswordDialog("Mot de passe");
-
+    	
  		Optional<PasswordData> result = passwordDialog.showAndWait();
  		if (result.isPresent()) {
- 			if (result.get().getPassword().equals("JPGMS")) {
+ 			String md5InputPassword = PasswordEncrypter.getInstance().getMd5EncryptedPassword(result.get().getPassword());
+ 			if (md5InputPassword != null && md5InputPassword.equals("d5367bacb1bffc74dd5d119786101518")) {
  				menuMaintenance.setVisible(true);
  			    menuConfiguration.setVisible(true);
  			} else {
@@ -377,6 +391,79 @@ public class GabiView extends BorderPane {
 				menuMaintenance.setVisible(false);
  			    menuConfiguration.setVisible(false);
  			}
+ 		}
+	}
+	
+	/**
+	 * setXpsAddress
+	 * @param e
+	 */
+	private void setXpsAddress(ActionEvent e) {
+		
+	}
+
+	/**
+	 * selectAxes
+	 * @param e
+	 */
+	private void selectAxes(ActionEvent e) {
+		
+	}
+
+	/**
+	 * setArrowSize
+	 * @param e
+	 */
+	private void setArrowSize(ActionEvent e) {
+		
+	}
+	
+	/**
+	 * setOrderNumber
+	 * @param e
+	 */
+	private void setOrderNumber(ActionEvent e) {
+		
+	}
+	
+	/**
+	 * xps
+	 * @param e
+	 */
+	private void xps(ActionEvent e) {
+		
+	}
+	
+	/**
+	 * debug
+	 * @param e
+	 */
+	private void debug(ActionEvent e) {
+		
+	}
+	
+	/**
+	 * showUserManual
+	 * @param e
+	 */
+	private void showUserManual(ActionEvent e) {
+		
+	}
+ 	
+	/**
+	 * modifyPassword
+	 * @param e
+	 */
+	private void modifyPassword(ActionEvent e) {
+		ChangePasswordDialog passwordDialog = new ChangePasswordDialog("Changement du mot de passe");
+    	
+ 		Optional<PasswordData> result = passwordDialog.showAndWait();
+ 		if (result.isPresent()) {
+ 			logger.log(Level.INFO, "Password changed successfully");
+ 			GabiParameters.getInstance().getGabiDataParameters().setPwd(result.get().getPassword());
+ 			GabiParameters.getInstance().save();
+ 		} else {
+ 			logger.log(Level.INFO, "Bad password !");	
  		}
 	}
 	

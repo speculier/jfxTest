@@ -37,26 +37,35 @@ public class MainGraphicalForm extends XForm {
 	private SubScene scene3D;
 	private GabiView mainGabiView;
 
-    // Axis group: contains the 3 axis X, Y and Z
-	private final XForm axisGroup = new XForm();
-    
+    // Axis groups: contains the 3 axis X, Y and Z
+	private final XForm mainAxisGroup = new XForm();
+	private final XForm m1AxisGroup = new XForm();
+	private final XForm m2AxisGroup = new XForm();
+	private final XForm oIntPointAxisGroup = new XForm();
+	
 	// CAmera groups
 	private final XForm cameraXform = new XForm();
 	private final XForm cameraXform2 = new XForm();
     private final XForm cameraXform3 = new XForm();
     
     // Shapes groups
-  	public final XForm shapesGroup = new XForm();
+    private final XForm shapesGroup = new XForm();
  	private final XForm translationTable1Group = new XForm();
  	private final XForm translationTable2Group = new XForm();
  	private final XForm sphereM1Group = new XForm();
  	private final XForm sphereM2Group = new XForm();  
  	private final XForm gabiGroup = new XForm();
  	private final XForm telescopeGroup = new XForm();
+ 	private final XForm m1Group = new XForm();
+ 	private final XForm m2Group = new XForm();
  	
  	// Reference point
- 	private ReferencePoint referencePoint = new ReferencePoint(0, 0, 0);
-	
+ 	private ReferencePoint mainReferencePoint = new ReferencePoint(0, 0, 0);
+ 	private ReferencePoint m1ReferencePoint = new ReferencePoint(GabiParameters.getInstance().getGabiDataParameters().getMirror1_X(), 
+ 			GabiParameters.getInstance().getGabiDataParameters().getMirror1_Y(), 0);
+ 	private ReferencePoint m2ReferencePoint = new ReferencePoint(GabiParameters.getInstance().getGabiDataParameters().getMirror2_X(), 
+ 			GabiParameters.getInstance().getGabiDataParameters().getMirror2_Y(), 0);
+ 
  	// Shapes
     private Cylinder telescopeCylinder = new Cylinder(GabiParameters.getInstance().getGabiDataParameters().getCylinderRadius(),
     		GabiParameters.getInstance().getGabiDataParameters().getCylinderHeight());
@@ -68,7 +77,10 @@ public class MainGraphicalForm extends XForm {
     private Box translationTableM2 = new Box(GabiParameters.getInstance().getGabiDataParameters().getTableWidth(), 
     		GabiParameters.getInstance().getGabiDataParameters().getTableHeight(), 
     		GabiParameters.getInstance().getGabiDataParameters().getTableDepth());
- 	
+    private Cylinder m1Cylinder = new Cylinder(GabiParameters.getInstance().getGabiDataParameters().getMirror1Radius(),
+    		GabiParameters.getInstance().getGabiDataParameters().getMirror1Height());
+    private Cylinder m2Cylinder = new Cylinder(GabiParameters.getInstance().getGabiDataParameters().getMirror2Radius(),
+    		GabiParameters.getInstance().getGabiDataParameters().getMirror2Height());
     // 3D perspective Camera
     private final PerspectiveCamera camera = new PerspectiveCamera(true);
     
@@ -80,8 +92,10 @@ public class MainGraphicalForm extends XForm {
     private double mouseDeltaX;
     private double mouseDeltaY;
     
+    //new Color(1,1,1,0.6)
+    
     // Materials
-    private final PhongMaterial bodyTelescopeCylinderMaterial = new PhongMaterial(Color.DARKRED);
+    private final PhongMaterial bodyTelescopeCylinderMaterial = new PhongMaterial(new Color(1,1,1,0.6));
     private final PhongMaterial baseSphereMaterial = new PhongMaterial(Color.WHITE);
     private final PhongMaterial translationTableMaterial = new PhongMaterial(Color.DARKBLUE);
 
@@ -114,9 +128,33 @@ public class MainGraphicalForm extends XForm {
      * @return
      */
     public ReferencePoint getMainReferencePoint() {
-    	return referencePoint;
+    	return mainReferencePoint;
     }
     
+    /**
+     * getM1ReferencePoint
+     * @return
+     */
+    public ReferencePoint getM1ReferencePoint() {
+    	return m1ReferencePoint;
+    }
+    
+    /**
+     * getM2ReferencePoint
+     * @return
+     */
+    public ReferencePoint getM2ReferencePoint() {
+    	return m2ReferencePoint;
+    }
+    
+    /**
+     * getM2ReferencePoint
+     * @return
+     */
+  /*  public ReferencePoint getOintReferencePoint() {
+    	return oReferencePoint;
+    }
+    */
     /**
      * getTranslationTable1Group
      * @return
@@ -156,7 +194,7 @@ public class MainGraphicalForm extends XForm {
 	public XForm getTelescopeGroup() {
 		return telescopeGroup;
 	}
-       
+
 	/**
 	 * MainGraphicalForm
 	 */
@@ -177,7 +215,7 @@ public class MainGraphicalForm extends XForm {
         buildCameras();
         
         // Build reference group
-        buildReference();
+        buildReferences();
         
         // Build 3D shapes
         buildShapes();
@@ -374,15 +412,19 @@ public class MainGraphicalForm extends XForm {
     }
     
     /**
-     * buildReference
+     * buildReferences
      */
-    private void buildReference() {
+    private void buildReferences() {
 
         // Add the axes in the 'axis' group
-        axisGroup.getChildren().add(referencePoint);
+        mainAxisGroup.getChildren().add(mainReferencePoint);
+        m1AxisGroup.getChildren().add(m1ReferencePoint);
+        m2AxisGroup.getChildren().add(m2ReferencePoint);
         
         // Add the 'axis' group in the 'world3D' group
-        getChildren().add(axisGroup);
+        getChildren().add(mainAxisGroup);
+        getChildren().add(m1AxisGroup);
+        getChildren().add(m2AxisGroup);
     }
 
     /**
@@ -394,7 +436,7 @@ public class MainGraphicalForm extends XForm {
     	
     	buildPalettas();
     	
-    	buildCylinder();
+    	buildTelescope();
     	
         // Add base forms group in the groups
         gabiGroup.getChildren().add(telescopeGroup);
@@ -411,22 +453,35 @@ public class MainGraphicalForm extends XForm {
     }
     
     /**
-     * buildCylinder
+     * buildTelescope
      */
-    private void buildCylinder() {
+    private void buildTelescope() {
     	
-    	// Materials
-        bodyTelescopeCylinderMaterial.setSpecularColor(Color.RED);
+    	// Mirrors
+    	m1Cylinder.setRotationAxis(Rotate.Z_AXIS);
+    	m1Cylinder.setRotate(90);
+    	m1Cylinder.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getMirror1_X());
+    	m1Cylinder.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getMirror2_Y());
+    	
+    	m2Cylinder.setRotationAxis(Rotate.Z_AXIS);
+    	m2Cylinder.setRotate(90);
+    	m2Cylinder.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getMirror2_X());
+    	m2Cylinder.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getMirror2_Y());
+    
+    	m1Group.getChildren().add(m1Cylinder);
+    	m2Group.getChildren().add(m2Cylinder);
         
-        // Cylinder       
+        // Telescope body cylinder          
         telescopeCylinder.setMaterial(bodyTelescopeCylinderMaterial);
         telescopeCylinder.setRotationAxis(Rotate.Z_AXIS);
-        telescopeCylinder.setRotate(GabiParameters.getInstance().getGabiDataParameters().getCylinderZAngle());
-        telescopeCylinder.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getCylinderX());
+        telescopeCylinder.setRotate(90);
+        telescopeCylinder.setTranslateX((GabiParameters.getInstance().getGabiDataParameters().getCylinderHeight() / 2) - (GabiParameters.getInstance().getGabiDataParameters().getTableWidth() / 2));
         telescopeCylinder.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getCylinderY());
  
         // Add shapes in each group
         telescopeGroup.getChildren().add(telescopeCylinder);
+        telescopeGroup.getChildren().add(m1Group);
+        telescopeGroup.getChildren().add(m2Group);
     }
     
     /**

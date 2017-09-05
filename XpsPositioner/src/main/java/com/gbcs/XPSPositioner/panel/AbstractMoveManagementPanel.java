@@ -34,10 +34,10 @@ public abstract class AbstractMoveManagementPanel extends TitledPane {
 		gabiView = view;
  	 	
 		// Buttons
-		Button buttonRelativeMovePlus = new Button("+");
+		Button buttonRelativeMovePlus = new Button("->");
  	 	buttonRelativeMovePlus.setOnAction(e-> relativeMovePlus());
 
-		Button buttonRelativeMoveMine = new Button("-");
+		Button buttonRelativeMoveMine = new Button("<-");
 	 	buttonRelativeMoveMine.setOnAction(e-> relativeMoveMine());
 
 		Button buttonAbsolute = new Button("Go");
@@ -54,9 +54,11 @@ public abstract class AbstractMoveManagementPanel extends TitledPane {
  	 	// ComboBox	 	
 	 	comboRelativeValue.setEditable(true);
  	 	comboRelativeValue.setVisibleRowCount(5);
+ 	 	comboRelativeValue.getEditor().setText("10");
  	 	
  	 	comboAbsoluteValue.setEditable(true);
  	 	comboAbsoluteValue.setVisibleRowCount(5);
+ 	 	comboAbsoluteValue.getEditor().setText("10");
  	 	
 	 	setCollapsible(false);
 	 	
