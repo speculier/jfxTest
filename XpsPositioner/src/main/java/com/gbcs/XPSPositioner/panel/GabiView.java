@@ -61,7 +61,7 @@ public class GabiView extends BorderPane {
     private CheckMenuItem checkMenuItemShowOintArrows = new CheckMenuItem("Flèches Oint");
     
     // Main statusBar 
-    private final StatusBarPanel statusBar = new StatusBarPanel();
+    private LowerStatusBarPanel statusBar;
     
     // Right tabed panels and its panels
     private final TabPane tabPane = new TabPane();  
@@ -77,6 +77,14 @@ public class GabiView extends BorderPane {
 	 */
 	public MainGraphicalForm getMainGraphicalForm () {
 		return mainGraphicalForm;
+	}
+	
+	/**
+	 * getStatusBar
+	 * @return LowerStatusBarPanel
+	 */
+	public LowerStatusBarPanel getStatusBar () {
+		return statusBar;
 	}
 	
 	/**
@@ -127,6 +135,7 @@ public class GabiView extends BorderPane {
 		// Create graphical area
 		Group root = new Group();
 		mainGraphicalForm = new MainGraphicalForm(root, this);
+		statusBar = new LowerStatusBarPanel(this);
         root.getChildren().add(mainGraphicalForm);
 
     	// Build menus

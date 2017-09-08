@@ -95,9 +95,10 @@ public class MainGraphicalForm extends XForm {
     //new Color(1,1,1,0.6)
     
     // Materials
-    private final PhongMaterial bodyTelescopeCylinderMaterial = new PhongMaterial(new Color(1,1,1,0.6));
+    private final PhongMaterial bodyTelescopeCylinderMaterial = new PhongMaterial(new Color(0.2,0.2,0.2,0.1));
     private final PhongMaterial baseSphereMaterial = new PhongMaterial(Color.WHITE);
     private final PhongMaterial translationTableMaterial = new PhongMaterial(Color.DARKBLUE);
+    private final PhongMaterial mirrorsMaterial = new PhongMaterial(Color.BLUEVIOLET);
 
     /**
      * getSubScene
@@ -121,6 +122,14 @@ public class MainGraphicalForm extends XForm {
      */
     public GabiView getGabiView() {
     	return mainGabiView;
+    }
+    
+    /**
+     * getM1AxisGroup
+     * @return
+     */
+    public XForm getM1AxisGroup() {
+    	return m1AxisGroup;
     }
     
     /**
@@ -154,6 +163,7 @@ public class MainGraphicalForm extends XForm {
   /*  public ReferencePoint getOintReferencePoint() {
     	return oReferencePoint;
     }
+    
     */
     /**
      * getTranslationTable1Group
@@ -418,13 +428,9 @@ public class MainGraphicalForm extends XForm {
 
         // Add the axes in the 'axis' group
         mainAxisGroup.getChildren().add(mainReferencePoint);
-        m1AxisGroup.getChildren().add(m1ReferencePoint);
-        m2AxisGroup.getChildren().add(m2ReferencePoint);
-        
+         
         // Add the 'axis' group in the 'world3D' group
         getChildren().add(mainAxisGroup);
-        getChildren().add(m1AxisGroup);
-        getChildren().add(m2AxisGroup);
     }
 
     /**
@@ -457,21 +463,30 @@ public class MainGraphicalForm extends XForm {
      */
     private void buildTelescope() {
     	
+    	// Axes
+        m1AxisGroup.getChildren().add(m1ReferencePoint);
+        m2AxisGroup.getChildren().add(m2ReferencePoint);
+        
     	// Mirrors
+    	m1Cylinder.setMaterial(mirrorsMaterial);
     	m1Cylinder.setRotationAxis(Rotate.Z_AXIS);
     	m1Cylinder.setRotate(90);
     	m1Cylinder.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getMirror1_X());
     	m1Cylinder.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getMirror2_Y());
     	
+    	m2Cylinder.setMaterial(mirrorsMaterial);
     	m2Cylinder.setRotationAxis(Rotate.Z_AXIS);
     	m2Cylinder.setRotate(90);
     	m2Cylinder.setTranslateX(GabiParameters.getInstance().getGabiDataParameters().getMirror2_X());
     	m2Cylinder.setTranslateY(GabiParameters.getInstance().getGabiDataParameters().getMirror2_Y());
     
     	m1Group.getChildren().add(m1Cylinder);
+    	m1Group.getChildren().add(m1AxisGroup);
     	m2Group.getChildren().add(m2Cylinder);
+    	m2Group.getChildren().add(m2AxisGroup);
         
-        // Telescope body cylinder          
+        // Telescope body cylinder     
+    	bodyTelescopeCylinderMaterial.setSpecularColor(Color.TRANSPARENT);
         telescopeCylinder.setMaterial(bodyTelescopeCylinderMaterial);
         telescopeCylinder.setRotationAxis(Rotate.Z_AXIS);
         telescopeCylinder.setRotate(90);

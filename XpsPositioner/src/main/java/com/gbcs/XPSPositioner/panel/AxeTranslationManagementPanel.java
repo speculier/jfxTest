@@ -20,7 +20,7 @@ public class AxeTranslationManagementPanel extends AbstractTranslationManagement
 	static final Logger logger = Logger.getLogger(AxeTranslationManagementPanel.class);
 
 	private MoveAxe axe;
-	
+
 	/**
 	 * AxeTranslationManagementPanel
 	 * @param view
@@ -40,6 +40,8 @@ public class AxeTranslationManagementPanel extends AbstractTranslationManagement
 	@Override
 	protected void relativeMoveMine() {
 		relativeMove(MoveSign.MOVE_MINE);
+		
+		gabiView.getStatusBar().updateDisplay();
 	}
 	
 	/**
@@ -48,6 +50,8 @@ public class AxeTranslationManagementPanel extends AbstractTranslationManagement
 	@Override
 	protected void relativeMovePlus() {		        		
 		relativeMove(MoveSign.MOVE_PLUS);
+		
+		gabiView.getStatusBar().updateDisplay();
 	}
 	
 	/**

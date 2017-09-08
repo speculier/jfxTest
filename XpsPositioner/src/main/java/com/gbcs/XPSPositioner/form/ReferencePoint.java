@@ -5,7 +5,7 @@ import com.gbcs.XPSPositioner.util.Constants;
 import javafx.scene.shape.Sphere;
 
 /**
- * OIntPoint
+ * ReferencePoint
  * @author Sébastien
  *
  */
@@ -16,10 +16,10 @@ public class ReferencePoint extends XForm {
 	private Sphere referencePoint;
 	
 	/**
-	 * OIntPoint ctor
-	 * @param xReference
-	 * @param yReference
-	 * @param zReference
+	 * ReferencePoint ctor
+	 * @param x
+	 * @param y
+	 * @param z
 	 */
 	public ReferencePoint(double x, double y, double z) {
 		
@@ -30,6 +30,11 @@ public class ReferencePoint extends XForm {
         // Translate reference
         axes.setTranslate(x, y, z);
         arrows.setTranslate(x, y, z);
+        
+        System.out.println("x=" + referencePoint.getTranslateX());
+        System.out.println("y=" + referencePoint.getTranslateY());
+        System.out.println("z=" + referencePoint.getTranslateZ());
+        
         referencePoint.setTranslateX(x);
         referencePoint.setTranslateY(y);
         referencePoint.setTranslateZ(z);
@@ -84,5 +89,12 @@ public class ReferencePoint extends XForm {
 	 */
 	public void setCenterPointVisible(boolean showCenterPoint) {
 		referencePoint.setVisible(showCenterPoint);
+	}
+	
+	/**
+	 * getX
+	 */
+	public double getX() {
+		return referencePoint.getTranslateX();
 	}
 }
