@@ -1,6 +1,8 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,7 +22,7 @@ import javafx.scene.layout.GridPane;
 public class EssaiPointManagementPanel extends TitledPane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(EssaiPointManagementPanel.class);
+	private static final Logger logger = LogManager.getLogger(EssaiPointManagementPanel.class);
 	
 	/**
 	 * EssaiPointManagementPanel ctor

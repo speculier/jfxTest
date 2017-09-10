@@ -1,6 +1,7 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -18,7 +19,7 @@ import javafx.scene.layout.Pane;
 public class AboutPane extends Pane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(AboutPane.class);
+	private static final Logger logger = LogManager.getLogger(AboutPane.class);
 	
 	/**
 	 * AboutPane ctor

@@ -23,7 +23,7 @@ public class PasswordEncrypter {
 	 * @return
 	 */
 	public static PasswordEncrypter getInstance() {
-	    if (null == instance) { // Premier appel
+	    if (null == instance) { 
 	            if (null == instance) {
 	                instance = new PasswordEncrypter();
 	            }
@@ -50,7 +50,7 @@ public class PasswordEncrypter {
 	        // Get the hash's bytes
 	        byte[] bytes = md.digest();
 	        
-	        //This bytes[] has bytes in decimal format; Convert it to hexadecimal format
+	        // This bytes[] has bytes in decimal format; Convert it to hexadecimal format
 	        StringBuilder sb = new StringBuilder();
 	        for(int i=0; i< bytes.length ;i++) {
 	            sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));

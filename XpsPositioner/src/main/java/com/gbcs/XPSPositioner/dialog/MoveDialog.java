@@ -1,7 +1,8 @@
 package com.gbcs.XPSPositioner.dialog;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.AbsoluteEssaiMoveData;
 import com.gbcs.XPSPositioner.data.AbsoluteMecaMoveData;
@@ -28,7 +29,7 @@ import javafx.util.Callback;
 public class MoveDialog extends Dialog<Object> {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(MoveDialog.class);
+	private static final Logger logger = LogManager.getLogger(MoveDialog.class);
 	
 	private TextField textFieldMoveValue = new TextField();
 	

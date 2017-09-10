@@ -1,6 +1,8 @@
 package com.gbcs.XPSPositioner.tabs;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.components.XpsAngleSpinner;
 import com.gbcs.XPSPositioner.panel.GabiView;
@@ -24,7 +26,7 @@ import javafx.scene.control.ToolBar;
 public class AdminTab extends Tab {
 	
 	// Logger
-	private static final Logger logger = Logger.getLogger(AdminTab.class);
+	private static final Logger logger = LogManager.getLogger(AdminTab.class);
 	
 	private GabiView gabiView;
 	

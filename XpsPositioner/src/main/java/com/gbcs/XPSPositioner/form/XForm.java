@@ -1,7 +1,9 @@
 
 package com.gbcs.XPSPositioner.form;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javafx.scene.Group;
 import javafx.scene.transform.Rotate;
@@ -16,7 +18,7 @@ import javafx.scene.transform.Translate;
 public class XForm extends Group {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(XForm.class);
+	private static final Logger logger = LogManager.getLogger(XForm.class);
 
 	/**
 	 * RotateOrder

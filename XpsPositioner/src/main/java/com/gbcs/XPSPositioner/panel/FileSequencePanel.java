@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.GabiController;
 
@@ -31,7 +33,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class FileSequencePanel extends TitledPane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(FileSequencePanel.class);
+	private static final Logger logger = LogManager.getLogger(FileSequencePanel.class);
 	
 	private ListView<String> listviewSequences;
 	private FileChooser fileChooserOpen = new FileChooser();

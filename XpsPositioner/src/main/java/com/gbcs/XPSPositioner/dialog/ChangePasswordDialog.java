@@ -1,7 +1,8 @@
 package com.gbcs.XPSPositioner.dialog;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.PasswordData;
 import com.gbcs.XPSPositioner.parameters.GabiParameters;
@@ -25,8 +26,8 @@ import javafx.util.Callback;
  */
 public class ChangePasswordDialog extends Dialog<PasswordData> {
 
-	// Logger
-	private static final Logger logger = Logger.getLogger(ChangePasswordDialog.class);
+	// 	Logger
+	private static final Logger logger = LogManager.getLogger(ChangePasswordDialog.class.getName());
 	
 	private PasswordField fieldPassword = new PasswordField ();
 	private PasswordField fieldNewPassword = new PasswordField ();

@@ -1,6 +1,7 @@
 package com.gbcs.XPSPositioner.tabs;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.GabiController;
 import com.gbcs.XPSPositioner.panel.EditSequencePanel;
@@ -24,7 +25,7 @@ import javafx.scene.layout.GridPane;
 public class SequenceTab extends Tab {
 	
 	// Logger
-	private static final Logger logger = Logger.getLogger(SequenceTab.class);
+	private static final Logger logger = LogManager.getLogger(SequenceTab.class);
 	
 	private GabiView gabiView;
 	private ListView<String> listviewSequences;

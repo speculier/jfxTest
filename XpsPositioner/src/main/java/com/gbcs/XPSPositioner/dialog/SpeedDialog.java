@@ -1,7 +1,8 @@
 package com.gbcs.XPSPositioner.dialog;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.SpeedData;
 import com.gbcs.XPSPositioner.panel.XyPointPanel;
@@ -23,7 +24,7 @@ import javafx.util.Callback;
 public class SpeedDialog extends Dialog<SpeedData> {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(SpeedDialog.class);
+	private static final Logger logger = LogManager.getLogger(SpeedDialog.class);
 	
 	private XyPointPanel pointPaneM1 = new XyPointPanel ("M1");
 	private XyPointPanel pointPaneM2 = new XyPointPanel ("M2");

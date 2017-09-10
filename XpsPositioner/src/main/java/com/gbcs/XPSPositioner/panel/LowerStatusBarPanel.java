@@ -1,6 +1,7 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -16,7 +17,7 @@ import javafx.scene.layout.Pane;
 public class LowerStatusBarPanel extends Pane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(LowerStatusBarPanel.class);
+	private static final org.apache.logging.log4j.Logger logger = LogManager.getLogger(LowerStatusBarPanel.class);
 	
 	private Label x1Position  = new Label();
 	private Label x2Position = new Label();

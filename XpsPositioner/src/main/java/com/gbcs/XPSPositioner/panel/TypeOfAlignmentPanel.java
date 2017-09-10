@@ -1,6 +1,8 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.enumeration.TypeOfAlignment;
 
@@ -19,7 +21,7 @@ import javafx.scene.layout.GridPane;
 public class TypeOfAlignmentPanel extends TitledPane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(TypeOfAlignmentPanel.class);
+	private static final Logger logger = LogManager.getLogger(TypeOfAlignmentPanel.class);
 	
 	ToggleGroup group = new ToggleGroup();
 	RadioButton radioTranslation = new RadioButton("TX / TY");

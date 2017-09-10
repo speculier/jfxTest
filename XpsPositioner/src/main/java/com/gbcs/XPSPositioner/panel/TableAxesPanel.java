@@ -1,6 +1,8 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.enumeration.MoveAxe;
 
@@ -19,7 +21,7 @@ import javafx.scene.layout.GridPane;
 public class TableAxesPanel extends TitledPane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(TableAxesPanel.class);
+	private static final Logger logger = LogManager.getLogger(TableAxesPanel.class);
 	
 	private ToggleGroup group = new ToggleGroup();
 	private RadioButton radioXM1 = new RadioButton("M1 X");

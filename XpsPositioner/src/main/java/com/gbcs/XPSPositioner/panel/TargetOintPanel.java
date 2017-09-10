@@ -1,6 +1,8 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.enumeration.TargetTypeOfAlignment;
 
@@ -19,7 +21,7 @@ import javafx.scene.layout.GridPane;
 public class TargetOintPanel extends TitledPane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(TargetOintPanel.class);
+	private static final Logger logger = LogManager.getLogger(TargetOintPanel.class);
 	
 	private TextField textFieldMoveXValue = new TextField("0");
 	private TextField textFieldMoveYValue = new TextField("0");

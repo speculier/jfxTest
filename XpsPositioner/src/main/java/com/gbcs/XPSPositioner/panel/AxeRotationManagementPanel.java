@@ -1,7 +1,8 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.enumeration.MoveSign;
 import com.gbcs.XPSPositioner.enumeration.MoveTypeOnAxe;
@@ -14,7 +15,7 @@ import com.gbcs.XPSPositioner.enumeration.MoveTypeOnAxe;
 public class AxeRotationManagementPanel extends AbstractRotationManagementPanel {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(AxeRotationManagementPanel.class);
+	private static final Logger logger = LogManager.getLogger(AxeRotationManagementPanel.class);
 	
 	private MoveTypeOnAxe typeOnAxe;
 	

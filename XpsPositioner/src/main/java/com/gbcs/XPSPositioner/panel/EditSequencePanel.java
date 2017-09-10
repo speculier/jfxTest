@@ -2,8 +2,9 @@ package com.gbcs.XPSPositioner.panel;
 
 import java.util.Optional;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
 import com.gbcs.XPSPositioner.data.DelayData;
@@ -35,7 +36,7 @@ import javafx.scene.layout.GridPane;
 public class EditSequencePanel extends TitledPane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(EditSequencePanel.class);
+	private static final Logger logger = LogManager.getLogger(EditSequencePanel.class);
 	
 	private ListView<String> listviewSequences;
 	private SequenceActionPanel actionPanel;

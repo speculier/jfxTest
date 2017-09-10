@@ -1,6 +1,8 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -17,7 +19,7 @@ import javafx.scene.layout.GridPane;
 public class XyPointPanel extends TitledPane {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(XyPointPanel.class);
+	private static final Logger logger = LogManager.getLogger(XyPointPanel.class);
 	
 	private TextField textFieldX = new TextField("");
 	private TextField textFieldY = new TextField("");

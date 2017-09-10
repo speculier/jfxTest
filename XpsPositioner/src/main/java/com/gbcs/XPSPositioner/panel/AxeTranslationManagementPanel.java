@@ -1,7 +1,8 @@
 package com.gbcs.XPSPositioner.panel;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.enumeration.MoveAxe;
 import com.gbcs.XPSPositioner.enumeration.MoveSign;
@@ -17,7 +18,7 @@ import javafx.scene.transform.Rotate;
 public class AxeTranslationManagementPanel extends AbstractTranslationManagementPanel {
 
 	// Logger
-	static final Logger logger = Logger.getLogger(AxeTranslationManagementPanel.class);
+	static final Logger logger = LogManager.getLogger(AxeTranslationManagementPanel.class);
 
 	private MoveAxe axe;
 

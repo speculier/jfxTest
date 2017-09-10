@@ -11,7 +11,7 @@ import javafx.scene.layout.GridPane;
 
 /**
  * AbstractTranslationManagementPanel
- * @author Sébastien
+ * @author Sebastien
  *
  */
 public abstract class AbstractMoveManagementPanel extends TitledPane {

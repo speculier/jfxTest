@@ -1,7 +1,8 @@
 package com.gbcs.XPSPositioner.dialog;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.NbLoopData;
 
@@ -23,7 +24,7 @@ import javafx.util.Callback;
 public class NbLoopDialog extends Dialog<NbLoopData> {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(NbLoopDialog.class);
+	private static final Logger logger = LogManager.getLogger(NbLoopDialog.class);
 	
 	private TextField fieldNbLoops = new TextField("2");
 	 	

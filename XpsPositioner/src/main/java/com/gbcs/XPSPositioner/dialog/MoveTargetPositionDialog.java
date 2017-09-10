@@ -1,7 +1,8 @@
 package com.gbcs.XPSPositioner.dialog;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.MoveTargetPositionData;
 import com.gbcs.XPSPositioner.panel.TargetOintPanel;
@@ -16,13 +17,13 @@ import javafx.util.Callback;
 
 /**
  * MoveTargetPositionDialog
- * @author Sébastien
+ * @author Sebastien
  *
  */
 public class MoveTargetPositionDialog extends Dialog<MoveTargetPositionData> {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(MoveTargetPositionDialog.class);
+	private static final Logger logger = LogManager.getLogger(MoveTargetPositionDialog.class);
 	
 	private TargetOintPanel oIntPanel = new TargetOintPanel("Oint");
 	

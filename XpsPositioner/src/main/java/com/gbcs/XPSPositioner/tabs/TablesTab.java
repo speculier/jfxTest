@@ -2,13 +2,13 @@ package com.gbcs.XPSPositioner.tabs;
 
 import java.util.Optional;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.SpeedData;
 import com.gbcs.XPSPositioner.dialog.SpeedDialog;
 import com.gbcs.XPSPositioner.enumeration.MoveAxe;
-import com.gbcs.XPSPositioner.form.XForm;
 import com.gbcs.XPSPositioner.panel.AbstractMoveManagementPanel;
 import com.gbcs.XPSPositioner.panel.AxeTranslationManagementPanel;
 import com.gbcs.XPSPositioner.panel.GabiView;
@@ -28,7 +28,7 @@ import javafx.scene.layout.GridPane;
 public class TablesTab extends Tab {
 	
 	// Logger
-	private static final Logger logger = Logger.getLogger(TablesTab.class);
+	private static final Logger logger = LogManager.getLogger(TablesTab.class);
 	
 	private GabiView gabiView;
 

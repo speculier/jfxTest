@@ -1,6 +1,7 @@
 package com.gbcs.XPSPositioner.components;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -13,7 +14,7 @@ import javafx.scene.control.SpinnerValueFactory;
 public class XpsAngleSpinner extends Spinner<Double> {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(XpsAngleSpinner.class);
+	private static final Logger logger = LogManager.getLogger(XpsAngleSpinner.class);
 	
 	private SpinnerValueFactory<Double> spinnerValue;
 

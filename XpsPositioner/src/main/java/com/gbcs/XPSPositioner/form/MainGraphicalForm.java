@@ -1,6 +1,8 @@
 package com.gbcs.XPSPositioner.form;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.enumeration.MoveAxe;
 import com.gbcs.XPSPositioner.enumeration.MoveSign;
@@ -31,7 +33,7 @@ import javafx.scene.transform.Rotate;
 public class MainGraphicalForm extends XForm {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(MainGraphicalForm.class);
+	private static final Logger logger = LogManager.getLogger(MainGraphicalForm.class);
 	
 	private Group root3D;
 	private SubScene scene3D;
@@ -43,7 +45,7 @@ public class MainGraphicalForm extends XForm {
 	private final XForm m2AxisGroup = new XForm();
 	private final XForm oIntPointAxisGroup = new XForm();
 	
-	// CAmera groups
+	// Camera groups
 	private final XForm cameraXform = new XForm();
 	private final XForm cameraXform2 = new XForm();
     private final XForm cameraXform3 = new XForm();

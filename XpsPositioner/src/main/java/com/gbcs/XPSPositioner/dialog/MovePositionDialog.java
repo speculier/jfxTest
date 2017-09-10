@@ -1,7 +1,8 @@
 package com.gbcs.XPSPositioner.dialog;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.AbsoluteTablePositionData;
 import com.gbcs.XPSPositioner.panel.XyPointPanel;
@@ -23,7 +24,7 @@ import javafx.util.Callback;
 public class MovePositionDialog extends Dialog<AbsoluteTablePositionData> {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(MovePositionDialog.class);
+	private static final Logger logger = LogManager.getLogger(MovePositionDialog.class);
 	
 	// Position panels
 	private XyPointPanel pointPaneM1;

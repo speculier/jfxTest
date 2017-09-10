@@ -7,8 +7,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Properties;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.gbcs.XPSPositioner.data.GabiParametersData;
 import com.gbcs.XPSPositioner.enumeration.RotationCenter;
@@ -21,7 +22,7 @@ import com.gbcs.XPSPositioner.enumeration.RotationCenter;
 public class GabiParameters {
 
 	// Logger
-	private static final Logger logger = Logger.getLogger(GabiParameters.class);
+	private static final Logger logger = LogManager.getLogger(GabiParameters.class);
 	
 	private final String GABI_CONFILE_FILE = "gabi.properties";
 	
