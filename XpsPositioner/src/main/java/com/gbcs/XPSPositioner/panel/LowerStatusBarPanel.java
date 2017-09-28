@@ -58,6 +58,7 @@ public class LowerStatusBarPanel extends Pane {
 	 	grid.add(errorMessage, 5, 0);
 	 	grid.add(mode, 6, 0);
 	 	
+	 	
 	 	getChildren().add(grid);
 	 	
 	 	// Update
