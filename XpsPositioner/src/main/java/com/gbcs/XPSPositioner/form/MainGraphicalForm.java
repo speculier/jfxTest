@@ -73,7 +73,7 @@ public class MainGraphicalForm extends XForm {
     		GabiParameters.getInstance().getGabiDataParameters().getCylinderHeight());
     private Sphere patellaM1 = new Sphere(GabiParameters.getInstance().getGabiDataParameters().getPatellaRadius());
     private Sphere patellaM2 = new Sphere(GabiParameters.getInstance().getGabiDataParameters().getPatellaRadius());
-    private Box translationTableM1 = new Box(GabiParameters.getInstance().getGabiDataParameters().getTableWidth(), 
+    public Box translationTableM1 = new Box(GabiParameters.getInstance().getGabiDataParameters().getTableWidth(), 
     		GabiParameters.getInstance().getGabiDataParameters().getTableHeight(), 
     		GabiParameters.getInstance().getGabiDataParameters().getTableDepth());
     private Box translationTableM2 = new Box(GabiParameters.getInstance().getGabiDataParameters().getTableWidth(), 
@@ -216,7 +216,7 @@ public class MainGraphicalForm extends XForm {
 		mainGabiView = view;
 		
         // Create 3D scene GREY with the root group
-    	scene3D = new SubScene(root3D, 1100, 900, true, SceneAntialiasing.BALANCED);
+    	scene3D = new SubScene(root3D, 800, 600, true, SceneAntialiasing.BALANCED);
         scene3D.setFill(Color.GREY);
         scene3D.setCamera(camera);
         

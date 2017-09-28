@@ -3,6 +3,7 @@ package com.gbcs.XPSPositioner.panel;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 
+import javafx.geometry.Bounds;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
@@ -62,22 +63,17 @@ public class LowerStatusBarPanel extends Pane {
 	 	// Update
 	 	updateDisplay();
 	}
-	
+
 	/**
 	 * updateDisplay
 	 */
 	public void updateDisplay() {
+				
+		x1Position.setText("X1 = " + mainGabiView.getMainGraphicalForm().getTranslationTable1Group().getTx());		
+		x2Position.setText("X2 = " + mainGabiView.getMainGraphicalForm().getTranslationTable2Group().getTx());
+		y1Position.setText("Y1 = " + mainGabiView.getMainGraphicalForm().getTranslationTable1Group().getTy());
+		y2Position.setText("Y2 = " + mainGabiView.getMainGraphicalForm().getTranslationTable2Group().getTy());
 		
-		//System.out.println(mainGabiView.getMainGraphicalForm().getM1AxisGroup().getTx());
-		//System.out.println(mainGabiView.getMainGraphicalForm().getM1AxisGroup().getTranslateX());
-		
-		System.out.println(mainGabiView.getMainGraphicalForm().getM1ReferencePoint().translateXProperty());
-		System.out.println(mainGabiView.getMainGraphicalForm().getM1ReferencePoint().translateYProperty());
-		//System.out.println(mainGabiView.getMainGraphicalForm().getM1ReferencePoint().getLayout());
-		
-		x1Position.setText("X1 = " + mainGabiView.getMainGraphicalForm().getM1ReferencePoint().getX());		
-		x2Position.setText("X2 = " + mainGabiView.getMainGraphicalForm().getM2ReferencePoint().getX());
-		y1Position.setText("Y1 = " + mainGabiView.getMainGraphicalForm().getM1ReferencePoint().getTy());
-		y2Position.setText("Y2 = " + mainGabiView.getMainGraphicalForm().getM2ReferencePoint().getTranslateY());
+		System.out.println(mainGabiView.getMainGraphicalForm().translationTableM1.getTranslateX());
 	}
 }

@@ -232,7 +232,7 @@ public class GabiView extends BorderPane {
 	    checkMenuItemShowOintArrows.setOnAction(e -> showOintArrows(e));
 	    
 	    menuItemConfigurationShow.getItems().addAll(checkMenuItemShowMainAxes, checkMenuItemShowM1Axes, checkMenuItemShowM2Axes, checkMenuItemShowOintAxes, checkMenuItemShowMainArrows, checkMenuItemShowM1Arrows, checkMenuItemShowM2Arrows, checkMenuItemShowOintArrows);
-
+	    
 	    // Rotations
 	    final ToggleGroup rotationGroup = new ToggleGroup();
 	    Menu menuItemConfigurationRotations = new Menu("Rotations");
@@ -251,7 +251,7 @@ public class GabiView extends BorderPane {
 	    radioMenuItemNearPointUnderM2.setOnAction(e -> setRotationCenterNearUnderM2(e));
 	    
 	    menuItemConfigurationRotations.getItems().addAll(radioMenuItemVirtualPointUnderM1, radioMenuItemNearCenterOfM1M2, radioMenuItemNearPointUnderM2);
-
+	    
 	    switch(GabiParameters.getInstance().getGabiDataParameters().getRotationCenter()) {
 	    	case NEAR_MIDDLE_OF_M1M2:
 	    		radioMenuItemNearCenterOfM1M2.setSelected(true);
